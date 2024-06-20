@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 let color = {
-    
+    white: '#fefefe',
+    black: '#000',
     none: 'transparent'
 }
 let colors = []

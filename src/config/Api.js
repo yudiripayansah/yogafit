@@ -1,7 +1,5 @@
 import axios from 'axios';
 const defAxios = axios.create({
-  // baseURL: "http://localhost:8000/api/"
-  // baseURL: "https://ardan.kopikoding.com/api/"
   baseURL: 'https://ardanmobileapps.ardangroup.fm/api/',
 });
 const Api = {
