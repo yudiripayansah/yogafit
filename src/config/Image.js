@@ -1,0 +1,23 @@
+const img = {
+  navClassActive: require('../assets/images/nav-class-orange.png'),
+  navClassInactive: require('../assets/images/nav-class-grey.png'),
+  navHomeActive: require('../assets/images/nav-home-orange.png'),
+  navHomeInactive: require('../assets/images/nav-home-grey.png'),
+  navTrainerActive: require('../assets/images/nav-trainer-orange.png'),
+  navTrainerInactive: require('../assets/images/nav-trainer-grey.png'),
+  navProfileActive: require('../assets/images/nav-profile-orange.png'),
+  navProfileInactive: require('../assets/images/nav-profile-grey.png'),
+  banner1: require('../assets/images/banner-1.jpg'),
+  banner2: require('../assets/images/banner-2.jpg'),
+  banner3: require('../assets/images/banner-3.jpg'),
+  banner4: require('../assets/images/banner-4.jpg'),
+  banner5: require('../assets/images/banner-5.jpg'),
+  buildings: require('../assets/images/icon-buildings.png'),
+  arrowDown: require('../assets/images/icon-arrow-down.png'),
+  yogaRed: require('../assets/images/icon-yoga-red.png'),
+  yogaHot: require('../assets/images/icon-fire-melt.png'),
+  ticket: require('../assets/images/icon-ticket.png'),
+  teacher: require('../assets/images/teacher.jpg'),
+  event: require('../assets/images/events.jpeg'),
+}
+export default img

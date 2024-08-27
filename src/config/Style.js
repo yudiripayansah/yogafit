@@ -1,8 +1,23 @@
 import {StyleSheet} from 'react-native';
 let color = {
-  white: '#fefefe',
-  black: '#000',
-  none: 'transparent',
+  orange: '#FE9805',
+  skyblue: '#3399CC',
+  black: '#000000',
+  white: '#fff',
+  greye: '#eee',
+  greyd: '#ddd',
+  greyc: '#ccc',
+  greyb: '#bbb',
+  greya: '#aaa',
+  grey90: '#999',
+  grey80: '#888',
+  grey70: '#777',
+  grey60: '#666',
+  grey50: '#555',
+  grey40: '#444',
+  grey30: '#333',
+  grey20: '#222',
+  grey10: '#111'
 };
 let colors = [];
 for (const [key, value] of Object.entries(color)) {
@@ -78,10 +93,10 @@ for (let i = 1; i <= 100; i++) {
   ];
   for (let p = 0; p < weight.length; p++) {
     typo[`h${i}-${p + 1}00`] = {
-      fontFamily: `Poppins-${weight[p]}`,
+      fontFamily: `NewAmsterdam-${weight[p]}`,
       fontSize: i,
     };
-    typo[`p${i}-${p + 1}00`] = {fontFamily: `Inter-${weight[p]}`, fontSize: i};
+    typo[`p${i}-${p + 1}00`] = {fontFamily: `Montserrat-${weight[p]}`, fontSize: i};
   }
 }
 let border = [];
