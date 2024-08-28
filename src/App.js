@@ -65,7 +65,6 @@ const App = ({}) => {
 
   return (
     <ThemeContext.Provider value={Style}>
-      <StatusBar barStyle={'dark-content'} />
         <AuthContext.Provider value={auth}>
           <NavigationContainer>
             <RootStack.Navigator

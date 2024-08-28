@@ -14,10 +14,15 @@ const img = {
   banner5: require('../assets/images/banner-5.jpg'),
   buildings: require('../assets/images/icon-buildings.png'),
   arrowDown: require('../assets/images/icon-arrow-down.png'),
+  arrowDownWhite: require('../assets/images/icon-arrow-downwhite.png'),
   yogaRed: require('../assets/images/icon-yoga-red.png'),
   yogaHot: require('../assets/images/icon-fire-melt.png'),
   ticket: require('../assets/images/icon-ticket.png'),
   teacher: require('../assets/images/teacher.jpg'),
   event: require('../assets/images/events.jpeg'),
+  mappoint: require('../assets/images/mappoint.png'),
+  calendar: require('../assets/images/icon-calendar.png'),
+  warning: require('../assets/images/icon-warning.png'),
+  fire: require('../assets/images/icon-fire.png'),
 }
 export default img

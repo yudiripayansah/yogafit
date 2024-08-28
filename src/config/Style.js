@@ -1,5 +1,7 @@
 import {StyleSheet} from 'react-native';
 let color = {
+  warning: '#FFDDAC',
+  danger: '#dd0000',
   orange: '#FE9805',
   skyblue: '#3399CC',
   black: '#000000',

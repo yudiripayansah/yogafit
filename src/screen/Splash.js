@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from 'react';
-import {Image, View} from 'react-native';
+import {Image, View, StatusBar} from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import analytics from '@react-native-firebase/analytics';
 const Splash = ({navigation}) => {
@@ -24,6 +24,8 @@ const Splash = ({navigation}) => {
         t.bgwhite,
         {flex: 1},
       ]}>
+
+      <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
       <Image
         style={[t.w135, t.h78, {objectFit: 'contain'}]}
         source={require('../assets/images/logo-full.png')}

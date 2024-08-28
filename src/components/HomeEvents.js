@@ -23,7 +23,6 @@ function HomeEvents({navigation, ...props}) {
         autoPlayInterval={3000}
         data={images}
         scrollAnimationDuration={1000}
-        onSnapToItem={index => console.log('current index:', index)}
         renderItem={({index}) => (
           <View
             style={[{

@@ -7,13 +7,13 @@ function HomeTeacher({navigation, ...props}) {
   const width = Dimensions.get('window').width;
   const {images} = props
   const baseOptions = ({
-      vertical: false,
-      width: width / 4,
-      height: width / 3.5,
-      style: {
-        width: width,
-      },
-    });
+                        vertical: false,
+                        width: width / 4,
+                        height: width / 3.5,
+                        style: {
+                          width: width,
+                        },
+                      });
   return (
     <View style={{flex: 1}}>
       <Carousel
@@ -23,7 +23,6 @@ function HomeTeacher({navigation, ...props}) {
         autoPlayInterval={3000}
         data={images}
         scrollAnimationDuration={1000}
-        onSnapToItem={index => console.log('current index:', index)}
         renderItem={({index}) => (
           <View
             style={[{

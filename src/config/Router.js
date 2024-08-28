@@ -20,7 +20,6 @@ export const RouteMain = ({navigation}) => {
   let [activeHeader, setActiveHeader] = useState('Home');
   return (
     <>
-      <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
       {/* <Header navigation={navigation} currentScreen={activeHeader} /> */}
       <MainStack.Navigator
         screenOptions={{

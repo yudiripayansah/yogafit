@@ -16,12 +16,10 @@ function HomeCarousel({navigation, ...props}) {
         autoPlayInterval={3000}
         data={images}
         scrollAnimationDuration={1000}
-        onSnapToItem={index => console.log('current index:', index)}
         renderItem={({index}) => (
           <View
             style={{
               flex: 1,
-              borderWidth: 1,
               justifyContent: 'center',
             }}>
               <Image source={images[index]} style={[{objectFit:'contain'},t.wp100]}/>
