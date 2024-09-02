@@ -8,6 +8,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 // assets
 import img from '../config/Image'
 // components
+import SubNavigation from '../components/SubNavigation';
 import LocationSelect from '../components/LocationSelect';
 import CalendarSelect from '../components/CalendarSelect';
 import ClassItem from '../components/ClassItem';
@@ -115,20 +116,7 @@ const Class = ({navigation}) => {
         <View style={[t.px20,t.bggreye,t.pt70]}>
           <LocationSelect/>
         </View>
-        <View style={[t.pt20,t.bggreye,t.pb20,,t.px20,t.fRow,t.faCenter,t.fjBetween]}>
-          <TouchableOpacity>
-            <Text style={[t.corange,t['p14-600']]}>Classes</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={[t.corange,t['p14-600']]}>Courses</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={[t.corange,t['p14-600']]}>Workshop</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={[t.corange,t['p14-600']]}>Retreat</Text>
-          </TouchableOpacity>
-        </View>
+        <SubNavigation/>
         <View style={[t.pt20,t.px20]}>
           <CalendarSelect/>
         </View>
