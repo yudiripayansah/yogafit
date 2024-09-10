@@ -1,38 +1,44 @@
 import React, {useEffect, useContext} from 'react';
 import {
-  View, TouchableOpacity, Image, Text
+  View, TouchableOpacity, Image, Text, ImageBackground
 } from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import img from '../config/Image'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 const Nav = ({navigation, ...props}) => {
   const {activeScreen} = props
   const t = useContext(ThemeContext);
   return (
-    <View style={[t.fRow,t.fjBetween,t.faCenter, t.bggreye, t.px20]}>
-      <View style={[t.fRow,t.fjStart,t.faCenter]}>
-        <TouchableOpacity style={[t.faCenter,t.fjCenter,t.px10, t.py10, t.me30]} onPress={() => {navigation.navigate('Home')}}>
+    <ImageBackground resizeMode="cover" source={img.navigation} style={[t.fRow,t.fjBetween,t.faCenter,t.absolute,t.bottom0,t.left0,t.wp100,t.right0, {backgroundPosition: 'center center', backgroundSize: '100% 50px'},]}>
+      <View style={[t.fRow,t.fjStart,t.faCenter,t.wp35,t.ps15]}>
+        <TouchableOpacity style={[t.faCenter,t.fjCenter,t.px10, t.py10, t.me15]} onPress={() => {navigation.navigate('Home')}}>
           <Image source={(activeScreen == 'Home') ? img.navHomeActive : img.navHomeInactive} style={[t.w30,t.h30]}/>
-          <Text style={[t['p12-400'],t.mt3,(activeScreen == 'Home') ? t.cblack : t.grey90]}>Home</Text>
+          <Text style={[t['p12-500'],t.mt3,(activeScreen == 'Home') ? t.cblack : t.cgrey10]}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[t.faCenter,t.fjCenter,t.px10, t.py10]} onPress={() => {navigation.navigate('Class')}}>
           <Image source={(activeScreen == 'Class') ? img.navClassActive : img.navClassInactive} style={[t.w30,t.h30]}/>
-          <Text style={[t['p12-400'],t.mt3,(activeScreen == 'Class') ? t.cblack : t.grey90]}>Class</Text>
+          <Text style={[t['p12-500'],t.mt3,(activeScreen == 'Class') ? t.cblack : t.cgrey10]}>Class</Text>
         </TouchableOpacity>
       </View>
-      <View>
-        
+      <View style={[t.faCenter,t.fjCenter,t.relative]}>
+        <TouchableOpacity style={[t.faCenter,t.fjCenter,t.absolute,{top:-65}]} activeOpacity={.9}>
+          <View style={[t.faCenter,t.fjCenter,t.w67,t.h67,t.br100,t.bgorange, t.bw3,t.bsolid,t.bgreye,{overflow:'hidden'}]}>
+            <Image source={img.logo} style={[t.w45,t.h45,{objectFit:'contain'}]}/>
+          </View>
+          <Text style={[t['p12-700'],t.mt12,t.cblack]}>Join Now</Text>
+        </TouchableOpacity>
       </View>
-      <View style={[t.fRow,t.fjEnd,t.faCenter]}>
-        <TouchableOpacity style={[t.faCenter,t.fjCenter,t.px10, t.py10, t.me30]} onPress={() => {navigation.navigate('Trainer')}}>
+      <View style={[t.fRow,t.fjEnd,t.faCenter,t.wp35,t.pe15]}>
+        <TouchableOpacity style={[t.faCenter,t.fjCenter,t.px10, t.py10, t.me15]} onPress={() => {navigation.navigate('Trainer')}}>
           <Image source={(activeScreen == 'Trainer') ? img.navTrainerActive : img.navTrainerInactive} style={[t.w30,t.h30]}/>
-          <Text style={[t['p12-400'],t.mt3,(activeScreen == 'Trainer') ? t.cblack : t.grey90]}>Trainer</Text>
+          <Text style={[t['p12-500'],t.mt3,(activeScreen == 'Trainer') ? t.cblack : t.cgrey10]}>Trainer</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[t.faCenter,t.fjCenter,t.px10, t.py10]} onPress={() => {navigation.navigate('Profile')}}>
           <Image source={(activeScreen == 'Profile') ? img.navProfileActive : img.navProfileInactive} style={[t.w30,t.h30]}/>
-          <Text style={[t['p12-400'],t.mt3,(activeScreen == 'Profile') ? t.cblack : t.grey90]}>Profile</Text>
+          <Text style={[t['p12-500'],t.mt3,(activeScreen == 'Profile') ? t.cblack : t.cgrey10]}>Profile</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

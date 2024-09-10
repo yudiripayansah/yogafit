@@ -145,6 +145,7 @@ const Class = ({navigation}) => {
             )
           })}
         </View>
+        <View style={[t.py50,t.wp100]}></View>
       </ScrollView>
     // </SafeAreaView>
   );

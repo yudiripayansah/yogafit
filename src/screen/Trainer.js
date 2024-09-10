@@ -102,6 +102,7 @@ const Trainer = ({navigation}) => {
         <View style={[t.mt30]}>
           <TeacherList teacher={teacher}/>
         </View>
+        <View style={[t.py50,t.wp100]}></View>
       </ScrollView>
     // </SafeAreaView>
   );

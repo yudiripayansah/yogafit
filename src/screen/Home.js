@@ -84,6 +84,7 @@ const Home = ({navigation}) => {
         </View>
         <HomeEvents images={events}/>
       </View>
+      <View style={[t.py50,t.wp100]}></View>
     </ScrollView>
   );
 };

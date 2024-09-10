@@ -24,5 +24,12 @@ const img = {
   calendar: require('../assets/images/icon-calendar.png'),
   warning: require('../assets/images/icon-warning.png'),
   fire: require('../assets/images/icon-fire.png'),
+  navigation: require('../assets/images/bg-nav.png'),
+  logo: require('../assets/images/logo-1.png'),
+  profile: require('../assets/images/icon-profile-black.png'),
+  share: require('../assets/images/icon-share.png'),
+  ticketOrange: require('../assets/images/icon-ticket-orange.png'),
+  contact: require('../assets/images/icon-contact.png'),
+  arrowRightOrange: require('../assets/images/icon-arrow-right-orange.png'),
 }
 export default img

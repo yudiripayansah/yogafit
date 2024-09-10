@@ -3,6 +3,7 @@ let color = {
   warning: '#FFDDAC',
   danger: '#dd0000',
   orange: '#FE9805',
+  darkorange: '#ef8d00',
   skyblue: '#3399CC',
   black: '#000000',
   white: '#fff',
