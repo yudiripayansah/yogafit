@@ -31,5 +31,13 @@ const img = {
   ticketOrange: require('../assets/images/icon-ticket-orange.png'),
   contact: require('../assets/images/icon-contact.png'),
   arrowRightOrange: require('../assets/images/icon-arrow-right-orange.png'),
+  yogafitLocation: require('../assets/images/yogafit-location.jpeg'),
+  star: require('../assets/images/star.png'),
+  signal: require('../assets/images/icon-signal.png'),
+  time: require('../assets/images/icon-clock.png'),
+  whatsapp: require('../assets/images/icon-whatsapp.png'),
+  edit: require('../assets/images/icon-edit.png'),
+  close: require('../assets/images/icon-close-orange.png'),
+  google: require('../assets/images/google.png'),
 }
 export default img

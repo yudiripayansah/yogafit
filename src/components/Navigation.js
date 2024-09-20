@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useContext, useRef} from 'react';
 import {
   View, TouchableOpacity, Image, Text, ImageBackground
 } from 'react-native';
@@ -6,7 +6,7 @@ import {ThemeContext} from '../context/ThemeContext';
 import img from '../config/Image'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 const Nav = ({navigation, ...props}) => {
-  const {activeScreen} = props
+  const {activeScreen, onPressMainBtn} = props
   const t = useContext(ThemeContext);
   return (
     <ImageBackground resizeMode="cover" source={img.navigation} style={[t.fRow,t.fjBetween,t.faCenter,t.absolute,t.bottom0,t.left0,t.wp100,t.right0, {backgroundPosition: 'center center', backgroundSize: '100% 50px'},]}>
@@ -21,7 +21,7 @@ const Nav = ({navigation, ...props}) => {
         </TouchableOpacity>
       </View>
       <View style={[t.faCenter,t.fjCenter,t.relative]}>
-        <TouchableOpacity style={[t.faCenter,t.fjCenter,t.absolute,{top:-65}]} activeOpacity={.9}>
+        <TouchableOpacity style={[t.faCenter,t.fjCenter,t.absolute,{top:-65}]} activeOpacity={.9} onPress={()=>{onPressMainBtn()}}>
           <View style={[t.faCenter,t.fjCenter,t.w67,t.h67,t.br100,t.bgorange, t.bw3,t.bsolid,t.bgreye,{overflow:'hidden'}]}>
             <Image source={img.logo} style={[t.w45,t.h45,{objectFit:'contain'}]}/>
           </View>

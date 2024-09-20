@@ -93,9 +93,9 @@ const Trainer = ({navigation}) => {
       <ScrollView style={[t.bgwhite]}>
         <StatusBar translucent barStyle="dark-content" />
         <View style={[t.px20,t.bggreye,t.pt70]}>
-          <LocationSelect/>
+          <LocationSelect navigation={navigation}/>
         </View>
-        <SubNavigation/>
+        <SubNavigation navigation={navigation}/>
         <View style={[t.px20,t.mt20]}>
           <TeacherCategory cat={cat}/>
         </View>

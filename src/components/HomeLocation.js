@@ -2,10 +2,11 @@ import React, {useEffect, useContext} from 'react';
 import {Dimensions, Text, View, Image} from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import img from '../config/Image'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 function HomeCarousel({navigation, ...props}) {
   const t = useContext(ThemeContext);
   return (
-    <View style={[t.wp100,t.bgwhite,t.fRow,t.fjBetween,t.faCenter,t.bgwhite,t.bw1,t.bsolid,t.bgreyd,t.br10,t.p10]}>
+    <TouchableOpacity style={[t.wp100,t.bgwhite,t.fRow,t.fjBetween,t.faCenter,t.bgwhite,t.bw1,t.bsolid,t.bgreyd,t.br10,t.p10]} onPress={()=>{navigation.navigate('Location')}}>
       <View style={[t.fRow,t.faCenter]}>
         <Image source={img.buildings} style={[t.w50,t.h50]}/>
         <View style={[t.ms10]}>
@@ -15,7 +16,7 @@ function HomeCarousel({navigation, ...props}) {
         </View>
       </View>
       <Image source={img.arrowDown} style={[t.w30,t.h30]}/>
-    </View>
+    </TouchableOpacity>
   );
 }
 

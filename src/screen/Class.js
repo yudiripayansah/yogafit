@@ -3,7 +3,6 @@ import {
   View, StatusBar, ScrollView, Text, Image
 } from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 // assets
 import img from '../config/Image'
@@ -110,44 +109,42 @@ const Class = ({navigation}) => {
 
   }, []);
   return (
-    // <SafeAreaView>
-      <ScrollView style={[t.bgwhite]}>
-        <StatusBar translucent barStyle="dark-content" />
-        <View style={[t.px20,t.bggreye,t.pt70]}>
-          <LocationSelect/>
+    <ScrollView style={[t.bgwhite]}>
+      <StatusBar translucent barStyle="dark-content" />
+      <View style={[t.px20,t.bggreye,t.pt70]}>
+        <LocationSelect navigation={navigation}/>
+      </View>
+      <SubNavigation navigation={navigation}/>
+      <View style={[t.pt20,t.px20]}>
+        <CalendarSelect/>
+      </View>
+      <View style={[t.mt10,t.px20,t.fRow,t.faCenter,t.fjCenter]}>
+        <View style={[t.bgorange,t.br100,t.mx10,t.wp35,t.faCenter]}>
+          <TouchableOpacity style={[t.py5,t.wp100]}>
+            <Text style={[t['p14-500'],t.cwhite]}>Normal Studio</Text>
+          </TouchableOpacity>
         </View>
-        <SubNavigation/>
-        <View style={[t.pt20,t.px20]}>
-          <CalendarSelect/>
+        <View style={[t.bgorange,t.br100,t.mx10,t.wp35,t.faCenter]}>
+          <TouchableOpacity style={[t.py5,t.wp100]}>
+            <Text style={[t['p14-500'],t.cwhite]}>Hot Studio</Text>
+          </TouchableOpacity>
         </View>
-        <View style={[t.mt10,t.px20,t.fRow,t.faCenter,t.fjCenter]}>
-          <View style={[t.bgorange,t.br100,t.mx10,t.wp35,t.faCenter]}>
-            <TouchableOpacity style={[t.py5,t.wp100]}>
-              <Text style={[t['p14-500'],t.cwhite]}>Normal Studio</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={[t.bgorange,t.br100,t.mx10,t.wp35,t.faCenter]}>
-            <TouchableOpacity style={[t.py5,t.wp100]}>
-              <Text style={[t['p14-500'],t.cwhite]}>Hot Studio</Text>
-            </TouchableOpacity>
-          </View>
+      </View>
+      <View style={[t.pt20,t.px20]}>
+        <View style={[t.bgwarning,t.fRow,t.faCenter,t.p10,t.br10]}>
+          <Image source={img.warning} style={[t.w20,t.h20,t.me5]}/>
+          <Text style={[t['p10-500'],t.cblack,t.wp95]}>Booking are mandatory in advance. Please book your class at least 1 day before to make sure your space are secured.</Text>
         </View>
-        <View style={[t.pt20,t.px20]}>
-          <View style={[t.bgwarning,t.fRow,t.faCenter,t.p10,t.br10]}>
-            <Image source={img.warning} style={[t.w20,t.h20,t.me5]}/>
-            <Text style={[t['p10-500'],t.cblack,t.wp95]}>Booking are mandatory in advance. Please book your class at least 1 day before to make sure your space are secured.</Text>
-          </View>
-        </View>
-        <View style={[t.mt20, t.px20]}>
-          {classList.map((item,index) => {
-            return (
-              <ClassItem data={item} key={index} boxStyle={[t.mt10]}/>
-            )
-          })}
-        </View>
-        <View style={[t.py50,t.wp100]}></View>
-      </ScrollView>
-    // </SafeAreaView>
+      </View>
+      <View style={[t.mt20, t.px20]}>
+        {classList.map((item,index) => {
+          return (
+            <ClassItem data={item} key={index} boxStyle={[t.mt10]}/>
+          )
+        })}
+      </View>
+      <View style={[t.py50,t.wp100]}></View>
+    </ScrollView>
   );
 };
 

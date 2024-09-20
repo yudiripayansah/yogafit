@@ -7,17 +7,17 @@ const SubNavigation = ({navigation, ...props}) => {
   const t = useContext(ThemeContext);
   return (
     <View style={[t.pt20,t.bggreye,t.pb20,,t.px20,t.fRow,t.faCenter,t.fjBetween]}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>{navigation.navigate('Class')}}>
         <Text style={[t.corange,t['p14-600']]}>Classes</Text>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>{navigation.navigate('Courses')}}>
         <Text style={[t.corange,t['p14-600']]}>Courses</Text>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>{navigation.navigate('Workshop')}}>
         <Text style={[t.corange,t['p14-600']]}>Workshop</Text>
       </TouchableOpacity>
-      <TouchableOpacity>
-        <Text style={[t.corange,t['p14-600']]}>Retreat</Text>
+      <TouchableOpacity onPress={()=>{navigation.navigate('Events')}}>
+        <Text style={[t.corange,t['p14-600']]}>Events</Text>
       </TouchableOpacity>
     </View>
   );

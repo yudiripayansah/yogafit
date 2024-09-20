@@ -39,7 +39,7 @@ const Home = ({navigation}) => {
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
       <HomeCarousel images={images}/>
       <View style={[t.mmt30,t.px20]}>
-        <HomeLocation/>
+        <HomeLocation navigation={navigation}/>
       </View>
       <View style={[t.mt20,t.px20]}>
         <HomeClass/>

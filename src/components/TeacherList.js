@@ -29,7 +29,7 @@ const TeacherList = ({navigation, ...props}) => {
           <TouchableOpacity>
             <View style={[t.mx10,t.bw1,t.bgreyd,t.bsolid,t.br10,t.bgwhite]}>
               <Image source={teacher[index].image} style={[t.wp100,t.hp76,{objectFit: 'contain'}]}/>
-              <View style={[t.px10]}>
+              <View style={[t.px10,t.mt5]}>
                 <Text style={[t.black,t['p14-600'],t.cblack]}>{teacher[index].name}</Text>
                 <Text style={[t.black,t['p10-500'],t.cblack]}>{teacher[index].cat}</Text>
               </View>
