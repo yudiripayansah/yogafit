@@ -5,11 +5,11 @@ const defAxios = axios.create({
 const Api = {
   slider(payload) {
     let url = '/auth/slider';
-    return defAxios.post(url, payload);
+    return defAxios.get(url, payload);
   },
   studio(payload) {
     let url = '/auth/get_studio';
-    return defAxios.post(url, payload);
+    return defAxios.get(url, payload);
   },
   myBooking(payload, token) {
     let url = '/member/my_booking';

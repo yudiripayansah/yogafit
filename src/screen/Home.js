@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import {
   ScrollView,View, StatusBar, Text, Image
 } from 'react-native';
@@ -14,10 +14,13 @@ import HomeEvents from '../components/HomeEvents';
 import HomeLocation from '../components/HomeLocation';
 import HomeClass from '../components/HomeClass';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+// API
+import Api from '../config/Api'
 const Home = ({navigation}) => {
   const t = useContext(ThemeContext);
   const user = useContext(UserContext);
   const {removeUser} = useContext(AuthContext);
+  const [slider,setSlider] = useState([])
   const images = [
     img.banner1,img.banner2,img.banner3,img.banner4,img.banner5
   ]
@@ -31,8 +34,25 @@ const Home = ({navigation}) => {
     img.event,img.event,img.event,img.event,img.event,
     img.event,img.event,img.event,img.event,img.event,
   ]
+  const getSlider = async () => {
+    try {
+      let req = await Api.slider()
+      if(req.status === 200){
+        let {data} = req.data
+        let slide = []
+        data.forEach((item) => {
+          slide.push({uri: item.url})
+        })
+        setSlider(slide)
+      } else {
+        console.error("Error get slider")
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
   useEffect(() => {
-
+    getSlider()
   }, []);
   return (
     <ScrollView style={[t.bgwhite]}>

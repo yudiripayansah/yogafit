@@ -11,9 +11,12 @@ import img from '../config/Image'
 import SubNavigation from '../components/SubNavigation';
 import LocationSelect from '../components/LocationSelect';
 import LocationItem from '../components/LocationItem';
+// API
+import Api from '../config/Api'
 const Location = ({navigation}) => {
   const t = useContext(ThemeContext);
   const [city, setCity] = useState('Pilih Kota');
+  const [studio, setStudio] = useState([]);
   const locationList = [
     {
       name: "Gandaria",
@@ -66,8 +69,28 @@ const Location = ({navigation}) => {
       time: "07:00 - 21:00",
     },
   ]
+  const getStudio = async () => {
+    try {
+      let req = await Api.studio()
+      if(req.status === 200 || req.status === 201){
+        let {data} = req.data
+        data.map((item) => {
+          item.distance = "2 Km"
+          item.image = img.yogafitLocation
+          item.freq = "Sedang"
+          item.rating= "4.8"
+          item.ratingCount= 200
+        })
+        setStudio(data)
+      } else {
+        console.error("Error get studio")
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
   useEffect(() => {
-
+    getStudio()
   }, []);
   return (
     <ScrollView style={[t.bgwhite]}>
@@ -110,7 +133,7 @@ const Location = ({navigation}) => {
           </View>
         </View>
         <Text style={[t['p14-500'],t.cblack,t.mt10]}>10 Yoga Fit Studio tersedia di Indonesia</Text>
-        {locationList.map((item,index) => {
+        {studio.map((item,index) => {
           return (
             <LocationItem data={item} key={index} boxStyle={[t.mt10]}/>
           )
