@@ -7,7 +7,7 @@ const SubNavigation = ({navigation, ...props}) => {
   const t = useContext(ThemeContext);
   return (
     <View style={[t.pt20,t.bggreye,t.pb20,,t.px20,t.fRow,t.faCenter,t.fjBetween]}>
-      <TouchableOpacity onPress={()=>{navigation.navigate('Class')}}>
+      <TouchableOpacity onPress={()=>{navigation.navigate('Classes')}}>
         <Text style={[t.corange,t['p14-600']]}>Classes</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={()=>{navigation.navigate('Courses')}}>

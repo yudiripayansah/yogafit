@@ -11,6 +11,10 @@ const Api = {
     let url = '/auth/get_studio';
     return defAxios.get(url, payload);
   },
+  login(payload) {
+    let url = '/auth/login';
+    return defAxios.post(url, payload);
+  },
   myBooking(payload, token) {
     let url = '/member/my_booking';
     let config = {
@@ -46,10 +50,6 @@ const Api = {
       },
     };
     return defAxios.post(url, payload, config);
-  },
-  login(payload) {
-    let url = '/auth/login';
-    return defAxios.post(url, payload);
   },
 };
 export default Api;

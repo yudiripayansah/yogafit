@@ -3,7 +3,10 @@ import {
   StatusBar 
 } from 'react-native';
 import {useState,useRef} from 'react';
+import BookingHistory from '../screen/BookingHistory';
+import BookingUpcoming from '../screen/BookingUpcoming';
 import Class from '../screen/Class';
+import Classes from '../screen/Classes';
 import Courses from '../screen/Courses';
 import Events from '../screen/Events';
 import Home from '../screen/Home';
@@ -23,30 +26,6 @@ const options = {
   ...TransitionPresets.SlideFromRightIOS,
 };
 export const RouteMain = ({navigation}) => {
-  let [activeHeader, setActiveHeader] = useState('Home');
-  return (
-    <>
-      {/* <Header navigation={navigation} currentScreen={activeHeader} /> */}
-      <MainStack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-        screenListeners={({navigation}) => ({
-          state: e => {
-            let index = e.data.state.index;
-            let routes = e.data.state.routes;
-            let routeName = routes[index].name;
-            setActiveHeader(routeName);
-          },
-        })}
-        initialRouteName={'Home'}>
-        <MainStack.Screen name={'Home'} component={Home} options={options} />
-      </MainStack.Navigator>
-      <Nav navigation={navigation} currentScreen={activeHeader} />
-    </>
-  );
-};
-export const RouteAuth = ({navigation}) => {
   let [activeScreen, setActiveScreen] = useState('Home');
   const loginRef = useRef(null);
 
@@ -77,7 +56,10 @@ export const RouteAuth = ({navigation}) => {
           },
         })}>
         <AuthStack.Screen name={'Home'} component={Home} options={options} />
+        <AuthStack.Screen name={'BookingHistory'} component={BookingHistory} options={options} />
+        <AuthStack.Screen name={'BookingUpcoming'} component={BookingUpcoming} options={options} />
         <AuthStack.Screen name={'Class'} component={Class} options={options} />
+        <AuthStack.Screen name={'Classes'} component={Classes} options={options} />
         <AuthStack.Screen name={'Trainer'} component={Trainer} options={options} />
         <AuthStack.Screen name={'Profile'} component={Profile} options={options} />
         <AuthStack.Screen name={'Intro'} component={Intro} options={options} />

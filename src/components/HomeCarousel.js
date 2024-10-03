@@ -22,7 +22,7 @@ function HomeCarousel({navigation, ...props}) {
               flex: 1,
               justifyContent: 'center',
             }}>
-              <Image source={images[index]} style={[{objectFit:'contain'},t.wp100]}/>
+              <Image source={images[index]} style={[{objectFit:'cover'},t.wp100,t.h250]}/>
               <View style={[t.absolute,t.wp100,t.hp100,t.bgblack,{opacity:.2}]}></View>
             </View>
         )}

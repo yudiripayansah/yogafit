@@ -39,5 +39,8 @@ const img = {
   edit: require('../assets/images/icon-edit.png'),
   close: require('../assets/images/icon-close-orange.png'),
   google: require('../assets/images/google.png'),
+  classes1: require('../assets/images/classes1.jpg'),
+  classes2: require('../assets/images/classes2.jpg'),
+  classes3: require('../assets/images/classes3.jpg'),
 }
 export default img

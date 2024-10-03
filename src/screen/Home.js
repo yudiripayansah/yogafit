@@ -41,7 +41,7 @@ const Home = ({navigation}) => {
         let {data} = req.data
         let slide = []
         data.forEach((item) => {
-          slide.push({uri: item.url})
+          slide.push({uri: item.file})
         })
         setSlider(slide)
       } else {
@@ -57,7 +57,7 @@ const Home = ({navigation}) => {
   return (
     <ScrollView style={[t.bgwhite]}>
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
-      <HomeCarousel images={images}/>
+      <HomeCarousel images={slider}/>
       <View style={[t.mmt30,t.px20]}>
         <HomeLocation navigation={navigation}/>
       </View>

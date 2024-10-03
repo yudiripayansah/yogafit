@@ -13,21 +13,21 @@ const Profile = ({navigation}) => {
   const user = useContext(UserContext);
   const {removeUser} = useContext(AuthContext);
   useEffect(() => {
-
+    console.log(user)
   }, []);
   return (
     <ScrollView style={[t.bgwhite]}>
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
       <View style={[t.pt70,t.px20,t.faCenter,t.fjCenter]}>
         <Image source={img.profile} style={[t.w50,t.h50,{objectFit:'contain'}]}/>
-        <Text style={[t['p18-700'],t.corange,t.mt10]}>John Doe</Text>
-        <Text style={[t['p18-600'],t.cblack,t.mt5]}>johndoe@email.com</Text>
+        <Text style={[t['p18-700'],t.corange,t.mt10]}>{user.name}</Text>
+        <Text style={[t['p18-600'],t.cblack,t.mt5]}>{user.email}</Text>
       </View>
       <View style={[t.px20,t.mt20]}>
         <TouchableOpacity style={[t.fRow,t.faCenter,t.fjBetween,t.br10,t.bw1,t.bsolid,t.bblack,t.p10]}>
           <View>
             <Text style={[t['h16-400'],t.corange]}>Refer your friends</Text>
-            <Text style={[t['p16-700'],t.cblack]}>JohnDoe888</Text>
+            <Text style={[t['p16-700'],t.cblack]}>{user.referal_code}</Text>
           </View>
           <Image source={img.share} style={[t.w30,t.h30,{objectFit:'contain'}]}/>
         </TouchableOpacity>
@@ -39,14 +39,14 @@ const Profile = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={[t.mt20,t.px20]}>
-        <View>
+        <TouchableOpacity onPress={() => {navigation.navigate('BookingHistory')}}>
           <Text style={[t.bgorange,t['h30-400'],t.cwhite,t.py15,t.tCenter]}>Booking History</Text>
           <View style={[t.fRow,t.faCenter,t.p10,t.fjCenter,t.bgwarning]}>
             <Image source={img.navClassActive} style={[t.w30,t.h30,{objectFit:'contain'}]}/>
             <Text style={[t['h30-400'],t.corange,t.ms10]}>30</Text>
             <Text style={[t['p16-500'],t.cblack,t.ms10]}>Class Attended</Text>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
       <View style={[t.mt20,t.px20]}>
         <View style={[t.fRow,t.faCenter,t.br10,t.bw1,t.bsolid,t.bblack,t.p10]}>

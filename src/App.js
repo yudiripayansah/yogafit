@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {StatusBar, AppState} from 'react-native';
+import {AppState} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {RouteAuth, RouteMain} from './config/Router';
+import {RouteMain} from './config/Router';
 import {ThemeContext} from './context/ThemeContext';
 import {UserContext} from './context/UserContext';
 import {AuthContext} from './context/AuthContext';
@@ -20,19 +20,15 @@ const App = ({}) => {
     if (loading) {
       return <RootStack.Screen name={'SplashScreen'} component={Splash} />;
     } else {
-      if (!state.user) {
-        return <RootStack.Screen name={'RouteAuth'} component={RouteAuth} />;
-      } else {
-        return (
-          <RootStack.Screen name={'RouteMain'}>
-            {({navigation}) => (
-              <UserContext.Provider value={state.user}>
-                <RouteMain navigation={navigation} />
-              </UserContext.Provider>
-            )}
-          </RootStack.Screen>
-        );
-      }
+      return (
+        <RootStack.Screen name={'RouteMain'}>
+          {({navigation}) => (
+            <UserContext.Provider value={state.user}>
+              <RouteMain navigation={navigation} />
+            </UserContext.Provider>
+          )}
+        </RootStack.Screen>
+      );
     }
   };
   const handleAppStateChange = nextAppState => {
