@@ -31,9 +31,14 @@ function Login({navigation, ...props}) {
         let req = await Api.login(payload)
         console.log(req.status)
         if(req.status === 200){
-          let {users} = req.data
+          let {users,token} = req.data
           if(users) {
+            users.token = token
             setUser(users)
+            setLogin({
+              status: true,
+              msg: 'Login successful. welcome back '+users.name
+            })
             setTimeout(() => {
               loginRef.current?.hide()
             },2000)
@@ -60,8 +65,19 @@ function Login({navigation, ...props}) {
       setLoading(false)
     } catch (error) {
       console.error(error)
+      setLogin({
+        status: false,
+        msg: 'Login failed! mobile number or password is wrong.'
+      })
       setLoading(false)
     }
+    setTimeout(()=>{
+      setLogin({
+        status: true,
+        msg: null,
+        data: null
+      })
+    },3000)
   }
   return (
     <ActionSheet ref={loginRef}>
@@ -78,24 +94,17 @@ function Login({navigation, ...props}) {
           <Text style={[t['p16-500'],t.cblack]}>Password</Text>
           <TextInput onChangeText={setpassword} value={password} placeholderTextColor='#ccc' placeholder='Enter your password' style={[t.bggrey90,t.p10,t['p14-500'],t.br5,t.cwhite,t.mt10]} secureTextEntry/>
         </View>
-        <View style={[t.mt10,t.fRow]}>
+        <View style={[t.mt10,t.fRow,t.mb20]}>
           <Text style={[t['p12-600'],t.cblack]}>Forgot your password?</Text>
           <TouchableOpacity>
             <Text style={[t['p12-600'],t.corange,t.tItalic,t.ms5]}>Click Here</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={[t.mxAuto,t.bgorange,t.mt20,t.faCenter,t.fjCenter,t.px50,t.py10,t.br5]} onPress={() => {doLogin()}}>
-          <Text style={[t['p14-700'],t.cblack]}>Login</Text>
+        <TouchableOpacity style={[t.mxAuto,t.bgorange,t.faCenter,t.fjCenter,t.px50,t.py10,t.br5]} onPress={() => {doLogin()}}>
+          <Text style={[t['p14-700'],t.cblack]}>{loading ? 'Processing...' : 'Login'}</Text>
         </TouchableOpacity>
-        <View style={[t.relative,t.faCenter,t.fjCenter,t.my10]}>
-          <View style={[t.absolute,t.wp100,t.bbw2,t.bblack,t.bsolid]}></View>
-          <Text style={[t.bgwhite,t['p14-600'],t.cblack,t.px10,t.py10]}>OR</Text>
-        </View>
-        <View>
-          <TouchableOpacity style={[t.fRow,t.bgwhite,t.fjCenter]}>
-            <Image source={img.google} style={[t.w20,t.h20]}/>
-            <Text style={[t['p14-700'],t.cblack,t.ms10]}>Login with Google</Text>
-          </TouchableOpacity>
+        <View style={[t.faCenter,t.fjCenter,t.mt5]}>
+          <Text style={[t['p12-500'],login.status ? t.cblack : t.cdanger]}>{login.msg}</Text>
         </View>
         <View style={[t.my40,t.fRow,t.fjCenter]}>
           <Text style={[t['p16-600'],t.cblack]}>Not a Member?</Text>

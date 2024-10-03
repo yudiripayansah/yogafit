@@ -17,58 +17,6 @@ const Location = ({navigation}) => {
   const t = useContext(ThemeContext);
   const [city, setCity] = useState('Pilih Kota');
   const [studio, setStudio] = useState([]);
-  const locationList = [
-    {
-      name: "Gandaria",
-      location: "Jakarta",
-      distance: "2Km",
-      rating: "4.8",
-      ratingCount: 200,
-      image: img.yogafitLocation,
-      freq: "Sedang",
-      time: "07:00 - 21:00",
-    },
-    {
-      name: "Kelapa Gading",
-      location: "Jakarta",
-      distance: "2Km",
-      rating: "4.8",
-      ratingCount: 200,
-      image: img.yogafitLocation,
-      freq: "Sedang",
-      time: "07:00 - 21:00",
-    },
-    {
-      name: "Pluit",
-      location: "Jakarta",
-      distance: "2Km",
-      rating: "4.8",
-      ratingCount: 200,
-      image: img.yogafitLocation,
-      freq: "Sedang",
-      time: "07:00 - 21:00",
-    },
-    {
-      name: "Gandaria",
-      location: "Jakarta",
-      distance: "2Km",
-      rating: "4.8",
-      ratingCount: 200,
-      image: img.yogafitLocation,
-      freq: "Sedang",
-      time: "07:00 - 21:00",
-    },
-    {
-      name: "Kelapa Gading",
-      location: "Jakarta",
-      distance: "2Km",
-      rating: "4.8",
-      ratingCount: 200,
-      image: img.yogafitLocation,
-      freq: "Sedang",
-      time: "07:00 - 21:00",
-    },
-  ]
   const getStudio = async () => {
     try {
       let req = await Api.studio()

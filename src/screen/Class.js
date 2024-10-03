@@ -1,8 +1,9 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import {
   View, StatusBar, ScrollView, Text, Image
 } from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
+import {UserContext} from '../context/UserContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 // assets
 import img from '../config/Image'
@@ -11,8 +12,16 @@ import SubNavigation from '../components/SubNavigation';
 import LocationSelect from '../components/LocationSelect';
 import CalendarSelect from '../components/CalendarSelect';
 import ClassItem from '../components/ClassItem';
+// api
+import Api from  '../config/Api';
 const Class = ({navigation}) => {
   const t = useContext(ThemeContext);
+  const user = useContext(UserContext);
+  const [id,setid] = useState()
+  const [studio,setstudio] = useState(103)
+  const [level,setlevel] = useState('')
+  const [classkat,setclasskat] = useState('')
+  const [classlist, setclasslist] = useState([])
   const classList = [
     {
       time: '07:00 AM',
@@ -105,8 +114,49 @@ const Class = ({navigation}) => {
       spot_left: 'Full Booked'
     },
   ]
+  const getSchedule = async () => {
+    try {
+      let param = `id=${id}&studio=${studio}&level=${level}&classkat=${classkat}`
+      console.log(param)
+      let req = await Api.mySchedule(param)
+      if(req.status === 200 || req.status === 201) {
+        let {data} = req.data
+        console.log(data[0])
+        setclasslist(data)
+      }
+    } catch (error) {
+      
+    }
+  }
+  const doBookNow = async (data) => {
+    try {
+      // let param = new FormData()
+      // param.append('id',Number(data.id_class))
+      let param = {
+        id: Number(data.id_class)
+      }
+      console.log(param)
+      let req = await Api.bookingClass(param,user.token)
+      if(req.status === 200 || req.status === 201) {
+        // let {data} = req.data
+        console.log(req.data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const getToday = () => {
+    const today = new Date();
+    const formattedDate = today.getFullYear() + '-' + 
+        String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+        String(today.getDate()).padStart(2, '0');
+    return formattedDate
+  }
   useEffect(() => {
-
+    getSchedule()
+  }, [id, studio, level, classkat]);
+  useEffect(() => {
+    setid(getToday())
   }, []);
   return (
     <ScrollView style={[t.bgwhite]}>
@@ -116,16 +166,16 @@ const Class = ({navigation}) => {
       </View>
       <SubNavigation navigation={navigation}/>
       <View style={[t.pt20,t.px20]}>
-        <CalendarSelect/>
+        <CalendarSelect onDateSelected={(date) => {setid(date)}}/>
       </View>
       <View style={[t.mt10,t.px20,t.fRow,t.faCenter,t.fjCenter]}>
         <View style={[t.bgorange,t.br100,t.mx10,t.wp35,t.faCenter]}>
-          <TouchableOpacity style={[t.py5,t.wp100]}>
+          <TouchableOpacity style={[t.py5,t.wp100]} onPress={()=>{setclasskat('normal')}}>
             <Text style={[t['p14-500'],t.cwhite]}>Normal Studio</Text>
           </TouchableOpacity>
         </View>
         <View style={[t.bgorange,t.br100,t.mx10,t.wp35,t.faCenter]}>
-          <TouchableOpacity style={[t.py5,t.wp100]}>
+          <TouchableOpacity style={[t.py5,t.wp100]} onPress={()=>{setclasskat('hot')}}>
             <Text style={[t['p14-500'],t.cwhite]}>Hot Studio</Text>
           </TouchableOpacity>
         </View>
@@ -137,9 +187,9 @@ const Class = ({navigation}) => {
         </View>
       </View>
       <View style={[t.mt20, t.px20]}>
-        {classList.map((item,index) => {
+        {classlist.map((item,index) => {
           return (
-            <ClassItem data={item} key={index} boxStyle={[t.mt10]}/>
+            <ClassItem data={item} key={index} boxStyle={[t.mt10]} onBookPress={(data)=>{doBookNow(data)}}/>
           )
         })}
       </View>

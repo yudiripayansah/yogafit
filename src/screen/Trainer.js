@@ -89,7 +89,6 @@ const Trainer = ({navigation}) => {
 
   }, []);
   return (
-    // <SafeAreaView>
       <ScrollView style={[t.bgwhite]}>
         <StatusBar translucent barStyle="dark-content" />
         <View style={[t.px20,t.bggreye,t.pt70]}>
@@ -104,7 +103,6 @@ const Trainer = ({navigation}) => {
         </View>
         <View style={[t.py50,t.wp100]}></View>
       </ScrollView>
-    // </SafeAreaView>
   );
 };
 

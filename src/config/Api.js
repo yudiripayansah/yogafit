@@ -25,7 +25,7 @@ const Api = {
     return defAxios.post(url, payload, config);
   },
   mySchedule(payload, token) {
-    let url = '/auth/get_users_schedule'+payload;
+    let url = '/auth/get_users_schedule?'+payload;
     let config = {
       headers: {
         Authorization: 'Bearer ' + token,

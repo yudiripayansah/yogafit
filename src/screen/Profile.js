@@ -12,22 +12,26 @@ const Profile = ({navigation}) => {
   const t = useContext(ThemeContext);
   const user = useContext(UserContext);
   const {removeUser} = useContext(AuthContext);
+  const doLogout = () => {
+    removeUser()
+    navigation.navigate('Home')
+  }
   useEffect(() => {
-    console.log(user)
+    
   }, []);
   return (
     <ScrollView style={[t.bgwhite]}>
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
       <View style={[t.pt70,t.px20,t.faCenter,t.fjCenter]}>
         <Image source={img.profile} style={[t.w50,t.h50,{objectFit:'contain'}]}/>
-        <Text style={[t['p18-700'],t.corange,t.mt10]}>{user.name}</Text>
-        <Text style={[t['p18-600'],t.cblack,t.mt5]}>{user.email}</Text>
+        <Text style={[t['p18-700'],t.corange,t.mt10]}>{user && user.name}</Text>
+        <Text style={[t['p18-600'],t.cblack,t.mt5]}>{user && user.email}</Text>
       </View>
       <View style={[t.px20,t.mt20]}>
         <TouchableOpacity style={[t.fRow,t.faCenter,t.fjBetween,t.br10,t.bw1,t.bsolid,t.bblack,t.p10]}>
           <View>
             <Text style={[t['h16-400'],t.corange]}>Refer your friends</Text>
-            <Text style={[t['p16-700'],t.cblack]}>{user.referal_code}</Text>
+            <Text style={[t['p16-700'],t.cblack]}>{user && user.referal_code}</Text>
           </View>
           <Image source={img.share} style={[t.w30,t.h30,{objectFit:'contain'}]}/>
         </TouchableOpacity>
@@ -92,7 +96,7 @@ const Profile = ({navigation}) => {
           <Text style={[t['p14-600'],t.corange]}>Delete Account</Text>
           <Image source={img.arrowRightOrange} style={[t.w30,t.h30,{objectFit:'contain'}]}/>
         </TouchableOpacity>
-        <TouchableOpacity style={[t.fRow,t.faCenter,t.fjBetween,t.px20,t.py10,t.bbw1,t.bgreyd,t.bsolid]}>
+        <TouchableOpacity style={[t.fRow,t.faCenter,t.fjBetween,t.px20,t.py10,t.bbw1,t.bgreyd,t.bsolid]} onPress={()=>{doLogout()}}>
           <Text style={[t['p14-600'],t.corange]}>Logout</Text>
           <Image source={img.arrowRightOrange} style={[t.w30,t.h30,{objectFit:'contain'}]}/>
         </TouchableOpacity>

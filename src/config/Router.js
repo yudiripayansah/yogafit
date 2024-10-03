@@ -13,6 +13,7 @@ import Home from '../screen/Home';
 import Intro from '../screen/Intro';
 import Login from '../screen/Login';
 import Location from '../screen/Location';
+import MyContract from '../screen/MyContract';
 import Profile from '../screen/Profile';
 import Trainer from '../screen/Trainer';
 import Workshop from '../screen/Workshop';
@@ -65,6 +66,7 @@ export const RouteMain = ({navigation}) => {
         <AuthStack.Screen name={'Intro'} component={Intro} options={options} />
         <AuthStack.Screen name={'Login'} component={Login} options={options} />
         <AuthStack.Screen name={'Location'} component={Location} options={options} />
+        <AuthStack.Screen name={'MyContract'} component={MyContract} options={options} />
         <AuthStack.Screen name={'Courses'} component={Courses} options={options} />
         <AuthStack.Screen name={'Events'} component={Events} options={options} />
         <AuthStack.Screen name={'Workshop'} component={Workshop} options={options} />
