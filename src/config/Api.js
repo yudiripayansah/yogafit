@@ -15,6 +15,10 @@ const Api = {
     let url = '/auth/login';
     return defAxios.post(url, payload);
   },
+  forgot(payload) {
+    let url = '/auth/forgot';
+    return defAxios.post(url, payload);
+  },
   myBooking(payload, token) {
     let url = '/member/my_booking';
     let config = {
@@ -51,5 +55,34 @@ const Api = {
     };
     return defAxios.post(url, payload, config);
   },
+  classes(payload) {
+    let url = '/auth/get_class';
+    return defAxios.get(url, payload);
+  },
+  classesDetail(payload) {
+    let url = '/auth/get_class';
+    return defAxios.get(url, payload);
+  },
+  workshop(payload) {
+    let url = '/auth/get_workshop';
+    return defAxios.get(url, payload);
+  },
+  course(payload) {
+    let url = '/auth/get_course';
+    return defAxios.get(url, payload);
+  },
+  event(payload) {
+    let url = '/auth/get_event';
+    return defAxios.get(url, payload);
+  },
+  trainer(payload) {
+    let url = '/auth/get_teacher_active';
+    return defAxios.get(url, payload);
+  },
+  classLevel(payload) {
+    let url = '/auth/get_class_level';
+    return defAxios.get(url, payload);
+  },
+  
 };
 export default Api;
