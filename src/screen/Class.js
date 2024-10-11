@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState} from 'react';
+import React, {useEffect, useContext, useState, useRef} from 'react';
 import {
   View, StatusBar, ScrollView, Text, Image, ActivityIndicator
 } from 'react-native';
@@ -13,23 +13,28 @@ import SubNavigation from '../components/SubNavigation';
 import LocationSelect from '../components/LocationSelect';
 import CalendarSelect from '../components/CalendarSelect';
 import ClassItem from '../components/ClassItem';
+import LevelModal from '../components/ClassKat';
+import ClassKatModal from '../components/Ck';
 // api
 import Api from  '../config/Api';
 const Class = ({route,navigation}) => {
   const t = useContext(ThemeContext);
   const studio = useContext(LocationContext);
   const user = useContext(UserContext);
+  const classkatRef = useRef(null);
+  const ckRef = useRef(null);
   const [id,setid] = useState()
-  const [level,setlevel] = useState('')
+  const [level,setlevel] = useState('Select Level')
   const [loading,setloading] = useState(false)
-  const [classkat,setclasskat] = useState('')
+  const [classkat,setclasskat] = useState('Select Category')
   const [classlist, setclasslist] = useState([])
   const {classKat = ''} = route.params || {}
   const getSchedule = async () => {
     setloading(true)
     try {
-      
-      let param = `id=${id}&studio=${studio.id}&level=${level}&classkat=${classkat ? classkat : classKat}`
+      let pLevel = (level != 'Select Level') ? level : ''
+      let pClassKat = classkat != 'Select Category' ? classkat : classKat ? classKat : ''
+      let param = `id=${id}&studio=${studio.id}&level=${pLevel}&classkat=${pClassKat}`
       console.log(param)
       let req = await Api.mySchedule(param)
       if(req.status === 200 || req.status === 201) {
@@ -74,6 +79,8 @@ const Class = ({route,navigation}) => {
   }, []);
   return (
     <ScrollView style={[t.bgwhite]}>
+      <LevelModal classkatRef={classkatRef} onSelectLevel={(level)=>{setlevel(level)}}/>
+      <ClassKatModal ckRef={ckRef} onSelectCk={(ck)=>{setclasskat(ck)}}/>
       <StatusBar translucent barStyle="dark-content" />
       <View style={[t.px20,t.bggreye,t.pt70]}>
         <LocationSelect navigation={navigation}/>
@@ -82,17 +89,19 @@ const Class = ({route,navigation}) => {
       <View style={[t.pt20,t.px20]}>
         <CalendarSelect onDateSelected={(date) => {setid(date)}}/>
       </View>
-      <View style={[t.mt10,t.px20,t.fRow,t.faCenter,t.fjCenter]}>
-        <View style={[t.bgorange,t.br100,t.mx10,t.wp35,t.faCenter]}>
-          <TouchableOpacity style={[t.py5,t.wp100]} onPress={()=>{setclasskat('normal')}}>
-            <Text style={[t['p14-500'],t.cwhite]}>Normal Studio</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={[t.bgorange,t.br100,t.mx10,t.wp35,t.faCenter]}>
-          <TouchableOpacity style={[t.py5,t.wp100]} onPress={()=>{setclasskat('hot')}}>
-            <Text style={[t['p14-500'],t.cwhite]}>Hot Studio</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={[t.mt10,t.px20,t.fRow,t.faCenter,t.fjStart]}>
+        <TouchableOpacity style={[t.bgorange,t.me10,t.br5,t.py10,t.px10,t.fRow,t.faCenter,t.fjBetween]} onPress={() => {classkatRef.current?.show();}}>
+          <Text style={[t.cwhite,t['p10-500']]}>{level}</Text>
+          <Image source={img.arrowDownWhite} style={[t.ms20,t.w15,t.h15,{objectFit:'contain'}]}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={[t.bgorange,t.me10,t.br5,t.py10,t.px10,t.fRow,t.faCenter,t.fjBetween]} onPress={() => {ckRef.current?.show();}}>
+          <Text style={[t.cwhite,t['p10-500']]}>{classkat ? classkat : classKat}</Text>
+          <Image source={img.arrowDownWhite} style={[t.ms20,t.w15,t.h15,{objectFit:'contain'}]}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={[t.bggreye,t.br5,t.py10,t.px10,t.fRow,t.faCenter,t.fjBetween]} onPress={() => {setlevel('Select Level');setclasskat('Select Category')}}>
+          <Text style={[t.corange,t['p10-500']]}>Reset</Text>
+          <Image source={img.close} style={[t.ms20,t.w10,t.h10,{objectFit:'contain'}]}/>
+        </TouchableOpacity>
       </View>
       <View style={[t.pt20,t.px20]}>
         <View style={[t.bgwarning,t.fRow,t.faCenter,t.p10,t.br10]}>
