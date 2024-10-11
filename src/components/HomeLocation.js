@@ -14,8 +14,8 @@ function HomeLocation({navigation, ...props}) {
         <Image source={img.buildings} style={[t.w50,t.h50]}/>
         <View style={[t.ms10]}>
           <Text style={[t['p10-400'],t.cgrey90]}>Our Location</Text>
-          <Text style={[t['h26-400'],t.corange]}>{studio.deptname}</Text>
-          <Text style={[t['p10-700'],t.black]}>{studio.distance} from your location</Text>
+          <Text style={[t['h26-400'],t.corange]}>{studio && studio.deptname}</Text>
+          <Text style={[t['p10-700'],t.black]}>{studio && studio.distance} from your location</Text>
         </View>
       </View>
       <Image source={img.arrowDown} style={[t.w30,t.h30]}/>
