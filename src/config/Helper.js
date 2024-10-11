@@ -101,6 +101,17 @@ const helper = {
       td = dy[fd]
     }
     return td
+  },
+  async checkImageExists(imageUrl) {
+    try {
+      const response = await fetch(imageUrl);
+      if (response.ok) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
   }
 }
 export default helper

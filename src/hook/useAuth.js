@@ -22,6 +22,18 @@ export function useAuth() {
             user: undefined,
           };
           break;
+        case 'SET_LOCATION':
+          return {
+            ...state,
+            location: {...action.payload},
+          };
+          break;
+        case 'REMOVE_LOCATION':
+          return {
+            ...state,
+            location: undefined,
+          };
+          break;
         default:
           return state;
           break;
@@ -29,6 +41,7 @@ export function useAuth() {
     },
     {
       user: undefined,
+      location: undefined
     },
   );
   const auth = useMemo(() => ({
@@ -41,14 +54,31 @@ export function useAuth() {
       dispatch(createAction('REMOVE_USER'));
     },
   }));
+  const loc = useMemo(() => ({
+    setLocation: async location => {
+      Store.set('YOGAFITLOCATION', location);
+      dispatch(createAction('SET_LOCATION', location));
+    },
+    removeLocation: async () => {
+      Store.remove('YOGAFITLOCATION');
+      dispatch(createAction('REMOVE_LOCATION'));
+    },
+  }));
   const checkUser = async () => {
     let user = await Store.get('YOGAFITUSER');
     if (user) {
       dispatch(createAction('SET_USER', user));
     }
   };
+  const checkLocation = async () => {
+    let location = await Store.get('YOGAFITLOCATION');
+    if (location) {
+      dispatch(createAction('SET_LOCATION', location));
+    }
+  };
   useEffect(() => {
     checkUser();
+    checkLocation();
   }, []);
-  return {auth, state};
+  return {loc, auth, state};
 }

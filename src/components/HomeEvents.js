@@ -2,6 +2,8 @@ import React, {useEffect, useContext} from 'react';
 import {Dimensions, Text, View, Image} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import {ThemeContext} from '../context/ThemeContext';
+import Theimage from './Theimage'
+import img from '../config/Image'
 function HomeEvents({navigation, ...props}) {
   const t = useContext(ThemeContext);
   const width = Dimensions.get('window').width;
@@ -30,7 +32,7 @@ function HomeEvents({navigation, ...props}) {
               justifyContent: 'center',
               alignItems: 'center',
             },]}>
-              <Image source={images[index]} style={[{objectFit:'contain'},t.wp95]}/>
+              <Theimage original={images[index]} placeholder={img.event} style={[{objectFit:'cover'},t.wp95,t.h100]}/>
             </View>
         )}
       />

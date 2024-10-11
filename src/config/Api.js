@@ -56,8 +56,8 @@ const Api = {
     return defAxios.post(url, payload, config);
   },
   classes(payload) {
-    let url = '/auth/get_class';
-    return defAxios.get(url, payload);
+    let url = '/auth/get_class?'+payload;
+    return defAxios.get(url);
   },
   classesDetail(payload) {
     let url = '/auth/get_class';

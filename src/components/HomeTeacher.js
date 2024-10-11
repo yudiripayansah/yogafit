@@ -2,6 +2,8 @@ import React, {useEffect, useContext} from 'react';
 import {Dimensions, Text, View, Image} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import {ThemeContext} from '../context/ThemeContext';
+import Theimage from './Theimage'
+import img from '../config/Image'
 function HomeTeacher({navigation, ...props}) {
   const t = useContext(ThemeContext);
   const width = Dimensions.get('window').width;
@@ -30,7 +32,7 @@ function HomeTeacher({navigation, ...props}) {
               justifyContent: 'center',
               alignItems: 'center',
             },]}>
-              <Image source={images[index]} style={[{objectFit:'contain'},t.wp90]}/>
+              <Theimage original={images[index]} placeholder={img.teacher} style={[{objectFit:'contain'},t.wp90,t.h200]}/>
             </View>
         )}
       />

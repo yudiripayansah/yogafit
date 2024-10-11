@@ -2,6 +2,9 @@ import React, {useContext} from 'react';
 import {Dimensions, Text, View, TouchableOpacity, Image} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import {ThemeContext} from '../context/ThemeContext';
+import Theimage from './Theimage'
+// assets
+import img from '../config/Image'
 const TeacherList = ({navigation, ...props}) => {
   const t = useContext(ThemeContext);
   const width = Dimensions.get('window').width;
@@ -9,7 +12,7 @@ const TeacherList = ({navigation, ...props}) => {
   const baseOptions = ({
                         vertical: false,
                         width: width / 2,
-                        height: width ,
+                        height: width,
                         style: {
                           width: width,
                         },
@@ -22,16 +25,16 @@ const TeacherList = ({navigation, ...props}) => {
         {...baseOptions}
         loop={true}
         autoPlay={true}
-        autoPlayInterval={3000}
+        autoPlayInterval={2000}
         data={teacher}
         scrollAnimationDuration={1000}
         renderItem={({index}) => (
           <TouchableOpacity>
-            <View style={[t.mx10,t.bw1,t.bgreyd,t.bsolid,t.br10,t.bgwhite]}>
-              <Image source={teacher[index].image} style={[t.wp100,t.hp76,{objectFit: 'contain'}]}/>
-              <View style={[t.px10,t.mt5]}>
-                <Text style={[t.black,t['p14-600'],t.cblack]}>{teacher[index].name}</Text>
-                <Text style={[t.black,t['p10-500'],t.cblack]}>{teacher[index].cat}</Text>
+            <View style={[t.mx10,t.bw1,t.bgreyd,t.bsolid,t.br10,t.bgwhite,t.fjBetween]}>
+              <Theimage original={teacher[index].foto} placeholder={img.placeholder} style={[t.wp100,t.h250,{objectFit: 'cover'}]}/>
+              <View style={[t.p15]}>
+                <Text style={[t.black,t['p12-600'],t.cblack]}>{teacher[index].name}</Text>
+                {/* <Text style={[t.black,t['p10-500'],t.cblack]}>{teacher[index].cat}</Text> */}
               </View>
             </View>
           </TouchableOpacity>

@@ -1,6 +1,6 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import {
-  View, StatusBar, ScrollView, Text, Image
+  View, StatusBar, ScrollView, Text, Image, ActivityIndicator
 } from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -11,62 +11,30 @@ import SubNavigation from '../components/SubNavigation';
 import LocationSelect from '../components/LocationSelect';
 import CalendarSelect from '../components/CalendarSelect';
 import WorkshopItem from '../components/WorkshopItem';
+// api
+import Api from  '../config/Api';
 const Workshop = ({navigation}) => {
   const t = useContext(ThemeContext);
-  const workshopList = [
-    {
-      date: '12 - 26',
-      month: 'June',
-      year: '2024',
-      name: 'Yoga Wheel Small Course',
-      location: 'Yoga Fit Gandaria',
-      duration: '5 Hours',
-      teacher: 'Master Jatin',
-      kind: '(Backbend)'
-    },
-    {
-      date: '12 - 26',
-      month: 'June',
-      year: '2024',
-      name: 'Yoga Wheel Small Course',
-      location: 'Yoga Fit Gandaria',
-      duration: '5 Hours',
-      teacher: 'Master Jatin',
-      kind: '(Backbend)'
-    },
-    {
-      date: '12 - 26',
-      month: 'June',
-      year: '2024',
-      name: 'Yoga Wheel Small Course',
-      location: 'Yoga Fit Gandaria',
-      duration: '5 Hours',
-      teacher: 'Master Jatin',
-      kind: '(Backbend)'
-    },
-    {
-      date: '12 - 26',
-      month: 'June',
-      year: '2024',
-      name: 'Yoga Wheel Small Course',
-      location: 'Yoga Fit Gandaria',
-      duration: '5 Hours',
-      teacher: 'Master Jatin',
-      kind: '(Backbend)'
-    },
-    {
-      date: '12 - 26',
-      month: 'June',
-      year: '2024',
-      name: 'Yoga Wheel Small Course',
-      location: 'Yoga Fit Gandaria',
-      duration: '5 Hours',
-      teacher: 'Master Jatin',
-      kind: '(Backbend)'
-    },
-  ]
+  const [workshop,setworkshop] = useState('')
+  const [loading,setloading] = useState(false)
+  const getWorkshop = async () => {
+    setloading(true)
+    try {
+      let req = await Api.workshop()
+      if(req.status === 200 || req.status === 201) {
+        let {data} = req.data
+        setworkshop(data)
+      } else {
+        setworkshop([])
+      }
+      setloading(false)
+    } catch (error) {
+      console.error(error)
+      setloading(false)
+    }
+  }
   useEffect(() => {
-
+    getWorkshop()
   }, []);
   return (
     <ScrollView style={[t.bgwhite]}>
@@ -76,11 +44,11 @@ const Workshop = ({navigation}) => {
       </View>
       <SubNavigation navigation={navigation}/>
       <View style={[t.mt20, t.px20]}>
-        {workshopList.map((item,index) => {
+        {!loading && workshop.length > 0 ? workshop.map((item,index) => {
           return (
             <WorkshopItem data={item} key={index} boxStyle={[t.mt10]}/>
           )
-        })}
+        }) : loading ? (<View style={[t.py50]}><ActivityIndicator size="large" color="#FE9805" /></View>) : <Text style={[t['p14-500'],t.cblack,t.tCenter,t.py50]}>No Available Workshop</Text>}
       </View>
       <View style={[t.py50,t.wp100]}></View>
     </ScrollView>

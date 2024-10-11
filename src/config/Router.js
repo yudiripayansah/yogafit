@@ -32,7 +32,6 @@ export const RouteMain = ({navigation}) => {
 
   const openLogin = () => {
     loginRef.current?.show();
-    console.log(loginRef.current)
   };
   const verifyRef = useRef(null);
 

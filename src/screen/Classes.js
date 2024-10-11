@@ -1,6 +1,6 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useContext, useState, useRef} from 'react';
 import {
-  View, StatusBar, ScrollView, Text, Image
+  View, StatusBar, ScrollView, ActivityIndicator
 } from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -11,28 +11,41 @@ import SubNavigation from '../components/SubNavigation';
 import LocationSelect from '../components/LocationSelect';
 import ClassesSelect from '../components/ClassesSelect';
 import ClassesItem from '../components/ClassesItem';
+import ClassKat from '../components/ClassKat';
+// API
+import Api from '../config/Api'
+// Helper
+import Helper from '../config/Helper';
 const Classes = ({navigation}) => {
   const t = useContext(ThemeContext);
-  const classesList = [
-    {
-      name: "Wheel Yoga",
-      image: img.classes1,
-      textStyle: t.bgorange
-    },
-    {
-      name: "Yoga Swing",
-      image: img.classes2,
-      textStyle: t.bgfreshorange
-    },
-    {
-      name: "Hot Class",
-      image: img.classes3,
-      textStyle: t.bgorange
-    },
-  ]
+  const [classes,setClasses] = useState([])
+  const [level,setlevel] = useState('All Level')
+  const [loading,setloading] = useState(false)
+  const classkatRef = useRef(null);
+  const getClasses = async () => {
+    setloading(true)
+    try {
+      let param = level != 'All Level' ? 'class_level='+level : ''
+      let req = await Api.classes(param)
+      if(req.status === 200 || req.status == 201){
+        let {data} = req.data
+        data.map((item,i) => {
+          item.textStyle = i%2 === 0 ? t.bgfreshorange : t.bgorange
+        })
+        setClasses(data)
+      } else {
+        setClasses([])
+        console.error("Error get classes")
+      }
+      setloading(false)
+    } catch (error) {
+      console.error(error)
+      setloading(false)
+    }
+  }
   useEffect(() => {
-
-  }, []);
+    getClasses()
+  }, [level]);
   return (
     <ScrollView style={[t.bgwhite]}>
       <StatusBar translucent barStyle="dark-content" />
@@ -41,14 +54,15 @@ const Classes = ({navigation}) => {
       </View>
       <SubNavigation navigation={navigation}/>
       <View style={[t.mt20, t.px20]}>
-        <ClassesSelect navigation={navigation}/>
-        {classesList.map((item,index) => {
+        <ClassesSelect navigation={navigation} onPress={() => {classkatRef.current?.show();}} level={level}/>
+        {!loading ? classes.map((item,index) => {
           return (
             <ClassesItem data={item} key={index} boxStyle={[t.mt10]}/>
           )
-        })}
+        }) : (<View style={[t.py50]}><ActivityIndicator size="large" color="#FE9805" /></View>)}
       </View>
       <View style={[t.py50,t.wp100]}></View>
+      <ClassKat classkatRef={classkatRef} onSelectLevel={(level)=>{setlevel(level)}}/>
     </ScrollView>
   );
 };

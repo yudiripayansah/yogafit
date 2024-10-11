@@ -29,7 +29,6 @@ function Login({navigation, ...props}) {
       }
       if(email && password) {
         let req = await Api.login(payload)
-        console.log(req.status)
         if(req.status === 200){
           let {users,token} = req.data
           if(users) {

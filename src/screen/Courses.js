@@ -1,6 +1,6 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import {
-  View, StatusBar, ScrollView, Text, Image
+  View, StatusBar, ScrollView, Text, ActivityIndicator
 } from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -11,57 +11,30 @@ import SubNavigation from '../components/SubNavigation';
 import LocationSelect from '../components/LocationSelect';
 import CalendarSelect from '../components/CalendarSelect';
 import CourseItem from '../components/CourseItem';
+// api
+import Api from  '../config/Api';
 const Courses = ({navigation}) => {
   const t = useContext(ThemeContext);
-  const courseList = [
-    {
-      date: '12 - 26',
-      month: 'June',
-      year: '2024',
-      name: 'Yoga Wheel Small Course',
-      location: 'Yoga Fit Gandaria',
-      duration: '5 Hours',
-      teacher: 'Master Jatin'
-    },
-    {
-      date: '12 - 26',
-      month: 'June',
-      year: '2024',
-      name: 'Yoga Wheel Small Course',
-      location: 'Yoga Fit Gandaria',
-      duration: '5 Hours',
-      teacher: 'Master Jatin'
-    },
-    {
-      date: '12 - 26',
-      month: 'June',
-      year: '2024',
-      name: 'Yoga Wheel Small Course',
-      location: 'Yoga Fit Gandaria',
-      duration: '5 Hours',
-      teacher: 'Master Jatin'
-    },
-    {
-      date: '12 - 26',
-      month: 'June',
-      year: '2024',
-      name: 'Yoga Wheel Small Course',
-      location: 'Yoga Fit Gandaria',
-      duration: '5 Hours',
-      teacher: 'Master Jatin'
-    },
-    {
-      date: '12 - 26',
-      month: 'June',
-      year: '2024',
-      name: 'Yoga Wheel Small Course',
-      location: 'Yoga Fit Gandaria',
-      duration: '5 Hours',
-      teacher: 'Master Jatin'
-    },
-  ]
+  const [course,setcourse] = useState('')
+  const [loading,setloading] = useState(false)
+  const getCourse = async () => {
+    setloading(true)
+    try {
+      let req = await Api.course()
+      if(req.status === 200 || req.status === 201) {
+        let {data} = req.data
+        setcourse(data)
+      } else {
+        setcourse([])
+      }
+      setloading(false)
+    } catch (error) {
+      console.error(error)
+      setloading(false)
+    }
+  }
   useEffect(() => {
-
+    getCourse()
   }, []);
   return (
     <ScrollView style={[t.bgwhite]}>
@@ -71,11 +44,11 @@ const Courses = ({navigation}) => {
       </View>
       <SubNavigation navigation={navigation}/>
       <View style={[t.mt20, t.px20]}>
-        {courseList.map((item,index) => {
+        {!loading && course.length > 0 ? course.map((item,index) => {
           return (
             <CourseItem data={item} key={index} boxStyle={[t.mt10]}/>
           )
-        })}
+        }) : loading ? (<View style={[t.py50]}><ActivityIndicator size="large" color="#FE9805" /></View>) : <Text style={[t['p14-500'],t.cblack,t.tCenter,t.py50]}>No Available Courses</Text>}
       </View>
       <View style={[t.py50,t.wp100]}></View>
     </ScrollView>

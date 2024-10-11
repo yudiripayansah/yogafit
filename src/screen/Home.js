@@ -1,10 +1,9 @@
-import React, {useEffect, useContext, useState} from 'react';
+import React, {useEffect, useContext, useState, useRef} from 'react';
 import {
   ScrollView,View, StatusBar, Text, Image
 } from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
-import {AuthContext} from '../context/AuthContext';
-import {UserContext} from '../context/UserContext';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 // assets
 import img from '../config/Image'
 // components
@@ -13,27 +12,15 @@ import HomeTeacher from '../components/HomeTeacher';
 import HomeEvents from '../components/HomeEvents';
 import HomeLocation from '../components/HomeLocation';
 import HomeClass from '../components/HomeClass';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import LocationModal from '../components/LocationList'
 // API
 import Api from '../config/Api'
 const Home = ({navigation}) => {
   const t = useContext(ThemeContext);
-  const user = useContext(UserContext);
-  const {removeUser} = useContext(AuthContext);
+  const locationRef = useRef(null);
   const [slider,setSlider] = useState([])
-  const images = [
-    img.banner1,img.banner2,img.banner3,img.banner4,img.banner5
-  ]
-  const teachers = [
-    img.teacher,img.teacher,img.teacher,img.teacher,img.teacher,
-    img.teacher,img.teacher,img.teacher,img.teacher,img.teacher,
-    img.teacher,img.teacher,img.teacher,img.teacher,img.teacher,
-  ]
-  const events = [
-    img.event,img.event,img.event,img.event,img.event,
-    img.event,img.event,img.event,img.event,img.event,
-    img.event,img.event,img.event,img.event,img.event,
-  ]
+  const [events,setEvents] = useState([])
+  const [trainer,setTrainer] = useState([])
   const getSlider = async () => {
     try {
       let req = await Api.slider()
@@ -51,18 +38,55 @@ const Home = ({navigation}) => {
       console.error(error)
     }
   }
+  const getEvents = async () => {
+    try {
+      let req = await Api.event()
+      if(req.status === 200){
+        let {data} = req.data
+        let event = []
+        data.forEach((item) => {
+          event.push({uri: item.gambar})
+        })
+        setEvents(event)
+      } else {
+        console.error("Error get event")
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const getTrainer = async () => {
+    try {
+      let req = await Api.trainer()
+      if(req.status === 200){
+        let {data} = req.data
+        let trainer = []
+        data.forEach((item) => {
+          trainer.push({uri: item.foto})
+        })
+        setTrainer(trainer)
+      } else {
+        console.error("Error get trainer")
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
   useEffect(() => {
     getSlider()
+    getEvents()
+    getTrainer()
   }, []);
   return (
     <ScrollView style={[t.bgwhite]}>
+      <LocationModal locationRef={locationRef}/>
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
       <HomeCarousel images={slider}/>
       <View style={[t.mmt30,t.px20]}>
-        <HomeLocation navigation={navigation}/>
+        <HomeLocation navigation={navigation} onPress={() => {locationRef.current?.show();}}/>
       </View>
       <View style={[t.mt20,t.px20]}>
-        <HomeClass/>
+        <HomeClass navigation={navigation}/>
       </View>
       <View style={[t.mt20,t.px20]}>
         <Text style={[t['h20-400'],t.cblack]}>Start Your Journey with Yoga Fit</Text>
@@ -96,7 +120,7 @@ const Home = ({navigation}) => {
         <View style={[t.px20,t.mb10]}>
           <Text style={[t['h20-400'],t.cblack]}>Teachers</Text>
         </View>
-        <HomeTeacher images={teachers}/>
+        <HomeTeacher images={trainer}/>
       </View>
       <View style={[t.mt20]}>
         <View style={[t.px20,t.mb10]}>

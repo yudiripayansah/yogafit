@@ -8,15 +8,13 @@ function CourseItem({navigation, ...props}) {
   const {data,boxStyle} = props
   return (
     <View style={[t.bw1,t.bsolid,t.bblack,t.p10,t.br10,t.fRow,t.faCenter,boxStyle]}>
-      <View style={[t.faCenter,t.fjCenter,t.pe20]}>
-        <Text style={[t['p12-600'],t.cblack,t.tCenter]}>{data.date}</Text>
-        <Text style={[t['p12-600'],t.cblack,t.tCenter]}>{data.month}</Text>
-        <Text style={[t['p12-600'],t.cblack,t.tCenter]}>{data.year}</Text>
+      <View style={[t.faCenter,t.fjCenter,t.pe20,t.wp20]}>
+        <Text style={[t['p12-600'],t.cblack,t.tCenter]}>{data.tanggal}</Text>
       </View>
       <View style={[{flex:1}]}>
-        <Text style={[t['h20-400'],t.corange]}>{data.name}</Text>
-        <Text style={[t['p12-400'],t.greya]}>{data.location}</Text>
-        <Text style={[t['p13-600'],t.cblack,t.mt10]}>{data.duration}</Text>
+        <Text style={[t['h20-400'],t.corange]}>{data.course}</Text>
+        <Text style={[t['p12-400'],t.greya]}>{data.studio}</Text>
+        <Text style={[t['p13-600'],t.cblack,t.mt10]}>{data.durasi}</Text>
         <View style={[t.fRow,t.fjBetween,t.faCenter,t.mt5]}>
           <Text style={[t['p12-600'],t.cblack]}>with {data.teacher}</Text>
           <TouchableOpacity>

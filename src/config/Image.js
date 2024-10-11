@@ -42,5 +42,6 @@ const img = {
   classes1: require('../assets/images/classes1.jpg'),
   classes2: require('../assets/images/classes2.jpg'),
   classes3: require('../assets/images/classes3.jpg'),
+  placeholder: require('../assets/images/placeholder.png'),
 }
 export default img

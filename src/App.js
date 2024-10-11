@@ -6,16 +6,42 @@ import {RouteMain} from './config/Router';
 import {ThemeContext} from './context/ThemeContext';
 import {UserContext} from './context/UserContext';
 import {AuthContext} from './context/AuthContext';
+import {LocContext} from './context/LocContext';
+import {LocationContext} from './context/LocationContext';
 import Style from './config/Style';
 import Splash from './screen/Splash';
 import {useAuth} from './hook/useAuth';
 import usePushNotification from './hook/usePushNotification';
+import {PermissionsAndroid, Platform} from 'react-native';
 const App = ({}) => {
   const {requestUserPermission} = usePushNotification();
   const RootStack = createStackNavigator();
   const [appState, setAppState] = useState(AppState.currentState);
   const [loading, setLoading] = useState(true);
-  const {auth, state} = useAuth();
+  const {loc, auth, state} = useAuth();
+  const requestLocationPermission = async () => {
+    try {
+      if (Platform.OS === 'android') {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: "Location Permission",
+            message: "This app needs access to your location.",
+            buttonNeutral: "Ask Me Later",
+            buttonNegative: "Cancel",
+            buttonPositive: "OK"
+          }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log("You can access the location");
+        } else {
+          console.log("Location permission denied");
+        }
+      }
+    } catch (err) {
+      console.warn("Failed to request location permission", err);
+    }
+  };
   const renderRoute = () => {
     if (loading) {
       return <RootStack.Screen name={'SplashScreen'} component={Splash} />;
@@ -23,9 +49,11 @@ const App = ({}) => {
       return (
         <RootStack.Screen name={'RouteMain'}>
           {({navigation}) => (
+            <LocationContext.Provider value={state.location}>
             <UserContext.Provider value={state.user}>
               <RouteMain navigation={navigation} />
             </UserContext.Provider>
+            </LocationContext.Provider>
           )}
         </RootStack.Screen>
       );
@@ -47,6 +75,7 @@ const App = ({}) => {
     }
   };
   useEffect(() => {
+    requestLocationPermission();
     listenToNotifications();
     setTimeout(() => {
       setLoading(false);
@@ -61,7 +90,8 @@ const App = ({}) => {
 
   return (
     <ThemeContext.Provider value={Style}>
-        <AuthContext.Provider value={auth}>
+      <AuthContext.Provider value={auth}>
+        <LocContext.Provider value={loc}>
           <NavigationContainer>
             <RootStack.Navigator
               screenOptions={{
@@ -71,7 +101,8 @@ const App = ({}) => {
               {renderRoute()}
             </RootStack.Navigator>
           </NavigationContainer>
-        </AuthContext.Provider>
+        </LocContext.Provider>
+      </AuthContext.Provider>
     </ThemeContext.Provider>
   );
 };

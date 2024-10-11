@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import {
   View, ScrollView, StatusBar, Image, Text
 } from 'react-native';
@@ -8,22 +8,22 @@ import {UserContext} from '../context/UserContext';
 // assets
 import img from '../config/Image'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+// components
+import Theimage from '../components/Theimage'
 const Profile = ({navigation}) => {
   const t = useContext(ThemeContext);
   const user = useContext(UserContext);
   const {removeUser} = useContext(AuthContext);
+  const [profileimage, setprofileimage] = useState({uri: 'https://login.yogafitidonline.com/api/storage/foto/'+user.foto})
   const doLogout = () => {
     removeUser()
     navigation.navigate('Home')
   }
-  useEffect(() => {
-    
-  }, []);
   return (
     <ScrollView style={[t.bgwhite]}>
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
       <View style={[t.pt70,t.px20,t.faCenter,t.fjCenter]}>
-        <Image source={img.profile} style={[t.w50,t.h50,{objectFit:'contain'}]}/>
+        <Theimage original={profileimage} placeholder={img.profile} style={[t.w50,t.h50,{objectFit:'contain'}]}/>
         <Text style={[t['p18-700'],t.corange,t.mt10]}>{user && user.name}</Text>
         <Text style={[t['p18-600'],t.cblack,t.mt5]}>{user && user.email}</Text>
       </View>

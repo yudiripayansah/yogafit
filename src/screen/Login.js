@@ -42,7 +42,6 @@ const Login = ({navigation}) => {
         email: email,
         password: password
       }
-      console.log(payload)
       if(email && password) {
         if(validateEmail(email)) {
           let req = await Api.login(payload)
@@ -123,11 +122,9 @@ const Login = ({navigation}) => {
         role: 'member',
         status: 'active',
       }
-      console.log(payload)
       let req = await Api.loginOrRegister(payload);
       if(req.status == 200){
         let {data,status,msg} = req.data
-        console.log(data)
         if(status) {
           setUser(data)
         } else {
@@ -146,13 +143,13 @@ const Login = ({navigation}) => {
       }
     } catch (error) {
         if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-            console.log(error)
+            console.error(error)
         } else if (error.code === statusCodes.IN_PROGRESS) {
-            console.log(error)
+            console.error(error)
         } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-            console.log(error)
+            console.error(error)
         } else {
-          console.log(error)
+          console.error(error)
         }
     }
   };
