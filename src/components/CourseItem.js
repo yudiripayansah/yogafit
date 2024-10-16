@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from 'react';
-import {Dimensions, Text, View, Image} from 'react-native';
+import {Dimensions, Text, View, Pressable} from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';// assets
 import img from '../config/Image'
@@ -7,7 +7,9 @@ function CourseItem({navigation, ...props}) {
   const t = useContext(ThemeContext);
   const {data,boxStyle} = props
   return (
-    <View style={[t.bw1,t.bsolid,t.bblack,t.p10,t.br10,t.fRow,t.faCenter,boxStyle]}>
+    <Pressable 
+      style={[t.bw1,t.bsolid,t.bblack,t.p10,t.br10,t.fRow,t.faCenter,boxStyle]}
+      onPress={()=>{navigation.navigate('Detail',{image:false,title:data.dTitle,text:data.dText})}}>
       <View style={[t.faCenter,t.fjCenter,t.pe20,t.wp20]}>
         <Text style={[t['p12-600'],t.cblack,t.tCenter]}>{data.tanggal}</Text>
       </View>
@@ -22,7 +24,7 @@ function CourseItem({navigation, ...props}) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 

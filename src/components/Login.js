@@ -11,7 +11,7 @@ import Api from '../config/Api'
 function Login({navigation, ...props}) {
   const t = useContext(ThemeContext);
   const {setUser} = useContext(AuthContext);
-  const {loginRef,verifyRef} = props
+  const {loginRef,verifyRef,registerRef} = props
   const [email,setemail] = useState('08988449651')
   const [password,setpassword] = useState('841586')
   const [loading, setLoading] = useState(false)
@@ -107,7 +107,7 @@ function Login({navigation, ...props}) {
         </View>
         <View style={[t.my40,t.fRow,t.fjCenter]}>
           <Text style={[t['p16-600'],t.cblack]}>Not a Member?</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>{registerRef.current?.show();loginRef.current?.hide()}}>
             <Text style={[t['p16-600'],t.corange,t.ms5]}>Register Here</Text>
           </TouchableOpacity>
         </View>

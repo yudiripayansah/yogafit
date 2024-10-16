@@ -29,7 +29,8 @@ const TeacherList = ({navigation, ...props}) => {
         data={teacher}
         scrollAnimationDuration={1000}
         renderItem={({index}) => (
-          <TouchableOpacity>
+          <TouchableOpacity
+          onPress={()=>{navigation.navigate('Detail',{image:teacher[index].foto,title:teacher[index].name})}}>
             <View style={[t.mx10,t.bw1,t.bgreyd,t.bsolid,t.br10,t.bgwhite,t.fjBetween]}>
               <Theimage original={teacher[index].foto} placeholder={img.placeholder} style={[t.wp100,t.h250,{objectFit: 'cover'}]}/>
               <View style={[t.p15]}>

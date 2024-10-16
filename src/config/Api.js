@@ -15,6 +15,14 @@ const Api = {
     let url = '/auth/login';
     return defAxios.post(url, payload);
   },
+  register(payload) {
+    let url = '/auth/register';
+    return defAxios.post(url, payload);
+  },
+  cekotp(payload) {
+    let url = '/auth/cek_otp';
+    return defAxios.post(url, payload);
+  },
   forgot(payload) {
     let url = '/auth/forgot';
     return defAxios.post(url, payload);
@@ -26,7 +34,16 @@ const Api = {
         Authorization: 'Bearer ' + token,
       },
     };
-    return defAxios.post(url, payload, config);
+    return defAxios.get(url, config);
+  },
+  myBookingHistory(payload, token) {
+    let url = '/member/my_booking_history';
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return defAxios.get(url, config);
   },
   mySchedule(payload, token) {
     let url = '/auth/get_users_schedule?'+payload;
@@ -53,7 +70,7 @@ const Api = {
         Authorization: 'Bearer ' + token,
       },
     };
-    return defAxios.post(url, payload, config);
+    return defAxios.get(url, config);
   },
   classes(payload) {
     let url = '/auth/get_class?'+payload;

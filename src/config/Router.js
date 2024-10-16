@@ -8,6 +8,8 @@ import BookingUpcoming from '../screen/BookingUpcoming';
 import Class from '../screen/Class';
 import Classes from '../screen/Classes';
 import Courses from '../screen/Courses';
+import Detail from '../screen/Detail';
+import DetailClass from '../screen/DetailClass';
 import Events from '../screen/Events';
 import Home from '../screen/Home';
 import Intro from '../screen/Intro';
@@ -21,6 +23,7 @@ import Nav from '../components/Navigation';
 import Header from '../components/Header';
 import LoginModal from '../components/Login'
 import VerifyModal from '../components/Verify'
+import RegisterModal from '../components/Register'
 const AuthStack = createStackNavigator();
 const MainStack = createStackNavigator();
 const options = {
@@ -29,20 +32,21 @@ const options = {
 export const RouteMain = ({navigation}) => {
   let [activeScreen, setActiveScreen] = useState('Home');
   const loginRef = useRef(null);
-
+  const verifyRef = useRef(null);
+  const registerRef = useRef(null);
+  const [registerdata,setregisterdata] = useState({})
   const openLogin = () => {
     loginRef.current?.show();
   };
-  const verifyRef = useRef(null);
 
   const openVerify = () => {
     verifyRef.current?.show();
-    console.log(verifyRef.current)
   };
   return (
     <>
-      <LoginModal loginRef={loginRef} verifyRef={verifyRef}/>
-      <VerifyModal verifyRef={verifyRef} loginRef={loginRef}/>
+      <LoginModal verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef}/>
+      <VerifyModal verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} registerdata={registerdata}/>
+      <RegisterModal verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} onRegister={(data) => {setregisterdata(data)}}/>
       <AuthStack.Navigator
         screenOptions={{
           headerShown: false,
@@ -60,6 +64,8 @@ export const RouteMain = ({navigation}) => {
         <AuthStack.Screen name={'BookingUpcoming'} component={BookingUpcoming} options={options} />
         <AuthStack.Screen name={'Class'} component={Class} options={options} />
         <AuthStack.Screen name={'Classes'} component={Classes} options={options} />
+        <AuthStack.Screen name={'Detail'} component={Detail} options={options} />
+        <AuthStack.Screen name={'DetailClass'} component={DetailClass} options={options} />
         <AuthStack.Screen name={'Trainer'} component={Trainer} options={options} />
         <AuthStack.Screen name={'Profile'} component={Profile} options={options} />
         <AuthStack.Screen name={'Intro'} component={Intro} options={options} />

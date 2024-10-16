@@ -16,7 +16,7 @@ function Ck({navigation, ...props}) {
   return (
     <ActionSheet ref={ckRef}>
       <View style={[t.bgwhite,t.wp100,t.px20,t.py20,t.brtl10,t.brtr10]}>
-        <TouchableOpacity onPress={() => classkatRef.current?.hide()} style={[t.msAuto]}>
+        <TouchableOpacity onPress={() => ckRef.current?.hide()} style={[t.msAuto]}>
           <Image source={img.close} style={[t.w15,t.h15]}/>
         </TouchableOpacity>
         {ck.map((item,index)=> {

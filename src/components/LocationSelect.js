@@ -18,7 +18,7 @@ function LocationSelect({navigation, ...props}) {
         <Image source={img.mappoint} style={[t.w40,t.h40]}/>
         <View style={[t.ms10]}>
           <Text style={[t['p12-400'],t.cwhite]}>Choose Your Studio</Text>
-          <Text style={[t['h24-400'],t.cwhite]}>{studio.deptname}</Text>
+          <Text style={[t['h24-400'],t.cwhite]}>{studio && studio.deptname}</Text>
         </View>
       </View>
       <Image source={img.arrowDownWhite} style={[t.w30,t.h30]}/>

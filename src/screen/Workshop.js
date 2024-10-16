@@ -23,6 +23,19 @@ const Workshop = ({navigation}) => {
       let req = await Api.workshop()
       if(req.status === 200 || req.status === 201) {
         let {data} = req.data
+        data.map((item,i) => {
+          item.dTitle = item.workshop
+          item.dText = `<div>
+                          Teacher: ${item.teacher}<br/>
+                          Date: ${item.tanggal}<br/>
+                          Studio: ${item.studio}<br/>
+                          Level: ${item.level}<br/>
+                          Duration: ${item.durasi}<br/><br/>
+                          <b>Description: </b><br/>
+                          ${item.desc_workshop}
+                        </div>
+                        `
+        })
         setworkshop(data)
       } else {
         setworkshop([])
@@ -46,7 +59,7 @@ const Workshop = ({navigation}) => {
       <View style={[t.mt20, t.px20]}>
         {!loading && workshop.length > 0 ? workshop.map((item,index) => {
           return (
-            <WorkshopItem data={item} key={index} boxStyle={[t.mt10]}/>
+            <WorkshopItem data={item} key={index} boxStyle={[t.mt10]} navigation={navigation}/>
           )
         }) : loading ? (<View style={[t.py50]}><ActivityIndicator size="large" color="#FE9805" /></View>) : <Text style={[t['p14-500'],t.cblack,t.tCenter,t.py50]}>No Available Workshop</Text>}
       </View>

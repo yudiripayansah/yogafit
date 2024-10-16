@@ -13,7 +13,7 @@ import Api from '../config/Api'
 // components
 import ContractItem from '../components/ContractItem';
 import QrModal from '../components/QrModal';
-const MyContract = ({navigation}) => {
+const HomeContract = ({navigation}) => {
   const t = useContext(ThemeContext);
   const user = useContext(UserContext);
   const qrRef = useRef(null);
@@ -26,7 +26,10 @@ const MyContract = ({navigation}) => {
       let req = await Api.myContract({},user.token)
       if(req.status === 200 || req.status === 201){
         let {data} = req.data
-        setcontract(data)
+        if(data){
+          let theData = [data[0]]
+          setcontract(theData)
+        }
       } else {
         console.error("Error get event")
       }
@@ -40,22 +43,15 @@ const MyContract = ({navigation}) => {
     getContract()
   }, []);
   return (
-    <ScrollView style={[t.bgwhite]}>
-      <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+    <View style={[t.px20]}>
       <QrModal qrRef={qrRef} qrcode={qrcode}/>
-      <View style={[t.pt30,t.px20,t.faCenter,t.fjCenter]}>
-        <Text style={[t['p18-600'],t.cblack,t.mt5]}>My Contract</Text>
-      </View>
-      <View style={[t.mt20, t.px20]}>
-        {!loading && contract.length > 0 ? contract.map((item,index) => {
-          return (
-            <ContractItem data={item} key={index} boxStyle={[t.mt10]} onPress={(qrcode)=>{setqrcode(qrcode);qrRef.current?.show()}}/>
-          )
-        }) : loading ? (<View style={[t.py50]}><ActivityIndicator size="large" color="#FE9805" /></View>) : <Text style={[t['p14-500'],t.cblack,t.tCenter,t.py50]}>No Available Contract</Text>}
-      </View>
-      <View style={[t.py50,t.wp100]}></View>
-    </ScrollView>
+      {!loading && contract.length > 0 ? contract.map((item,index) => {
+        return (
+          <ContractItem data={item} key={index} boxStyle={[t.mt10]} onPress={(qrcode)=>{setqrcode(qrcode);qrRef.current?.show()}}/>
+        )
+      }) : loading ? (<View style={[t.py50]}><ActivityIndicator size="large" color="#FE9805" /></View>) : <Text style={[t['p14-500'],t.cblack,t.tCenter,t.py50]}>No Available Contract</Text>}
+    </View>
   );
 };
 
-export default MyContract;
+export default HomeContract;

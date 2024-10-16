@@ -14,7 +14,7 @@ const Profile = ({navigation}) => {
   const t = useContext(ThemeContext);
   const user = useContext(UserContext);
   const {removeUser} = useContext(AuthContext);
-  const [profileimage, setprofileimage] = useState({uri: 'https://login.yogafitidonline.com/api/storage/foto/'+user && user.foto})
+  const [profileimage, setprofileimage] = useState(user ? {uri: 'https://login.yogafitidonline.com/api/storage/foto/'+ user.foto} : {uri: 'https://login.yogafitidonline.com/api/storage/foto/'})
   const doLogout = () => {
     removeUser()
     navigation.navigate('Home')

@@ -5,8 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';// assets
 import img from '../config/Image'
 function ClassItem({navigation, ...props}) {
   const t = useContext(ThemeContext);
-  const {onBookPress} = props
-  const {data,boxStyle} = props
+  const {onBookPress,onDetailPress,data,boxStyle} = props
   return (
     <View style={[t.bw1,t.bsolid,t.bblack,t.p10,t.br10,t.fRow,t.faCenter,boxStyle]}>
       <View style={[t.faCenter,t.fjCenter,t.pe10]}>
@@ -29,7 +28,7 @@ function ClassItem({navigation, ...props}) {
           </View> */}
         </View>
         <View style={[t.fRow,t.fjBetween,t.faEnd,t.mt10]}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>{onDetailPress()}}>
             <Text style={[t.bggrey90,t.py5,t.px10,t.bw1,t.bblack,t.bsolid,t.br100,t.cblack,t['p12-700']]}>Detail</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=>{onBookPress(data)}}>

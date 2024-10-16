@@ -31,6 +31,22 @@ const Classes = ({navigation}) => {
         let {data} = req.data
         data.map((item,i) => {
           item.textStyle = i%2 === 0 ? t.bgfreshorange : t.bgorange
+          item.dImage = {uri:item.file}
+          item.dTitle = item.class_name
+          item.dText = `<div>
+                          Capacity: ${item.capacity}<br/>
+                          Category: ${item.class_kat}<br/>
+                          Level: ${item.level}<br/>
+                          Duration: ${item.duration} Mins<br/>
+                          Virtual Class: ${item.virtual_class}<br/><br/><br/>
+                          <b>Benefit: </b><br/>
+                          ${item.class_benefit}<br/>
+                          <b>Facilities: </b><br/>
+                          ${item.class_facilities}<br/>
+                          <b>Description: </b><br/>
+                          ${item.class_desc}
+                        </div>
+                        `
         })
         setClasses(data)
       } else {
@@ -57,7 +73,7 @@ const Classes = ({navigation}) => {
         <ClassesSelect navigation={navigation} onPress={() => {classkatRef.current?.show();}} level={level}/>
         {!loading ? classes.map((item,index) => {
           return (
-            <ClassesItem data={item} key={index} boxStyle={[t.mt10]}/>
+            <ClassesItem navigation={navigation} data={item} key={index} boxStyle={[t.mt10]}/>
           )
         }) : (<View style={[t.py50]}><ActivityIndicator size="large" color="#FE9805" /></View>)}
       </View>

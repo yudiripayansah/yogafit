@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import {
   View, ScrollView, StatusBar, Image, Text
 } from 'react-native';
@@ -14,6 +14,20 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 const BookingUpcoming = ({navigation}) => {
   const t = useContext(ThemeContext);
   const user = useContext(UserContext);
+  const [booking,setbooking] = useState([])
+  const getBooking = async () => {
+    try {
+      let req = await Api.myBooking({},user.token)
+      if(req.status === 200 || req.status === 201){
+        let {data} = req.data
+        setbooking(data)
+      } else {
+        console.error("Error get event")
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
   const bookingList = [
     {
       studio: 'Yoga Fit Gandaria',
@@ -67,7 +81,7 @@ const BookingUpcoming = ({navigation}) => {
     },
   ]
   useEffect(() => {
-
+    getBooking()
   }, []);
   return (
     <ScrollView style={[t.bgwhite]}>

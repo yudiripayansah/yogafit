@@ -23,6 +23,18 @@ const Courses = ({navigation}) => {
       let req = await Api.course()
       if(req.status === 200 || req.status === 201) {
         let {data} = req.data
+        data.map((item,i) => {
+          item.dTitle = item.course
+          item.dText = `<div>
+                          Teacher: ${item.teacher}<br/>
+                          Date: ${item.tanggal}<br/>
+                          Studio: ${item.studio}<br/>
+                          Duration: ${item.durasi} Mins<br/><br/>
+                          <b>Description: </b><br/>
+                          ${item.desc_course}
+                        </div>
+                        `
+        })
         setcourse(data)
       } else {
         setcourse([])
@@ -46,7 +58,7 @@ const Courses = ({navigation}) => {
       <View style={[t.mt20, t.px20]}>
         {!loading && course.length > 0 ? course.map((item,index) => {
           return (
-            <CourseItem data={item} key={index} boxStyle={[t.mt10]}/>
+            <CourseItem data={item} key={index} boxStyle={[t.mt10]} navigation={navigation}/>
           )
         }) : loading ? (<View style={[t.py50]}><ActivityIndicator size="large" color="#FE9805" /></View>) : <Text style={[t['p14-500'],t.cblack,t.tCenter,t.py50]}>No Available Courses</Text>}
       </View>

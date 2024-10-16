@@ -7,17 +7,17 @@ import img from '../config/Image'
 const BookingFilter = ({navigation, ...props}) => {
   const t = useContext(ThemeContext);
   return (
-    <View style={[t.fRow,t.faCenter,t.fjBetween]}>
-      <TouchableOpacity style={[t.bsolid,t.bw1,t.borange,t.py10,t.px15,t.br100,t.fRow,t.faCenter]} onPress={()=>{navigation.navigate('Class')}}>
+    <View style={[t.fRow,t.faCenter,t.fjCenter]}>
+      <TouchableOpacity style={[t.bsolid,t.bw1,t.borange,t.py10,t.px15,t.br100,t.fRow,t.faCenter]} onPress={()=>{}}>
         <Image source={img.calendar} style={[t.w15,t.h15,t.me5]}/>
-        <Text style={[t.cblack,t['p12-500']]}>By Date</Text>
+        <Text style={[t.cblack,t['p12-500']]}>Select Date</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[t.bsolid,t.bw1,t.borange,t.py10,t.px15,t.br100]} onPress={()=>{navigation.navigate('Courses')}}>
+      {/* <TouchableOpacity style={[t.bsolid,t.bw1,t.borange,t.py10,t.px15,t.br100]} onPress={()=>{navigation.navigate('Courses')}}>
         <Text style={[t.cblack,t['p12-500']]}>Normal</Text>
       </TouchableOpacity>
       <TouchableOpacity style={[t.bsolid,t.bw1,t.borange,t.py10,t.px15,t.br100]} onPress={()=>{navigation.navigate('Courses')}}>
         <Text style={[t.cblack,t['p12-500']]}>Hot Class</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

@@ -24,6 +24,14 @@ const Events = ({navigation}) => {
       if(req.status === 200 || req.status === 201) {
         let {data} = req.data
         setevent(data)
+        data.map((item,i) => {
+          item.dImage = {uri:item.gambar}
+          item.dTitle = item.desc_event
+          item.dText = `<div>
+                          Date: ${item.tanggal}<br/>
+                        </div>
+                        `
+        })
       } else {
         setevent([])
       }
@@ -46,7 +54,7 @@ const Events = ({navigation}) => {
       <View style={[t.mt20, t.px20]}>
         {!loading && event.length > 0 ? event.map((item,index) => {
           return (
-            <EventItem data={item} key={index} boxStyle={[t.mt10]}/>
+            <EventItem data={item} key={index} boxStyle={[t.mt10]} navigation={navigation}/>
           )
         }) : loading ? (<View style={[t.py50]}><ActivityIndicator size="large" color="#FE9805" /></View>) : <Text style={[t['p14-500'],t.cblack,t.tCenter,t.py50]}>No Available Events</Text>}
       </View>

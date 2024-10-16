@@ -47,7 +47,7 @@ const helper = {
       let d = theDate.getDate()
       let m = theDate.getMonth()
       let y = theDate.getFullYear()
-      return `${days[dy]},${d} ${month[m]} ${y}`
+      return `${d} ${month[m]} ${y}`
     } else {
       return null
     }

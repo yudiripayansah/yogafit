@@ -1,6 +1,6 @@
 import React, {useEffect, useContext, useState, useRef} from 'react';
 import {
-  View, StatusBar, ScrollView, Text, Image, ActivityIndicator
+  View, StatusBar, ScrollView, Text, Image, ActivityIndicator, Alert 
 } from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import {UserContext} from '../context/UserContext';
@@ -28,14 +28,14 @@ const Class = ({route,navigation}) => {
   const [loading,setloading] = useState(false)
   const [classkat,setclasskat] = useState('Select Category')
   const [classlist, setclasslist] = useState([])
+  const [counter,setcounter] = useState(0)
   const {classKat = ''} = route.params || {}
   const getSchedule = async () => {
     setloading(true)
     try {
       let pLevel = (level != 'Select Level') ? level : ''
-      let pClassKat = classkat != 'Select Category' ? classkat : classKat ? classKat : ''
+      let pClassKat = classkat != 'Select Category' ? classkat : ''
       let param = `id=${id}&studio=${studio.id}&level=${pLevel}&classkat=${pClassKat}`
-      console.log(param)
       let req = await Api.mySchedule(param)
       if(req.status === 200 || req.status === 201) {
         let {data} = req.data
@@ -56,7 +56,17 @@ const Class = ({route,navigation}) => {
       }
       let req = await Api.bookingClass(param,user.token)
       if(req.status === 200 || req.status === 201) {
-        console.log(req.data)
+        if(req.data.message && req.data.message == 'Success Added') {
+          Alert.alert(
+            'Success',
+            'Successfully booking class'
+          );
+        } else {
+          Alert.alert(
+            'Failed',
+            req.data.data[0]
+          );
+        }
       }
     } catch (error) {
       console.error(error)
@@ -72,10 +82,15 @@ const Class = ({route,navigation}) => {
   useEffect(() => {
     if(id){
       getSchedule()
+      let count = counter + 1
+      setcounter(count++)
     }
   }, [id, studio, level, classkat]);
   useEffect(() => {
     setid(getToday())
+    if(classKat && classKat != ''){
+      setclasskat(classKat)
+    }
   }, []);
   return (
     <ScrollView style={[t.bgwhite]}>
@@ -112,7 +127,7 @@ const Class = ({route,navigation}) => {
       <View style={[t.mt20, t.px20]}>
         {!loading && classlist.length > 0 ? classlist.map((item,index) => {
           return (
-            <ClassItem data={item} key={index} boxStyle={[t.mt10]} onBookPress={(data)=>{doBookNow(data)}}/>
+            <ClassItem data={item} key={index} boxStyle={[t.mt10]} onBookPress={(data)=>{doBookNow(data)}} onDetailPress={()=>{navigation.navigate('DetailClass',{theClass:item})}}/>
           )
         }) : loading ? (<View style={[t.py50]}><ActivityIndicator size="large" color="#FE9805" /></View>) : <Text style={[t['p14-500'],t.cblack,t.tCenter,t.py50]}>No Available Schedule</Text>}
       </View>
