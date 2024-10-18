@@ -45,11 +45,11 @@ const HomeContract = ({navigation}) => {
   return (
     <View style={[t.px20]}>
       <QrModal qrRef={qrRef} qrcode={qrcode}/>
-      {!loading && contract.length > 0 ? contract.map((item,index) => {
+      {!loading && contract.length > 0 && contract[0] ? contract.map((item,index) => {
         return (
           <ContractItem data={item} key={index} boxStyle={[t.mt10]} onPress={(qrcode)=>{setqrcode(qrcode);qrRef.current?.show()}}/>
         )
-      }) : loading ? (<View style={[t.py50]}><ActivityIndicator size="large" color="#FE9805" /></View>) : <Text style={[t['p14-500'],t.cblack,t.tCenter,t.py50]}>No Available Contract</Text>}
+      }) : loading && (<View style={[t.py50]}><ActivityIndicator size="large" color="#FE9805" /></View>)}
     </View>
   );
 };

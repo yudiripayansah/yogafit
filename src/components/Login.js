@@ -12,7 +12,7 @@ function Login({navigation, ...props}) {
   const t = useContext(ThemeContext);
   const {setUser} = useContext(AuthContext);
   const {loginRef,verifyRef,registerRef} = props
-  const [email,setemail] = useState('08988449651')
+  const [email,setemail] = useState('085156487895')
   const [password,setpassword] = useState('841586')
   const [loading, setLoading] = useState(false)
   const [login, setLogin] = useState({

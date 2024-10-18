@@ -1,6 +1,6 @@
 import React, {useEffect, useContext, useState} from 'react';
 import {
-  View, ScrollView, StatusBar, Image, Text
+  View, ScrollView, StatusBar, Image, Text, Linking, Alert
 } from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import {AuthContext} from '../context/AuthContext';
@@ -8,6 +8,7 @@ import {UserContext} from '../context/UserContext';
 // assets
 import img from '../config/Image'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import SweetAlert from 'react-native-sweet-alert';
 // components
 import Theimage from '../components/Theimage'
 const Profile = ({navigation}) => {
@@ -15,6 +16,37 @@ const Profile = ({navigation}) => {
   const user = useContext(UserContext);
   const {removeUser} = useContext(AuthContext);
   const [profileimage, setprofileimage] = useState(user ? {uri: 'https://login.yogafitidonline.com/api/storage/foto/'+ user.foto} : {uri: 'https://login.yogafitidonline.com/api/storage/foto/'})
+  function convertToInternationalFormat(phoneNumber) {
+    if (phoneNumber.startsWith('0')) {
+      return '+62' + phoneNumber.slice(1);
+    }
+    return phoneNumber; // If it doesn't start with '0', return the number as is.
+  }
+  const sendWhatsAppMessage = (number) => {
+    const phoneNumber = convertToInternationalFormat(number); // WhatsApp number with country code
+    const message = 'Hi Yogafit!'; // Optional: pre-defined message
+    const url = `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+
+    Linking.canOpenURL(url)
+      .then((supported) => {
+        if (supported) {
+          return Linking.openURL(url);
+        } else {
+          SweetAlert.showAlertWithOptions({
+            title: 'Error',
+            subTitle: 'WhatsApp is not installed',
+            confirmButtonTitle: 'OK',
+            confirmButtonColor: '#000',
+            otherButtonTitle: 'Cancel',
+            otherButtonColor: '#dedede',
+            style: 'error',
+            cancellable: true
+          });
+          // Alert.alert('Error', 'WhatsApp is not installed');
+        }
+      })
+      .catch((err) => console.error('Error occurred', err));
+  };
   const doLogout = () => {
     removeUser()
     navigation.navigate('Home')
@@ -37,7 +69,7 @@ const Profile = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={[t.mt20,t.px20,t.faCenter,t.fjCenter]}>
-        <TouchableOpacity style={[t.bgorange,t.px20,t.py10,t.br10,t.fRow,t.faCenter,t.fjBetween]}>
+        <TouchableOpacity style={[t.bgorange,t.px20,t.py10,t.br10,t.fRow,t.faCenter,t.fjBetween]} onPress={()=>{sendWhatsAppMessage('+6287803377765')}}>
           <Image source={img.contact} style={[t.w30,t.h30,{objectFit:'contain'}]}/>
           <Text style={[t['h25-400'],t.cwhite,t.ms10]}>Connect With Us</Text>
         </TouchableOpacity>

@@ -6,6 +6,7 @@ import {ThemeContext} from '../context/ThemeContext';
 import {UserContext} from '../context/UserContext';
 import {LocationContext} from '../context/LocationContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import SweetAlert from 'react-native-sweet-alert';
 // assets
 import img from '../config/Image'
 // components
@@ -52,20 +53,40 @@ const Class = ({route,navigation}) => {
   const doBookNow = async (data) => {
     try {
       let param = {
-        id: Number(data.id_class)
+        id: Number(data.id_schedule)
       }
       let req = await Api.bookingClass(param,user.token)
       if(req.status === 200 || req.status === 201) {
         if(req.data.message && req.data.message == 'Success Added') {
-          Alert.alert(
-            'Success',
-            'Successfully booking class'
-          );
+          SweetAlert.showAlertWithOptions({
+            title: 'Success',
+            subTitle: 'Successfully booking class',
+            confirmButtonTitle: 'OK',
+            confirmButtonColor: '#000',
+            otherButtonTitle: 'Cancel',
+            otherButtonColor: '#dedede',
+            style: 'success',
+            cancellable: true
+          },() => {navigation.navigate('Home')});
+          // Alert.alert(
+          //   'Success',
+          //   'Successfully booking class'
+          // );
         } else {
-          Alert.alert(
-            'Failed',
-            req.data.data[0]
-          );
+          SweetAlert.showAlertWithOptions({
+            title: 'Failed',
+            subTitle: req.data.data[0],
+            confirmButtonTitle: 'OK',
+            confirmButtonColor: '#000',
+            otherButtonTitle: 'Cancel',
+            otherButtonColor: '#dedede',
+            style: 'error',
+            cancellable: true
+          });
+          // Alert.alert(
+          //   'Failed',
+          //   req.data.data[0]
+          // );
         }
       }
     } catch (error) {
