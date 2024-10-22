@@ -34,53 +34,6 @@ const BookingHistory = ({navigation}) => {
       setloading(false)
     }
   }
-  const bookingList = [
-    {
-      studio: 'Yoga Fit Gandaria',
-      type: 'HOT',
-      name: 'Hot Backbend - In Studio',
-      teacher: 'Master Rakesh',
-      date: 'Wednesday, 26 June 2024',
-      time: '07:00 AM - 08:00 AM',
-      attendance: 'Present!'
-    },
-    {
-      studio: 'Yoga Fit Gandaria',
-      type: 'HOT',
-      name: 'Hot Backbend - In Studio',
-      teacher: 'Master Rakesh',
-      date: 'Wednesday, 26 June 2024',
-      time: '07:00 AM - 08:00 AM',
-      attendance: 'Present!'
-    },
-    {
-      studio: 'Yoga Fit Gandaria',
-      type: 'HOT',
-      name: 'Hot Backbend - In Studio',
-      teacher: 'Master Rakesh',
-      date: 'Wednesday, 26 June 2024',
-      time: '07:00 AM - 08:00 AM',
-      attendance: 'Present!'
-    },
-    {
-      studio: 'Yoga Fit Gandaria',
-      type: 'HOT',
-      name: 'Hot Backbend - In Studio',
-      teacher: 'Master Rakesh',
-      date: 'Wednesday, 26 June 2024',
-      time: '07:00 AM - 08:00 AM',
-      attendance: 'Present!'
-    },
-    {
-      studio: 'Yoga Fit Gandaria',
-      type: 'HOT',
-      name: 'Hot Backbend - In Studio',
-      teacher: 'Master Rakesh',
-      date: 'Wednesday, 26 June 2024',
-      time: '07:00 AM - 08:00 AM',
-      attendance: 'Present!'
-    },
-  ]
   useEffect(() => {
     getBooking()
   }, []);

@@ -11,10 +11,13 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import SweetAlert from 'react-native-sweet-alert';
 // components
 import Theimage from '../components/Theimage'
+import Api from '../config/Api'
 const Profile = ({navigation}) => {
   const t = useContext(ThemeContext);
   const user = useContext(UserContext);
   const {removeUser} = useContext(AuthContext);
+  const [booking,setbooking] = useState([])
+  const [loading,setloading] = useState(false)
   const [profileimage, setprofileimage] = useState(user ? {uri: 'https://login.yogafitidonline.com/api/storage/foto/'+ user.foto} : {uri: 'https://login.yogafitidonline.com/api/storage/foto/'})
   function convertToInternationalFormat(phoneNumber) {
     if (phoneNumber.startsWith('0')) {
@@ -47,10 +50,29 @@ const Profile = ({navigation}) => {
       })
       .catch((err) => console.error('Error occurred', err));
   };
+  const getBooking = async () => {
+    setloading(true)
+    try {
+      let req = await Api.myBookingHistory({},user.token)
+      if(req.status === 200 || req.status === 201){
+        let {data} = req.data
+        setbooking(data)
+      } else {
+        console.error("Error get event")
+      }
+      setloading(false)
+    } catch (error) {
+      console.error(error)
+      setloading(false)
+    }
+  }
   const doLogout = () => {
     removeUser()
     navigation.navigate('Home')
   }
+  useEffect(() => {
+    getBooking()
+  }, []);
   return (
     <ScrollView style={[t.bgwhite]}>
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
@@ -79,8 +101,8 @@ const Profile = ({navigation}) => {
           <Text style={[t.bgorange,t['h30-400'],t.cwhite,t.py15,t.tCenter]}>Booking History</Text>
           <View style={[t.fRow,t.faCenter,t.p10,t.fjCenter,t.bgwarning]}>
             <Image source={img.navClassActive} style={[t.w30,t.h30,{objectFit:'contain'}]}/>
-            <Text style={[t['h30-400'],t.corange,t.ms10]}>30</Text>
-            <Text style={[t['p16-500'],t.cblack,t.ms10]}>Class Attended</Text>
+            <Text style={[t['h30-400'],t.corange,t.ms10]}>{booking.length}</Text>
+            <Text style={[t['p16-500'],t.cblack,t.ms10]}>Class Booked</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -104,7 +126,7 @@ const Profile = ({navigation}) => {
         </View>
       </View>
       <View style={[t.mt20,t.btw1,t.bgreyd,t.bsolid]}>
-        <TouchableOpacity style={[t.fRow,t.faCenter,t.fjBetween,t.px20,t.py10,t.bbw1,t.bgreyd,t.bsolid]}>
+        <TouchableOpacity style={[t.fRow,t.faCenter,t.fjBetween,t.px20,t.py10,t.bbw1,t.bgreyd,t.bsolid]} onPress={()=>{navigation.navigate('MyProfile')}}>
           <Text style={[t['p14-600'],t.corange]}>My Profile</Text>
           <Image source={img.arrowRightOrange} style={[t.w30,t.h30,{objectFit:'contain'}]}/>
         </TouchableOpacity>
@@ -120,7 +142,7 @@ const Profile = ({navigation}) => {
           <Text style={[t['p14-600'],t.corange]}>Upcoming Yoga Fit Events</Text>
           <Image source={img.arrowRightOrange} style={[t.w30,t.h30,{objectFit:'contain'}]}/>
         </TouchableOpacity>
-        <TouchableOpacity style={[t.fRow,t.faCenter,t.fjBetween,t.px20,t.py10,t.bbw1,t.bgreyd,t.bsolid]}>
+        <TouchableOpacity style={[t.fRow,t.faCenter,t.fjBetween,t.px20,t.py10,t.bbw1,t.bgreyd,t.bsolid]} onPress={()=>{navigation.navigate('Faq')}}>
           <Text style={[t['p14-600'],t.corange]}>FAQ</Text>
           <Image source={img.arrowRightOrange} style={[t.w30,t.h30,{objectFit:'contain'}]}/>
         </TouchableOpacity>

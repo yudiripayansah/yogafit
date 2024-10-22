@@ -43,5 +43,9 @@ const img = {
   classes2: require('../assets/images/classes2.jpg'),
   classes3: require('../assets/images/classes3.jpg'),
   placeholder: require('../assets/images/placeholder.png'),
+  eyeopen: require('../assets/images/icon-eye-open.png'),
+  eyeclose: require('../assets/images/icon-eye-close.png'),
+  card: require('../assets/images/bg-card.png'),
+  logohorizontal: require('../assets/images/yogafit-logo-horizontal.png'),
 }
 export default img

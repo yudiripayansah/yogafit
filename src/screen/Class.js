@@ -16,6 +16,9 @@ import CalendarSelect from '../components/CalendarSelect';
 import ClassItem from '../components/ClassItem';
 import LevelModal from '../components/ClassKat';
 import ClassKatModal from '../components/Ck';
+import LoginModal from '../components/Login'
+import VerifyModal from '../components/Verify'
+import RegisterModal from '../components/Register'
 // api
 import Api from  '../config/Api';
 const Class = ({route,navigation}) => {
@@ -24,6 +27,10 @@ const Class = ({route,navigation}) => {
   const user = useContext(UserContext);
   const classkatRef = useRef(null);
   const ckRef = useRef(null);
+  const loginRef = useRef(null);
+  const verifyRef = useRef(null);
+  const registerRef = useRef(null);
+  const [registerdata,setregisterdata] = useState({})
   const [id,setid] = useState()
   const [level,setlevel] = useState('Select Level')
   const [loading,setloading] = useState(false)
@@ -68,10 +75,6 @@ const Class = ({route,navigation}) => {
             style: 'success',
             cancellable: true
           },() => {navigation.navigate('Home')});
-          // Alert.alert(
-          //   'Success',
-          //   'Successfully booking class'
-          // );
         } else {
           SweetAlert.showAlertWithOptions({
             title: 'Failed',
@@ -83,10 +86,6 @@ const Class = ({route,navigation}) => {
             style: 'error',
             cancellable: true
           });
-          // Alert.alert(
-          //   'Failed',
-          //   req.data.data[0]
-          // );
         }
       }
     } catch (error) {
@@ -99,6 +98,9 @@ const Class = ({route,navigation}) => {
         String(today.getMonth() + 1).padStart(2, '0') + '-' + 
         String(today.getDate()).padStart(2, '0');
     return formattedDate
+  }
+  const registerAndBook = () => {
+    registerRef.current?.show()
   }
   useEffect(() => {
     if(id){
@@ -117,6 +119,9 @@ const Class = ({route,navigation}) => {
     <ScrollView style={[t.bgwhite]}>
       <LevelModal classkatRef={classkatRef} onSelectLevel={(level)=>{setlevel(level)}}/>
       <ClassKatModal ckRef={ckRef} onSelectCk={(ck)=>{setclasskat(ck)}}/>
+      <LoginModal verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef}/>
+      <VerifyModal verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} registerdata={registerdata}/>
+      <RegisterModal verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} onRegister={(data) => {setregisterdata(data)}}/>
       <StatusBar translucent barStyle="dark-content" />
       <View style={[t.px20,t.bggreye,t.pt70]}>
         <LocationSelect navigation={navigation}/>
@@ -148,7 +153,7 @@ const Class = ({route,navigation}) => {
       <View style={[t.mt20, t.px20]}>
         {!loading && classlist.length > 0 ? classlist.map((item,index) => {
           return (
-            <ClassItem data={item} key={index} boxStyle={[t.mt10]} onBookPress={(data)=>{doBookNow(data)}} onDetailPress={()=>{navigation.navigate('DetailClass',{theClass:item})}}/>
+            <ClassItem data={item} key={index} boxStyle={[t.mt10]} onBookPress={(data)=>{user ? doBookNow(data) : registerAndBook()}} onDetailPress={()=>{navigation.navigate('DetailClass',{theClass:item})}}/>
           )
         }) : loading ? (<View style={[t.py50]}><ActivityIndicator size="large" color="#FE9805" /></View>) : <Text style={[t['p14-500'],t.cblack,t.tCenter,t.py50]}>No Available Schedule</Text>}
       </View>

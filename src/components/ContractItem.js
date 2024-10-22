@@ -4,25 +4,33 @@ import {ThemeContext} from '../context/ThemeContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';// assets
 import img from '../config/Image'
 import Theimage from './Theimage';
+import Helper from '../config/Helper'
 function ContractItem({navigation, ...props}) {
   const t = useContext(ThemeContext);
   const {data,boxStyle,onPress} = props
   return (
     <Pressable 
-      style={[t.bgwhite,t.bw5,t.bsolid,t.borange,t.p10,t.br10,t.fRow,t.fjBetween,boxStyle]}
       onPress={()=>{onPress({uri:data ? 'https://login.yogafitidonline.com/api/storage/qrcode/'+data.referal_code+'.png': 'xxx'})}}>
-      <View>
-        <Text style={[t['h30-400'],t.cblack]}>{data && data.name}</Text>
-        <Text style={[t['p14-600'],t.cblack,t.mt10]}>{data && data.no_telp}</Text>
-        <Text style={[t['p14-600'],t.cblack]}>{data && data.packages_name}</Text>
-        <Text style={[t['p14-500'],t.cgrey3,t.mt10]}>Studio: {data && data.deptname}</Text>
-        <Text style={[t['p14-500'],t.cgrey3]}>Exp Member: {data && data.end_date}</Text>
-        <View style={[t.fRow,t.mt10]}>
-        <Text style={[t['p14-600'],t.cblack]}>Status:</Text>
-        <Text style={[t['p14-600'],t.ms5,data && data.status_contract ? t.cleafGreen : t.cdanger]}>{data && data.status_contract ? 'Active' : 'Non Active'}</Text>
+      <Text style={[t['h30-400'],t.corange,t.pb10,t.bbw1,t.bsolid,t.bgreyd]}>{data && data.name}</Text>
+      <View style={[t.fRow,t.fjBetween,t.faStart,t.mt10]}>
+        <View style={[]}>
+          <Text style={[t['p14-600'],t.cgreya]}>Class Name</Text>
+          <Text style={[t['p14-600'],t.cblack]}>{data && data.class_name}</Text>
+          <Text style={[t['p14-600'],t.cgreya,t.mt10]}>Tanggal Booking</Text>
+          <Text style={[t['p14-600'],t.cblack]}>{data && Helper.dateIndo(data.tgl_schedule)}</Text>
+          <Text style={[t['p14-600'],t.cgreya,t.mt10]}>Time</Text>
+          <Text style={[t['p14-600'],t.cblack]}>{data && data.start_time} -  {data && data.end_time}</Text>
+          <Text style={[t['p14-600'],t.cgreya,t.mt10]}>Teacher</Text>
+          <Text style={[t['p14-600'],t.cblack]}>{data && data.teacher}</Text>
+          <Text style={[t['p14-600'],t.cgreya,t.mt10]}>Studio</Text>
+          <Text style={[t['p14-600'],t.cblack]}>{data && data.deptname}</Text>
+        </View>
+        <View style={[t.px10,t.py5,t.bgorange,t.br5]}>
+          <Text style={[t['p10-500'],t.cwhite,t.tCenter,t.mb5]}>Scan QR</Text>
+          <Theimage original={{uri:data ? 'https://login.yogafitidonline.com/api/storage/qrcode/'+data.referal_code+'.png': 'xxx'}} placeholder={img.placeholder} style={[t.w80,t.h80,{objectFit:'contain'}]}/>
+          <Text style={[t['p10-500'],t.cwhite,t.tCenter,t.mt5]}>Klik Disini</Text>
         </View>
       </View>
-      <Theimage original={{uri:data ? 'https://login.yogafitidonline.com/api/storage/qrcode/'+data.referal_code+'.png': 'xxx'}} placeholder={img.placeholder} style={[t.w50,t.h50,{objectFit:'contain'}]}/>
     </Pressable>
   );
 }

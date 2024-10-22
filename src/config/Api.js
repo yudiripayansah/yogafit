@@ -100,6 +100,15 @@ const Api = {
     let url = '/auth/get_class_level';
     return defAxios.get(url, payload);
   },
+  faq(token) {
+    let url = '/member/get_faq';
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return defAxios.get(url, config);
+  },
   
 };
 export default Api;

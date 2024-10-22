@@ -1,5 +1,5 @@
 import React, {useEffect, useContext, useRef, useState } from 'react';
-import {Dimensions, Text, View, Image, TextInput} from 'react-native';
+import {Dimensions, Text, View, Image, TextInput, Pressable} from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import {AuthContext} from '../context/AuthContext';
 import ActionSheet from 'react-native-actions-sheet';
@@ -12,9 +12,12 @@ function Login({navigation, ...props}) {
   const t = useContext(ThemeContext);
   const {setUser} = useContext(AuthContext);
   const {loginRef,verifyRef,registerRef} = props
-  const [email,setemail] = useState('085156487895')
+  // const [email,setemail] = useState('085156487895')
+  // const [password,setpassword] = useState('841586')
+  const [email,setemail] = useState('08988449651')
   const [password,setpassword] = useState('841586')
   const [loading, setLoading] = useState(false)
+  const [showpassword, setshowpassword] = useState(false)
   const [login, setLogin] = useState({
     status: true,
     msg: null,
@@ -91,7 +94,12 @@ function Login({navigation, ...props}) {
         </View>
         <View style={[t.mt20]}>
           <Text style={[t['p16-500'],t.cblack]}>Password</Text>
-          <TextInput onChangeText={setpassword} value={password} placeholderTextColor='#ccc' placeholder='Enter your password' style={[t.bggrey90,t.p10,t['p14-500'],t.br5,t.cwhite,t.mt10]} secureTextEntry/>
+          <View style={[t.fRow,t.fjBetween,t.faCenter,t.wp100,t.relative]}>
+            <TextInput onChangeText={setpassword} value={password} placeholderTextColor='#ccc' placeholder='Enter your password' style={[t.bggrey90,t.p10,t['p14-500'],t.br5,t.cwhite,t.mt10, t.wp100]} secureTextEntry={showpassword ? false : true}/>
+            <Pressable style={[t.absolute,t.right10,t.top25]} onPress={()=>{setshowpassword(!showpassword)}}>
+              <Image source={showpassword ? img.eyeopen : img.eyeclose} style={[t.w20,t.h20]}/>
+            </Pressable>
+          </View>
         </View>
         <View style={[t.mt10,t.fRow,t.mb20]}>
           <Text style={[t['p12-600'],t.cblack]}>Forgot your password?</Text>

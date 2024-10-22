@@ -120,9 +120,7 @@ const Home = ({navigation}) => {
         </View>
       </View>
       {user && (
-      <View style={[t.mt20]}>
         <HomeContract navigation={navigation}/>
-      </View>
       )}
       <View style={[t.mt20]}>
         <View style={[t.px20,t.mb10]}>

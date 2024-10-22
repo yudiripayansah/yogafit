@@ -1,9 +1,8 @@
 import React, {useEffect, useContext, useState, useRef} from 'react';
 import {
-  View, ScrollView, StatusBar, Alert, Text, Dimensions
+  View, ScrollView, StatusBar, ActivityIndicator, Text, Dimensions
 } from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
-import {AuthContext} from '../context/AuthContext';
 import {UserContext} from '../context/UserContext';
 // assets
 import img from '../config/Image'
@@ -19,46 +18,48 @@ const DetailClass = ({route,navigation}) => {
   const user = useContext(UserContext);
   const screenWidth = Dimensions.get('window').width - 40;
   const {theClass} = route.params
+  const [loading,setloading] = useState(false)
   const doBookNow = async () => {
+    setloading(true)
     try {
       let param = {
         id: Number(theClass.id_schedule)
       }
       let req = await Api.bookingClass(param,user.token)
       if(req.status === 200 || req.status === 201) {
-        if(req.data.message && req.data.message == 'Success Added') {
-          SweetAlert.showAlertWithOptions({
-            title: 'Success',
-            subTitle: 'Successfully booking class',
-            confirmButtonTitle: 'OK',
-            confirmButtonColor: '#000',
-            otherButtonTitle: 'Cancel',
-            otherButtonColor: '#dedede',
-            style: 'success',
-            cancellable: true
-          },() => {navigation.navigate('Home')});
-          // Alert.alert(
-          //   'Success',
-          //   'Successfully booking class'
-          // );
-        } else {
-          // Alert.alert(
-          //   'Failed',
-          //   req.data.data[0]
-          // );
-          SweetAlert.showAlertWithOptions({
-            title: 'Failed',
-            subTitle: req.data.data[0],
-            confirmButtonTitle: 'OK',
-            confirmButtonColor: '#000',
-            otherButtonTitle: 'Cancel',
-            otherButtonColor: '#dedede',
-            style: 'error',
-            cancellable: true
-          });
-        }
+        setTimeout(()=>{
+          if(req.data.message && req.data.message == 'Success Added') {
+            SweetAlert.showAlertWithOptions({
+              title: 'Success',
+              subTitle: 'Successfully booking class',
+              confirmButtonTitle: 'OK',
+              confirmButtonColor: '#000',
+              otherButtonTitle: 'Cancel',
+              otherButtonColor: '#dedede',
+              style: 'success',
+              cancellable: true
+            },() => {navigation.navigate('Home')});
+          } else {
+            SweetAlert.showAlertWithOptions({
+              title: 'Failed',
+              subTitle: req.data.data[0],
+              confirmButtonTitle: 'OK',
+              confirmButtonColor: '#000',
+              otherButtonTitle: 'Cancel',
+              otherButtonColor: '#dedede',
+              style: 'error',
+              cancellable: true
+            });
+          }
+        },2000)
       }
+      setTimeout(()=>{
+        setloading(false)
+      },2000)
     } catch (error) {
+      setTimeout(()=>{
+        setloading(false)
+      },2000)
       console.error(error)
     }
   }
@@ -95,9 +96,13 @@ const DetailClass = ({route,navigation}) => {
           }}
           source={{ html: `<div>${theClass.fasilitas}</div>` }}
         />
-        <TouchableOpacity onPress={()=>{doBookNow()}}>
-          <Text style={[t.bgorange,t.py5,t.px10,t.bw1,t.borange,t.bsolid,t.br5,t.cwhite,t.tCenter,t['p20-700']]}>Book Now</Text>
-        </TouchableOpacity>
+        {!loading ? 
+          (
+            <TouchableOpacity onPress={()=>{doBookNow()}}>
+              <Text style={[t.bgorange,t.py5,t.px10,t.bw1,t.borange,t.bsolid,t.br5,t.cwhite,t.tCenter,t['p20-700']]}>Book Now</Text>
+            </TouchableOpacity>
+          )
+         : (<View style={[t.pt20]}><ActivityIndicator size="large" color="#FE9805" /></View>)}
       </View>
       <View style={[t.py50,t.wp100]}></View>
     </ScrollView>

@@ -1,5 +1,5 @@
 import React, {useEffect, useContext, useState } from 'react';
-import {Text, ScrollView,View, Image, ActivityIndicator} from 'react-native';
+import {Text, ScrollView,View, Image, ActivityIndicator, PermissionsAndroid, Platform} from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import {LocContext} from '../context/LocContext';
 import {LocationContext} from '../context/LocationContext';
@@ -95,8 +95,35 @@ function LocationList({navigation, ...props}) {
       return 0
     }
   };
+  const requestLocationPermission = async () => {
+    try {
+      if (Platform.OS === 'ios') {
+        const status = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+        if (status === RESULTS.GRANTED) {
+          getLonglat();
+        } else {
+          console.log('Permission Denied', 'Location permission is required to continue.');
+        }
+      } else {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Location Access Required',
+            message: 'This app needs to access your location',
+          }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          getLonglat();
+        } else {
+          console.log('Permission Denied', 'Location permission is required to continue.');
+        }
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
   useEffect(() => {
-    getLonglat()
+    requestLocationPermission()
   }, []);
   useEffect(() => {
     getStudio()
