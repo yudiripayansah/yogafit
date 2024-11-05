@@ -1,9 +1,10 @@
 import React, {useEffect, useContext, useRef, useState } from 'react';
-import {Dimensions, Text, ScrollView, View, Image, TextInput} from 'react-native';
+import {Switch, Text, ScrollView, View, Image, TextInput} from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import {AuthContext} from '../context/AuthContext';
 import {LocationContext} from '../context/LocationContext';
 import ActionSheet from 'react-native-actions-sheet';
+import DateTimePicker from '@react-native-community/datetimepicker';
 // assets
 import img from '../config/Image'
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -11,39 +12,63 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Api from '../config/Api'
 // components
 import LocationModal from './LocationList'
+import ClassItem from './ClassItem'
 function Register({navigation, ...props}) {
   const t = useContext(ThemeContext);
   const {setUser} = useContext(AuthContext);
   const studio = useContext(LocationContext);
   const locationRef = useRef(null);
-  const {loginRef,verifyRef, registerRef, onRegister} = props
+  const {loginRef,verifyRef, registerRef, onRegister, classdata} = props
   const [id,setid] = useState()
   const [name,setname] = useState()
   const [email,setemail] = useState()
+  const [referral,setreferral] = useState('')
+  const [gender,setgender] = useState(true)
+  const [birthday,setbirthday] = useState(new Date())
   const [loading, setLoading] = useState(false)
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [register, setRegister] = useState({
     status: true,
     msg: null,
     data: null
   })
   const handlePhoneNumber = (text) => {
-    // Use regex to remove any non-numeric characters
     const numericValue = text.replace(/[^0-9]/g, '');
     setid(numericValue);
   };
+  const toggleSwitch = () => setgender(previousState => !previousState);
+  const onDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || birthday;
+    setShowDatePicker(Platform.OS === 'ios'); // Only keep picker open on iOS
+    setbirthday(currentDate);
+  };
   const doRegister = async () => {
     setLoading(true)
+    let dGender = gender ? 'male' : 'female';
     try {
       let payload = {
         id: id,
         name: name,
         email: email,
+        gender: dGender,
+        birthday: birthday,
+        referral: referral,
         studio: studio.id,
       }
-      if(id && name && email && studio) {
-        let req = await Api.register(payload)
-        if(req.status === 200 || req.status === 201){
+      if(classdata && classdata.id_schedule){
+        payload.schedule = classdata.id_schedule
+      }
+      if(id && name && email && dGender && birthday && studio) {
+        console.log(payload)
+        let req = false
+        if(classdata && classdata.id_schedule){
+          req = await Api.getuserotp(payload)
+        } else {
+          req = await Api.register(payload)
+        }
+        if(req && req.status === 200 || req.status === 201){
           if(req.data) {
+            console.log(req.data)
             onRegister(payload)
             setRegister({
               status: true,
@@ -99,6 +124,12 @@ function Register({navigation, ...props}) {
           <Image source={img.close} style={[t.w15,t.h15]}/>
         </TouchableOpacity>
         <Text style={[t['p20-600'],t.cblack,t.tCenter]}>Come join Us?</Text>
+        {(classdata && classdata.id_schedule) && (
+          <View style={[t.mt20]}>
+            <Text style={[t['p16-500'],t.cblack]}>Selected Class</Text>
+            <ClassItem data={classdata} boxStyle={[t.mt10]} hidebtn={true}/>
+          </View>
+        )}
         <View style={[t.mt20]}>
           <Text style={[t['p16-500'],t.cblack]}>Mobile number</Text>
           <TextInput keyboardType="numeric" onChangeText={handlePhoneNumber} value={id} placeholderTextColor='#ccc' placeholder='eg: +6281234567890' style={[t.bggrey90,t.p10,t['p14-500'],t.br5,t.cwhite,t.mt10]}/>
@@ -111,11 +142,44 @@ function Register({navigation, ...props}) {
           <Text style={[t['p16-500'],t.cblack]}>Email</Text>
           <TextInput onChangeText={setemail} value={email} placeholderTextColor='#ccc' placeholder='eg: johndoe@email.com' style={[t.bggrey90,t.p10,t['p14-500'],t.br5,t.cwhite,t.mt10]}/>
         </View>
-        <View style={[t.my20]}>
+        <View style={[t.mt20]}>
+          <Text style={[t['p16-500'],t.cblack]}>Gender</Text>
+          <View style={[t.fRow,t.faCenter,t.mt10]}>
+            <Switch
+              trackColor={{false: '#F67AAE', true: '#17A5FF'}}
+              thumbColor='#f4f3f4'
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={gender}
+            />
+            <Text style={[t['p16-700'],t.cblack]}>{gender ? 'Male' : 'Female'}</Text>
+          </View>
+        </View>
+        <View style={[t.mt20]}>
+          <Text style={[t['p16-500'],t.cblack]}>Birthday</Text>
+          <TouchableOpacity onPress={() => setShowDatePicker(true)} style={[t.mt10]}>
+            <Text style={[t['p16-700'],t.cblack]}>
+                {`Birthday: ${birthday.toLocaleDateString()}`}
+            </Text>
+          </TouchableOpacity>
+          {showDatePicker && (
+            <DateTimePicker
+                value={birthday}
+                mode="date"
+                display="default"
+                onChange={onDateChange}
+            />
+          )}
+        </View>
+        <View style={[t.mt20]}>
           <Text style={[t['p16-500'],t.cblack]}>Studio</Text>
           <TouchableOpacity onPress={()=>{locationRef.current?.show();}} style={[t.bggrey90,t.p10,t.br5,t.mt10]}>
             <Text style={[t['p14-500'],t.cwhite]}>{studio && studio.deptname}</Text>
           </TouchableOpacity>
+        </View>
+        <View style={[t.my20]}>
+          <Text style={[t['p16-500'],t.cblack]}>Referral Code</Text>
+          <TextInput onChangeText={setreferral} value={referral} placeholderTextColor='#ccc' placeholder='eg: Y064F1T' style={[t.bggrey90,t.p10,t['p14-500'],t.br5,t.cwhite,t.mt10]}/>
         </View>
         <TouchableOpacity style={[t.mxAuto,t.bgorange,t.faCenter,t.fjCenter,t.px50,t.py10,t.br5]} onPress={() => {doRegister()}}>
           <Text style={[t['p14-700'],t.cblack]}>{loading ? 'Processing...' : 'Register'}</Text>

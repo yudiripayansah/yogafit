@@ -19,8 +19,24 @@ const Api = {
     let url = '/auth/register';
     return defAxios.post(url, payload);
   },
+  getuserotp(payload) {
+    let url = '/auth/get_users_otp';
+    return defAxios.post(url, payload);
+  },
+  updatePhone(payload) {
+    let url = '/auth/edit_hp';
+    return defAxios.post(url, payload);
+  },
+  resendOtp(payload) {
+    let url = '/auth/resend_otp';
+    return defAxios.post(url, payload);
+  },
   cekotp(payload) {
     let url = '/auth/cek_otp';
+    return defAxios.post(url, payload);
+  },
+  cekoptwithbooking(payload) {
+    let url = '/auth/booking ';
     return defAxios.post(url, payload);
   },
   forgot(payload) {
@@ -63,8 +79,29 @@ const Api = {
     };
     return defAxios.post(url, payload, config);
   },
+  trialContract(token) {
+    let url = '/member/my_contract_trial';
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return defAxios.get(url, config);
+  },
+  deleteAccount(token) {
+    let url = '/member/delete_account';
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return defAxios.post(url, config);
+  },
   myContract(payload, token) {
     let url = '/member/my_contract';
+    if(payload){
+      url += `?id=${payload.id}`
+    }
     let config = {
       headers: {
         Authorization: 'Bearer ' + token,
@@ -109,6 +146,14 @@ const Api = {
     };
     return defAxios.get(url, config);
   },
-  
+  changePassword(payload,token) {
+    let url = '/member/change_password';
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return defAxios.put(url, payload, config);
+  },
 };
 export default Api;

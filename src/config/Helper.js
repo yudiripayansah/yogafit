@@ -112,6 +112,23 @@ const helper = {
     } catch (error) {
       return false;
     }
+  },
+  daysLeft(targetDate) {
+    // Get today's date
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to midnight for accurate comparison
+    
+    // Convert target date to a Date object
+    const target = new Date(targetDate);
+    target.setHours(0, 0, 0, 0); // Reset time to midnight
+    
+    // Calculate the difference in milliseconds
+    const diffInMs = target - today;
+
+    // Convert the difference from milliseconds to days
+    const daysLeft = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+
+    return daysLeft >= 0 ? daysLeft : 0; // Return 0 if the date is in the past
   }
 }
 export default helper

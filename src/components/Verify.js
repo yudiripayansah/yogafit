@@ -9,9 +9,14 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Api from '../config/Api'
 function Verify({navigation, ...props}) {
   const t = useContext(ThemeContext);
-  const {verifyRef, loginRef,registerdata} = props
+  const {changephoneRef,verifyRef, loginRef,registerdata} = props
   const [otp,setotp] = useState()
   const [loading, setLoading] = useState(false)
+  const [resend, setResend] = useState({
+    status: true,
+    msg: null,
+    data: null
+  })
   const [register, setRegister] = useState({
     status: true,
     msg: null,
@@ -24,8 +29,16 @@ function Verify({navigation, ...props}) {
         id: registerdata.id,
         otp: otp
       }
+      if(registerdata.schedule){
+        payload.schedule = registerdata.schedule
+      }
       if(payload.id && payload.otp) {
-        let req = await Api.cekotp(payload)
+        let req = false
+        if(registerdata.schedule){
+          req = await Api.cekoptwithbooking(payload)
+        } else {
+          req = await Api.cekotp(payload)
+        }
         if(req.status === 200 || req.status === 201){
           if(req.data.data != "Wrong otp code") {
             setRegister({
@@ -61,12 +74,62 @@ function Verify({navigation, ...props}) {
       console.error(error)
       setRegister({
         status: false,
-        msg: 'Register failed! mobile number or password is wrong.'
+        msg: 'Verification failed!'
       })
       setLoading(false)
     }
     setTimeout(()=>{
       setRegister({
+        status: true,
+        msg: null,
+        data: null
+      })
+    },3000)
+  }
+  const doResend = async () => {
+    setLoading(true)
+    try {
+      let payload = {
+        nohp: registerdata.id
+      }
+        let req = await Api.resendOtp(payload)
+        if(req.status === 200 || req.status === 201){
+          if(req.data.data != "Wrong otp code") {
+            setResend({
+              status: true,
+              msg: 'New code has been sent'
+            })
+            setTimeout(() => {
+              setResend({
+                status: true,
+                msg: null,
+                data: null
+              })
+            },2000)
+          } else {
+            setResend({
+              status: false,
+              msg: 'Failed to resend new code'
+            })
+          }
+        } else {
+          setResend({
+            status: false,
+            msg: 'Failed trying to resend new code',
+            data: null
+          })
+        }
+      setLoading(false)
+    } catch (error) {
+      console.error(error)
+      setResend({
+        status: false,
+        msg: 'Resend code failed'+error
+      })
+      setLoading(false)
+    }
+    setTimeout(()=>{
+      setResend({
         status: true,
         msg: null,
         data: null
@@ -82,6 +145,16 @@ function Verify({navigation, ...props}) {
         <Text style={[t['p20-600'],t.cblack,t.tCenter]}>Account Verification</Text>
         <View style={[t.mt10,t.fRow,t.wp100]}>
           <Text style={[t['p12-500'],t.cblack,t.tCenter,t.wp100]}>Hi {registerdata.name}, Please enter the verification code that was sent to your WhatsApp number</Text>
+        </View>
+        <View style={[t.mt10,t.faCenter,t.fjCenter]}>
+          <Text style={[t['p12-500'],t.cblack,t.tCenter,t.wp100]}>Didn't get the code?</Text>
+          <TouchableOpacity onPress={() => doResend()} style={[t.msAuto]}>
+            <Text style={[t['p12-500'],t.corange,t.tCenter,t.wp100]}>Click here to resend</Text>
+          </TouchableOpacity>
+          <Text style={[t['p12-500'],t.cblack,t.tCenter,t.wp100]}>Or</Text>
+          <TouchableOpacity onPress={() => {changephoneRef.current?.show();verifyRef.current?.hide()}} style={[t.msAuto]}>
+            <Text style={[t['p12-500'],t.corange,t.tCenter,t.wp100]}>Change phone number</Text>
+          </TouchableOpacity>
         </View>
         <View style={[t.mt20,t.faCenter,t.fjCenter]}>
           <TextInput onChangeText={setotp} value={otp} placeholderTextColor='#ccc' placeholder='XXXXXX' style={[t.wp60,t.bggrey90,t.p10,t['p20-700'],t.br5,t.cwhite,t.mt10,{letterSpacing:10},t.tCenter]}/>

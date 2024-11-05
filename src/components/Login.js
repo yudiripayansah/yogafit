@@ -11,11 +11,9 @@ import Api from '../config/Api'
 function Login({navigation, ...props}) {
   const t = useContext(ThemeContext);
   const {setUser} = useContext(AuthContext);
-  const {loginRef,verifyRef,registerRef} = props
-  // const [email,setemail] = useState('085156487895')
-  // const [password,setpassword] = useState('841586')
+  const {loginRef,verifyRef,registerRef,forgotRef} = props
   const [email,setemail] = useState('08988449651')
-  const [password,setpassword] = useState('841586')
+  const [password,setpassword] = useState('234903')
   const [loading, setLoading] = useState(false)
   const [showpassword, setshowpassword] = useState(false)
   const [login, setLogin] = useState({
@@ -103,7 +101,10 @@ function Login({navigation, ...props}) {
         </View>
         <View style={[t.mt10,t.fRow,t.mb20]}>
           <Text style={[t['p12-600'],t.cblack]}>Forgot your password?</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>{
+            forgotRef.current?.show()
+            loginRef.current?.hide()
+          }}>
             <Text style={[t['p12-600'],t.corange,t.tItalic,t.ms5]}>Click Here</Text>
           </TouchableOpacity>
         </View>

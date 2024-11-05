@@ -1,11 +1,11 @@
 import React, {useEffect, useContext} from 'react';
 import {Dimensions, Text, View, Image} from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
-import { TouchableOpacity } from 'react-native-gesture-handler';// assets
-import img from '../config/Image'
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import Helper from '../config/Helper'
 function ClassItem({navigation, ...props}) {
   const t = useContext(ThemeContext);
-  const {onBookPress,onDetailPress,data,boxStyle} = props
+  const {onBookPress,onDetailPress,data,boxStyle,hidebtn} = props
   return (
     <View style={[t.bw1,t.bsolid,t.bblack,t.p10,t.br10,t.fRow,t.faCenter,boxStyle]}>
       <View style={[t.faCenter,t.fjCenter,t.pe10]}>
@@ -27,14 +27,18 @@ function ClassItem({navigation, ...props}) {
             <Text style={[t['p12-400'],t.corange]}>{data.spot_left}</Text>
           </View> */}
         </View>
-        <View style={[t.fRow,t.fjBetween,t.faEnd,t.mt10]}>
-          <TouchableOpacity onPress={()=>{onDetailPress()}}>
-            <Text style={[t.bggrey90,t.py5,t.px10,t.bw1,t.bblack,t.bsolid,t.br100,t.cblack,t['p12-700']]}>Detail</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=>{onBookPress(data)}}>
-            <Text style={[t.bgorange,t.py5,t.px10,t.bw1,t.borange,t.bsolid,t.br100,t.cwhite,t['p12-700']]}>Book Now</Text>
-          </TouchableOpacity>
-        </View>
+        {!hidebtn ? (
+          <View style={[t.fRow,t.fjBetween,t.faEnd,t.mt10]}>
+            <TouchableOpacity onPress={()=>{onDetailPress()}}>
+              <Text style={[t.bggrey90,t.py5,t.px10,t.bw1,t.bblack,t.bsolid,t.br100,t.cblack,t['p12-700']]}>Detail</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>{onBookPress(data)}}>
+              <Text style={[t.bgorange,t.py5,t.px10,t.bw1,t.borange,t.bsolid,t.br100,t.cwhite,t['p12-700']]}>Book Now</Text>
+            </TouchableOpacity>
+          </View>
+        ): (
+          <Text style={[t['p12-700'],t.cblack,t.mt5]}>{Helper.dateIndo(data.tgl_schedule)}</Text>
+        )}
       </View>
     </View>
   );

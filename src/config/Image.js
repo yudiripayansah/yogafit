@@ -23,6 +23,7 @@ const img = {
   mappoint: require('../assets/images/mappoint.png'),
   calendar: require('../assets/images/icon-calendar.png'),
   warning: require('../assets/images/icon-warning.png'),
+  warningRed: require('../assets/images/icon-warning-red.png'),
   fire: require('../assets/images/icon-fire.png'),
   navigation: require('../assets/images/bg-nav.png'),
   logo: require('../assets/images/logo-1.png'),

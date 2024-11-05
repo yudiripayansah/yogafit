@@ -22,7 +22,6 @@ const Faq = ({navigation}) => {
       let req = await Api.faq(user.token)
       if(req.status === 200 || req.status === 201){
         let {data} = req.data
-        console.log(data)
         setfaq(data)
       } else {
         console.error("Error get event")

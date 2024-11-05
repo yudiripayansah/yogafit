@@ -1,5 +1,5 @@
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-import {useState,useRef} from 'react';
+import {useState,useRef, useEffect} from 'react';
 import BookingHistory from '../screen/BookingHistory';
 import BookingUpcoming from '../screen/BookingUpcoming';
 import Class from '../screen/Class';
@@ -14,6 +14,7 @@ import Intro from '../screen/Intro';
 import Login from '../screen/Login';
 import Location from '../screen/Location';
 import MyContract from '../screen/MyContract';
+import MyContractDetail from '../screen/MyContractDetail';
 import MyProfile from '../screen/MyProfile';
 import Profile from '../screen/Profile';
 import Trainer from '../screen/Trainer';
@@ -22,6 +23,8 @@ import Nav from '../components/Navigation';
 import LoginModal from '../components/Login'
 import VerifyModal from '../components/Verify'
 import RegisterModal from '../components/Register'
+import ForgotModal from '../components/Forgot'
+import ChangePhoneModal from '../components/ChangePhone'
 const MainStack = createStackNavigator();
 const options = {
   ...TransitionPresets.SlideFromRightIOS,
@@ -31,6 +34,8 @@ export const RouteMain = ({navigation}) => {
   const loginRef = useRef(null);
   const verifyRef = useRef(null);
   const registerRef = useRef(null);
+  const forgotRef = useRef(null);
+  const changephoneRef = useRef(null);
   const [registerdata,setregisterdata] = useState({})
   const openLogin = () => {
     loginRef.current?.show();
@@ -39,11 +44,16 @@ export const RouteMain = ({navigation}) => {
   const openVerify = () => {
     verifyRef.current?.show();
   };
+  useEffect(() => {
+    
+  },[])
   return (
     <>
-      <LoginModal verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef}/>
-      <VerifyModal verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} registerdata={registerdata}/>
-      <RegisterModal verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} onRegister={(data) => {setregisterdata(data)}}/>
+      <LoginModal verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} forgotRef={forgotRef}/>
+      <ForgotModal verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} forgotRef={forgotRef}/>
+      <VerifyModal changephoneRef={changephoneRef} verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} registerdata={registerdata}/>
+      <ChangePhoneModal changephoneRef={changephoneRef} verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} registerdata={registerdata}/>
+      <RegisterModal changephoneRef={changephoneRef} verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} onRegister={(data) => {setregisterdata(data)}}/>
       <MainStack.Navigator
         screenOptions={{
           headerShown: false,
@@ -69,6 +79,7 @@ export const RouteMain = ({navigation}) => {
         <MainStack.Screen name={'Login'} component={Login} options={options} />
         <MainStack.Screen name={'Location'} component={Location} options={options} />
         <MainStack.Screen name={'MyContract'} component={MyContract} options={options} />
+        <MainStack.Screen name={'MyContractDetail'} component={MyContractDetail} options={options} />
         <MainStack.Screen name={'MyProfile'} component={MyProfile} options={options} />
         <MainStack.Screen name={'Courses'} component={Courses} options={options} />
         <MainStack.Screen name={'Events'} component={Events} options={options} />
