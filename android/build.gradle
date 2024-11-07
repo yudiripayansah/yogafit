@@ -1,8 +1,10 @@
 buildscript {
     ext {
         buildToolsVersion = "34.0.0"
+        // buildToolsVersion = "33.0.0"
         minSdkVersion = 23
         compileSdkVersion = 34
+        // compileSdkVersion = 33
         targetSdkVersion = 34
         ndkVersion = "23.1.7779620"
         kotlinVersion = "1.9.22"
@@ -20,3 +22,9 @@ buildscript {
 }
 
 apply plugin: "com.facebook.react.rootproject"
+
+configurations.all {
+    resolutionStrategy {
+        force 'androidx.core:core-ktx:1.6.0'
+    }
+}

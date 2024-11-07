@@ -55,13 +55,13 @@ function Register({navigation, ...props}) {
         referral: referral,
         studio: studio.id,
       }
-      if(classdata && classdata.id_schedule){
-        payload.schedule = classdata.id_schedule
+      if(classdata && classdata.idschedule){
+        payload.schedule = classdata.idschedule
       }
       if(id && name && email && dGender && birthday && studio) {
         console.log(payload)
         let req = false
-        if(classdata && classdata.id_schedule){
+        if(classdata && classdata.idschedule){
           req = await Api.getuserotp(payload)
         } else {
           req = await Api.register(payload)
@@ -124,7 +124,7 @@ function Register({navigation, ...props}) {
           <Image source={img.close} style={[t.w15,t.h15]}/>
         </TouchableOpacity>
         <Text style={[t['p20-600'],t.cblack,t.tCenter]}>Come join Us?</Text>
-        {(classdata && classdata.id_schedule) && (
+        {(classdata && classdata.idschedule) && (
           <View style={[t.mt20]}>
             <Text style={[t['p16-500'],t.cblack]}>Selected Class</Text>
             <ClassItem data={classdata} boxStyle={[t.mt10]} hidebtn={true}/>

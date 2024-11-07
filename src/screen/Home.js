@@ -97,6 +97,7 @@ const Home = ({navigation}) => {
       if(user && user.token){
         let req = await Api.trialContract(user.token)
         if(req.status === 200 || req.status === 201){
+          console.log(req.data)
           settrialcontract(req.data.data[0])
         } else {
           console.error("Error get trial contract")

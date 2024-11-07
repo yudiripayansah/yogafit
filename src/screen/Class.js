@@ -63,11 +63,11 @@ const Class = ({route,navigation}) => {
   const doBookNow = async (data) => {
     try {
       let param = {
-        id: Number(data.id_schedule)
+        id: Number(data.idschedule)
       }
       let req = await Api.bookingClass(param,user.token)
       if(req.status === 200 || req.status === 201) {
-        if(req.data.message && req.data.message == 'Success Added') {
+        if(req.data.message && req.data.message == 'Success Booking Class') {
           SweetAlert.showAlertWithOptions({
             title: 'Success',
             subTitle: 'Successfully booking class',
@@ -79,9 +79,10 @@ const Class = ({route,navigation}) => {
             cancellable: true
           },() => {navigation.navigate('Home')});
         } else {
+          console.log(req.data)
           SweetAlert.showAlertWithOptions({
             title: 'Failed',
-            subTitle: req.data.data[0],
+            subTitle: 'Failed',
             confirmButtonTitle: 'OK',
             confirmButtonColor: '#000',
             otherButtonTitle: 'Cancel',

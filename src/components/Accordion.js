@@ -30,7 +30,7 @@ const Accordion = ({ title, content }) => {
       </TouchableOpacity>
       <Animated.View style={[t.bbw1,t.bsolid,t.bgreye, animatedStyle]}>
         <View style={[t.py15,t.btw1,t.bsolid,t.bgreye]}>
-          <Text style={[t['p12-500'],t.cgrey6]}>{content}</Text>
+          <Text style={[t['p12-500'],t.cblack]}>{content}</Text>
         </View>
       </Animated.View>
     </View>
