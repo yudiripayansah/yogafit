@@ -8,7 +8,6 @@ import {UserContext} from '../context/UserContext';
 // assets
 import img from '../config/Image'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import SweetAlert from 'react-native-sweet-alert';
 // components
 import Theimage from '../components/Theimage'
 import Api from '../config/Api'
@@ -39,17 +38,7 @@ const Profile = ({navigation}) => {
         if (supported) {
           return Linking.openURL(url);
         } else {
-          SweetAlert.showAlertWithOptions({
-            title: 'Error',
-            subTitle: 'WhatsApp is not installed',
-            confirmButtonTitle: 'OK',
-            confirmButtonColor: '#000',
-            otherButtonTitle: 'Cancel',
-            otherButtonColor: '#dedede',
-            style: 'error',
-            cancellable: true
-          });
-          // Alert.alert('Error', 'WhatsApp is not installed');
+          Alert.alert('Error', 'WhatsApp is not installed');
         }
       })
       .catch((err) => console.error('Error occurred', err));

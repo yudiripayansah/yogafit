@@ -7,7 +7,7 @@ import {UserContext} from '../context/UserContext';
 // assets
 import img from '../config/Image'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import SweetAlert from 'react-native-sweet-alert';
+import AwesomeAlert from 'react-native-awesome-alerts';
 // components
 import Theimage from '../components/Theimage';
 import RenderHTML from 'react-native-render-html';
@@ -18,6 +18,14 @@ const DetailClass = ({route,navigation}) => {
   const user = useContext(UserContext);
   const screenWidth = Dimensions.get('window').width - 40;
   const {theClass} = route.params
+  const [alert,setalert] = useState({
+    show: false,
+    title: '',
+    message: '',
+    cancelText: 'Close',
+    confirmText: 'Ok',
+    onConfirm: () => {}
+  })
   const [loading,setloading] = useState(false)
   const doBookNow = async () => {
     setloading(true)
@@ -28,28 +36,24 @@ const DetailClass = ({route,navigation}) => {
       let req = await Api.bookingClass(param,user.token)
       if(req.status === 200 || req.status === 201) {
         setTimeout(()=>{
-          if(req.data.message && req.data.message == 'Success Added') {
-            SweetAlert.showAlertWithOptions({
+          if(req.data.message && req.data.message == 'Success Booking Class') {
+            setalert({
+              show: true,
               title: 'Success',
-              subTitle: 'Successfully booking class',
-              confirmButtonTitle: 'OK',
-              confirmButtonColor: '#000',
-              otherButtonTitle: 'Cancel',
-              otherButtonColor: '#dedede',
-              style: 'success',
-              cancellable: true
-            },() => {navigation.navigate('Home')});
+              message: req.data.message,
+              cancelText: 'Close',
+              confirmText: 'Ok',
+              onConfirm: () => {navigation.navigate('Home')}
+            })
           } else {
-            SweetAlert.showAlertWithOptions({
+            setalert({
+              show: true,
               title: 'Failed',
-              subTitle: req.data.data[0],
-              confirmButtonTitle: 'OK',
-              confirmButtonColor: '#000',
-              otherButtonTitle: 'Cancel',
-              otherButtonColor: '#dedede',
-              style: 'error',
-              cancellable: true
-            });
+              message: req.data.data[0],
+              cancelText: 'Close',
+              confirmText: 'Ok',
+              onConfirm: () => {hideAlert()}
+            })
           }
         },2000)
       }
@@ -63,10 +67,42 @@ const DetailClass = ({route,navigation}) => {
       console.error(error)
     }
   }
+  const hideAlert = () => {
+    setalert({
+      show: false,
+      title: '',
+      message: '',
+      cancelText: 'Close',
+      confirmText: 'Ok',
+      onConfirm: () => {}
+    })
+  }
   useEffect(() => {
   }, []);
   return (
     <ScrollView style={[t.bgwhite]}>
+      <AwesomeAlert
+        show={alert.show}
+        showProgress={false}
+        title={alert.title}
+        message={alert.message}
+        closeOnTouchOutside={true}
+        closeOnHardwareBackPress={false}
+        showCancelButton={false}
+        showConfirmButton={true}
+        cancelText={alert.cancelText}
+        confirmText={alert.confirmText}
+        confirmButtonColor="#62AC18"
+        cancelButtonColor="#dd0000"
+        titleStyle={[t['h20-400'],t.cblack]}
+        messageStyle={[t['p14-500',t.cblack,t.tCenter]]}
+        contentStyle={[t.tCenter]}
+        confirmButtonTextStyle={[t['p20-600',t.cblack]]}
+        onCancelPressed={() => {
+          setalert(false)
+        }}
+        onConfirmPressed={alert.onConfirm}
+      />
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
       <Theimage original={{uri:'https://login.yogafitidonline.com/api/storage/studio/'+theClass.gambar}} placeholder={img.placeholder}/>
       <View style={[t.pt20,t.pb50,t.px20]}>

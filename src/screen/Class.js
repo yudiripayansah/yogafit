@@ -6,7 +6,7 @@ import {ThemeContext} from '../context/ThemeContext';
 import {UserContext} from '../context/UserContext';
 import {LocationContext} from '../context/LocationContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import SweetAlert from 'react-native-sweet-alert';
+import AwesomeAlert from 'react-native-awesome-alerts';
 // assets
 import img from '../config/Image'
 // components
@@ -36,6 +36,14 @@ const Class = ({route,navigation}) => {
   const [id,setid] = useState()
   const [level,setlevel] = useState('Select Level')
   const [loading,setloading] = useState(false)
+  const [alert,setalert] = useState({
+    show: false,
+    title: '',
+    message: '',
+    cancelText: 'Close',
+    confirmText: 'Ok',
+    onConfirm: () => {}
+  })
   const [classdata,setclassdata] = useState(null)
   const [classkat,setclasskat] = useState('Select Category')
   const [classlist, setclasslist] = useState([])
@@ -68,33 +76,40 @@ const Class = ({route,navigation}) => {
       let req = await Api.bookingClass(param,user.token)
       if(req.status === 200 || req.status === 201) {
         if(req.data.message && req.data.message == 'Success Booking Class') {
-          SweetAlert.showAlertWithOptions({
+          setalert({
+            show: true,
             title: 'Success',
-            subTitle: 'Successfully booking class',
-            confirmButtonTitle: 'OK',
-            confirmButtonColor: '#000',
-            otherButtonTitle: 'Cancel',
-            otherButtonColor: '#dedede',
-            style: 'success',
-            cancellable: true
-          },() => {navigation.navigate('Home')});
+            message: req.data.message,
+            cancelText: 'Close',
+            confirmText: 'Ok',
+            onConfirm: () => {navigation.navigate('Home')}
+          })
         } else {
-          console.log(req.data)
-          SweetAlert.showAlertWithOptions({
-            title: 'Failed',
-            subTitle: 'Failed',
-            confirmButtonTitle: 'OK',
-            confirmButtonColor: '#000',
-            otherButtonTitle: 'Cancel',
-            otherButtonColor: '#dedede',
-            style: 'error',
-            cancellable: true
-          });
+          if(req.data.data && req.data.data.length > 0){
+            setalert({
+              show: true,
+              title: 'Failed',
+              message: req.data.data[0],
+              cancelText: 'Close',
+              confirmText: 'Ok',
+              onConfirm: () => {hideAlert()}
+            })
+          }
         }
       }
     } catch (error) {
       console.error(error)
     }
+  }
+  const hideAlert = () => {
+    setalert({
+      show: false,
+      title: '',
+      message: '',
+      cancelText: 'Close',
+      confirmText: 'Ok',
+      onConfirm: () => {}
+    })
   }
   const getToday = () => {
     const today = new Date();
@@ -128,6 +143,28 @@ const Class = ({route,navigation}) => {
       <VerifyModal changephoneRef={changephoneRef} verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} registerdata={registerdata}/>
       <RegisterModal changephoneRef={changephoneRef} verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} onRegister={(data) => {setregisterdata(data)}} classdata={classdata}/>
       <ChangePhoneModal changephoneRef={changephoneRef} verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} registerdata={registerdata}/>
+      <AwesomeAlert
+        show={alert.show}
+        showProgress={false}
+        title={alert.title}
+        message={alert.message}
+        closeOnTouchOutside={true}
+        closeOnHardwareBackPress={false}
+        showCancelButton={false}
+        showConfirmButton={true}
+        cancelText={alert.cancelText}
+        confirmText={alert.confirmText}
+        confirmButtonColor="#62AC18"
+        cancelButtonColor="#dd0000"
+        titleStyle={[t['h20-400'],t.cblack]}
+        messageStyle={[t['p14-500',t.cblack,t.tCenter]]}
+        contentStyle={[t.tCenter]}
+        confirmButtonTextStyle={[t['p20-600',t.cblack]]}
+        onCancelPressed={() => {
+          setalert(false)
+        }}
+        onConfirmPressed={alert.onConfirm}
+      />
       <StatusBar translucent barStyle="dark-content" />
       <View style={[t.px20,t.bggreye,t.pt70]}>
         <LocationSelect navigation={navigation}/>
