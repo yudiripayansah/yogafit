@@ -24,7 +24,7 @@ function HomeCarousel({navigation, ...props}) {
               flex: 1,
               justifyContent: 'center',
             }}>
-              <Theimage original={images[index]} placeholder={img.banner1} style={[{objectFit:'cover'},t.wp100,t.h250]} />
+              <Theimage original={images[index]} placeholder={img.banner1} style={[{objectFit:'cover'},t.wp100,t.hp100]} />
               <View style={[t.absolute,t.wp100,t.hp100,t.bgblack,{opacity:.2}]}></View>
             </View>
         )}

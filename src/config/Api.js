@@ -1,7 +1,35 @@
 import axios from 'axios';
+import {AuthContext} from '../context/AuthContext';
+import {useEffect, useContext} from 'react';
 const defAxios = axios.create({
   baseURL: 'https://login.yogafitidonline.com/api/api/',
 });
+const useSetupAxiosInterceptors = (navigation) => {
+  const { removeUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    const interceptor = defAxios.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      (error) => {
+        if (axios.isAxiosError(error)) {
+          if (error.response && error.response.status === 403) {
+            removeUser();
+            navigation.navigate('Home')
+            console.error('Error: Forbidden (403) - You do not have access to this resource.');
+          }
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    return () => {
+      // Remove interceptor on cleanup
+      defAxios.interceptors.response.eject(interceptor);
+    };
+  }, [removeUser]);
+};
 const Api = {
   slider(payload) {
     let url = '/auth/slider';
@@ -95,7 +123,7 @@ const Api = {
         Authorization: 'Bearer ' + token,
       },
     };
-    return defAxios.post(url, config);
+    return defAxios.post(url, {}, config);
   },
   myContract(payload, token) {
     let url = '/member/my_contract';
@@ -156,4 +184,4 @@ const Api = {
     return defAxios.put(url, payload, config);
   },
 };
-export default Api;
+export {Api, useSetupAxiosInterceptors};

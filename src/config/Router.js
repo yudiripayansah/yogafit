@@ -25,11 +25,13 @@ import VerifyModal from '../components/Verify'
 import RegisterModal from '../components/Register'
 import ForgotModal from '../components/Forgot'
 import ChangePhoneModal from '../components/ChangePhone'
+import {useSetupAxiosInterceptors} from '../config/Api'
 const MainStack = createStackNavigator();
 const options = {
   ...TransitionPresets.SlideFromRightIOS,
 };
 export const RouteMain = ({navigation}) => {
+  useSetupAxiosInterceptors(navigation)
   let [activeScreen, setActiveScreen] = useState('Home');
   const loginRef = useRef(null);
   const verifyRef = useRef(null);

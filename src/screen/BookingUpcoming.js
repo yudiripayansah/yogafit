@@ -22,10 +22,10 @@ const BookingUpcoming = ({navigation}) => {
         let {data} = req.data
         setbooking(data)
       } else {
-        console.error("Error get event")
+        console.error("Error get upcoming booking")
       }
     } catch (error) {
-      console.error(error)
+      console.error('Error get upcoming booking: '+error)
     }
   }
   const bookingList = [

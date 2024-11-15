@@ -28,13 +28,13 @@ function HomeTeacher({navigation, ...props}) {
         scrollAnimationDuration={1000}
         renderItem={({index}) => (
           <Pressable 
-            onPress={()=>{navigation.navigate('Detail',{image:teacher[index].image,title:teacher[index].name})}}
+            onPress={()=>{navigation.navigate('Detail',{image:teacher[index].image,title:teacher[index].name,text:teacher[index].text})}}
             style={[{
               flex: 1,
               justifyContent: 'center',
               alignItems: 'flex-end',
             },]}>
-              <Theimage original={teacher[index].image} placeholder={img.teacher} style={[{objectFit:'contain'},t.wp90,t.h200]}/>
+              <Theimage original={teacher[index].image} placeholder={img.teacher} style={[{objectFit:'cover'},t.wp90,t.h200]}/>
           </Pressable>
         )}
       />

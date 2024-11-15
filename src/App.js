@@ -71,7 +71,7 @@ const App = ({}) => {
     try {
       requestUserPermission();
     } catch (error) {
-      console.error(error);
+      console.error('Error get permission: '+error);
     }
   };
   useEffect(() => {
