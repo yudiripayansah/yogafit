@@ -21,7 +21,7 @@ function Forgot({navigation, ...props}) {
   const {loginRef, verifyRef, registerRef, forgotRef} = props;
   // const [email,setemail] = useState('085156487895')
   // const [password,setpassword] = useState('841586')
-  const [phone, setphone] = useState('08988449651');
+  const [phone, setphone] = useState();
   const [loading, setLoading] = useState(false);
   const [forgot, setForgot] = useState({
     status: true,

@@ -19,8 +19,8 @@ function Login({navigation, ...props}) {
   const t = useContext(ThemeContext);
   const {setUser} = useContext(AuthContext);
   const {loginRef, verifyRef, registerRef, forgotRef} = props;
-  const [email, setemail] = useState('08121913683');
-  const [password, setpassword] = useState('331862');
+  const [email, setemail] = useState();
+  const [password, setpassword] = useState();
   const [loading, setLoading] = useState(false);
   const [showpassword, setshowpassword] = useState(false);
   const [login, setLogin] = useState({

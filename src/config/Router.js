@@ -15,10 +15,12 @@ import Login from '../screen/Login';
 import Location from '../screen/Location';
 import MyContract from '../screen/MyContract';
 import MyContractDetail from '../screen/MyContractDetail';
+import MyDetailActivity from '../screen/MyDetailActivity';
 import MyProfile from '../screen/MyProfile';
 import Profile from '../screen/Profile';
 import Trainer from '../screen/Trainer';
 import Workshop from '../screen/Workshop';
+import YogaInstructor from '../screen/YogaInstructor';
 import Nav from '../components/Navigation';
 import LoginModal from '../components/Login'
 import VerifyModal from '../components/Verify'
@@ -82,11 +84,13 @@ export const RouteMain = ({navigation}) => {
         <MainStack.Screen name={'Location'} component={Location} options={options} />
         <MainStack.Screen name={'MyContract'} component={MyContract} options={options} />
         <MainStack.Screen name={'MyContractDetail'} component={MyContractDetail} options={options} />
+        <MainStack.Screen name={'MyDetailActivity'} component={MyDetailActivity} options={options} />
         <MainStack.Screen name={'MyProfile'} component={MyProfile} options={options} />
         <MainStack.Screen name={'Courses'} component={Courses} options={options} />
         <MainStack.Screen name={'Events'} component={Events} options={options} />
         <MainStack.Screen name={'Faq'} component={Faq} options={options} />
         <MainStack.Screen name={'Workshop'} component={Workshop} options={options} />
+        <MainStack.Screen name={'YogaInstructor'} component={YogaInstructor} options={options} />
       </MainStack.Navigator>
       <Nav navigation={navigation} activeScreen={activeScreen} onPressMainBtn={openLogin}/>
     </>

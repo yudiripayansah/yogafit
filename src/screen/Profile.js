@@ -216,7 +216,7 @@ const Profile = ({navigation}) => {
             />
             <View style={[t.ms10]}>
               <Text style={[t['p14-500'], t.cblack]}>Current Membership</Text>
-              <Text style={[t['h25-400'], t.corange]}>
+              <Text style={[t['h20-400'], t.corange]}>
                 {contract && contract.packages_name}
               </Text>
               <View style={[t.fRow, t.faCenter, t.fjBetween, t.wp92]}>
@@ -268,7 +268,10 @@ const Profile = ({navigation}) => {
             t.bbw1,
             t.bgreyd,
             t.bsolid,
-          ]}>
+          ]}
+          onPress={() => {
+            navigation.navigate('MyDetailActivity');
+          }}>
           <Text style={[t['p14-600'], t.corange]}>My Detail Activity</Text>
           <Image
             source={img.arrowRightOrange}
@@ -285,7 +288,10 @@ const Profile = ({navigation}) => {
             t.bbw1,
             t.bgreyd,
             t.bsolid,
-          ]}>
+          ]}
+          onPress={() => {
+            navigation.navigate('YogaInstructor');
+          }}>
           <Text style={[t['p14-600'], t.corange]}>
             Wants to be Yoga Instructor?
           </Text>

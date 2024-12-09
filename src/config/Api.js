@@ -107,6 +107,24 @@ const Api = {
     };
     return defAxios.post(url, payload, config);
   },
+  getInstructor(token) {
+    let url = '/member/get_instructor';
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return defAxios.get(url, config);
+  },
+  myActivity(token) {
+    let url = '/member/my_activity';
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return defAxios.get(url, config);
+  },
   trialContract(token) {
     let url = '/member/my_contract_trial';
     let config = {
