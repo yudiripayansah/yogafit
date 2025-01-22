@@ -1,4 +1,4 @@
-package com.yogafit
+package com.yogafitindonesia
 
 import android.app.Application
 import com.facebook.react.PackageList

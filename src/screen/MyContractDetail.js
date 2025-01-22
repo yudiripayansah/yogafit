@@ -91,7 +91,7 @@ const MyContractDetail = ({route, navigation}) => {
             onPress={data => {
               setqrcode({
                 uri: data
-                  ? 'https://login.yogafitidonline.com/api/storage/qrcode/' +
+                  ? 'https://login.yogafitindonesiaonline.com/api/storage/qrcode/' +
                     data.referal_code +
                     '.png'
                   : 'xxx',

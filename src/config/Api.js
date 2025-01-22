@@ -2,26 +2,28 @@ import axios from 'axios';
 import {AuthContext} from '../context/AuthContext';
 import {useEffect, useContext} from 'react';
 const defAxios = axios.create({
-  baseURL: 'https://login.yogafitidonline.com/api/api/',
+  baseURL: 'https://login.yogafitindonesiaonline.com/api/api/',
 });
-const useSetupAxiosInterceptors = (navigation) => {
-  const { removeUser } = useContext(AuthContext);
+const useSetupAxiosInterceptors = navigation => {
+  const {removeUser} = useContext(AuthContext);
 
   useEffect(() => {
     const interceptor = defAxios.interceptors.response.use(
-      (response) => {
+      response => {
         return response;
       },
-      (error) => {
+      error => {
         if (axios.isAxiosError(error)) {
           if (error.response && error.response.status === 403) {
             removeUser();
-            navigation.navigate('Home')
-            console.error('Error: Forbidden (403) - You do not have access to this resource.');
+            navigation.navigate('Home');
+            console.error(
+              'Error: Forbidden (403) - You do not have access to this resource.',
+            );
           }
         }
         return Promise.reject(error);
-      }
+      },
     );
 
     return () => {
@@ -90,7 +92,7 @@ const Api = {
     return defAxios.get(url, config);
   },
   mySchedule(payload, token) {
-    let url = '/auth/get_users_schedule?'+payload;
+    let url = '/auth/get_users_schedule?' + payload;
     let config = {
       headers: {
         Authorization: 'Bearer ' + token,
@@ -145,8 +147,8 @@ const Api = {
   },
   myContract(payload, token) {
     let url = '/member/my_contract';
-    if(payload){
-      url += `?id=${payload.id}`
+    if (payload) {
+      url += `?id=${payload.id}`;
     }
     let config = {
       headers: {
@@ -156,7 +158,7 @@ const Api = {
     return defAxios.get(url, config);
   },
   classes(payload) {
-    let url = '/auth/get_class?'+payload;
+    let url = '/auth/get_class?' + payload;
     return defAxios.get(url);
   },
   classesDetail(payload) {
@@ -192,7 +194,7 @@ const Api = {
     };
     return defAxios.get(url, config);
   },
-  changePassword(payload,token) {
+  changePassword(payload, token) {
     let url = '/member/change_password';
     let config = {
       headers: {

@@ -119,7 +119,7 @@ const DetailClass = ({route, navigation}) => {
       <Theimage
         original={{
           uri:
-            'https://login.yogafitidonline.com/api/storage/studio/' +
+            'https://login.yogafitindonesiaonline.com/api/storage/studio/' +
             theClass.gambar,
         }}
         placeholder={img.placeholder}

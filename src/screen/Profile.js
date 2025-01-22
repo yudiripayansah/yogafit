@@ -29,8 +29,12 @@ const Profile = ({navigation}) => {
   const [loading, setloading] = useState(false);
   const [profileimage, setprofileimage] = useState(
     user
-      ? {uri: 'https://login.yogafitidonline.com/api/storage/foto/' + user.foto}
-      : {uri: 'https://login.yogafitidonline.com/api/storage/foto/'},
+      ? {
+          uri:
+            'https://login.yogafitindonesiaonline.com/api/storage/foto/' +
+            user.foto,
+        }
+      : {uri: 'https://login.yogafitindonesiaonline.com/api/storage/foto/'},
   );
   function convertToInternationalFormat(phoneNumber) {
     if (phoneNumber.startsWith('0')) {
