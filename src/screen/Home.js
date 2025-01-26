@@ -128,7 +128,7 @@ const Home = ({navigation}) => {
   };
   const getContract = async () => {
     console.log('Home get contract');
-    if (user) {
+    if (user && user.token) {
       setloadingContract(true);
       try {
         let req = await Api.myBooking({}, user.token);

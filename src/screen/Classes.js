@@ -34,7 +34,7 @@ const Classes = ({navigation}) => {
           item.dText = `<div>
                           Capacity: ${item.capacity}<br/>
                           Category: ${item.class_kat}<br/>
-                          Level: ${item.level}<br/>
+                          Level: ${item.class_level}<br/>
                           Duration: ${item.duration} Mins<br/>
                           Virtual Class: ${item.virtual_class}<br/><br/><br/>
                           <b>Benefit: </b><br/>
