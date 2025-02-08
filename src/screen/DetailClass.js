@@ -16,13 +16,23 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 // components
 import Theimage from '../components/Theimage';
 import RenderHTML from 'react-native-render-html';
+import LoginModal from '../components/Login';
+import VerifyModal from '../components/Verify';
+import RegisterModal from '../components/Register';
+import ChangePhoneModal from '../components/ChangePhone';
 // api
 import {Api} from '../config/Api';
 const DetailClass = ({route, navigation}) => {
   const t = useContext(ThemeContext);
   const user = useContext(UserContext);
+  const loginRef = useRef(null);
+  const verifyRef = useRef(null);
+  const registerRef = useRef(null);
+  const changephoneRef = useRef(null);
   const screenWidth = Dimensions.get('window').width - 40;
   const {theClass} = route.params;
+  const [classdata, setclassdata] = useState(null);
+  const [registerdata, setregisterdata] = useState({});
   const [alert, setalert] = useState({
     show: false,
     title: '',
@@ -76,6 +86,10 @@ const DetailClass = ({route, navigation}) => {
       console.error('Error booking class: ' + error);
     }
   };
+  const registerAndBook = data => {
+    setclassdata(data);
+    registerRef.current?.show();
+  };
   const hideAlert = () => {
     setalert({
       show: false,
@@ -89,6 +103,36 @@ const DetailClass = ({route, navigation}) => {
   useEffect(() => {}, []);
   return (
     <ScrollView style={[t.bgwhite]}>
+      <LoginModal
+        changephoneRef={changephoneRef}
+        verifyRef={verifyRef}
+        loginRef={loginRef}
+        registerRef={registerRef}
+      />
+      <VerifyModal
+        changephoneRef={changephoneRef}
+        verifyRef={verifyRef}
+        loginRef={loginRef}
+        registerRef={registerRef}
+        registerdata={registerdata}
+      />
+      <RegisterModal
+        changephoneRef={changephoneRef}
+        verifyRef={verifyRef}
+        loginRef={loginRef}
+        registerRef={registerRef}
+        onRegister={data => {
+          setregisterdata(data);
+        }}
+        classdata={classdata}
+      />
+      <ChangePhoneModal
+        changephoneRef={changephoneRef}
+        verifyRef={verifyRef}
+        loginRef={loginRef}
+        registerRef={registerRef}
+        registerdata={registerdata}
+      />
       <AwesomeAlert
         show={alert.show}
         showProgress={false}
@@ -156,7 +200,7 @@ const DetailClass = ({route, navigation}) => {
         {!loading ? (
           <TouchableOpacity
             onPress={() => {
-              doBookNow();
+              user ? doBookNow(theClass) : registerAndBook(theClass);
             }}>
             <Text
               style={[
