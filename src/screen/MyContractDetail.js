@@ -116,6 +116,7 @@ const MyContractDetail = ({route, navigation}) => {
               <PackagesCard
                 data={item}
                 key={index}
+                onPress={()=>{}}
                 boxStyle={[t.mt10, t.bbw1, t.bsolid, t.bgreyd, t.pb10]}
               />
             );

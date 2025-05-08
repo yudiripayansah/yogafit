@@ -199,7 +199,7 @@ const Api = {
         Authorization: 'Bearer ' + token,
       },
     };
-    return defAxios.put(url, payload, config);
+    return defAxios.post(url, payload, config);
   },
 };
 export {Api, useSetupAxiosInterceptors};
