@@ -2,14 +2,14 @@ import React, {useEffect, useContext} from 'react';
 import {View, Text, ImageBackground, TouchableOpacity} from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import analytics from '@react-native-firebase/analytics';
+// import analytics from '@react-native-firebase/analytics';
 const Feed = ({navigation}) => {
   const t = useContext(ThemeContext);
   const gAnalytics = () => {
-    analytics().logScreenView({
-      screen_name: 'Intro',
-      screen_class: 'Intro',
-    });
+    // analytics().logScreenView({
+    //   screen_name: 'Intro',
+    //   screen_class: 'Intro',
+    // });
   };
   useEffect(() => {
     gAnalytics();

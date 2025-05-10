@@ -11,10 +11,10 @@ import {LocationContext} from './context/LocationContext';
 import Style from './config/Style';
 import Splash from './screen/Splash';
 import {useAuth} from './hook/useAuth';
-import usePushNotification from './hook/usePushNotification';
+// import usePushNotification from './hook/usePushNotification';
 import {PermissionsAndroid, Platform} from 'react-native';
 const App = ({}) => {
-  const {requestUserPermission} = usePushNotification();
+  // const {requestUserPermission} = usePushNotification();
   const RootStack = createStackNavigator();
   const [appState, setAppState] = useState(AppState.currentState);
   const [loading, setLoading] = useState(true);
@@ -68,11 +68,11 @@ const App = ({}) => {
     setAppState(nextAppState);
   };
   const listenToNotifications = () => {
-    try {
-      requestUserPermission();
-    } catch (error) {
-      console.error('Error get permission: '+error);
-    }
+    // try {
+    //   requestUserPermission();
+    // } catch (error) {
+    //   console.error('Error get permission: '+error);
+    // }
   };
   useEffect(() => {
     requestLocationPermission();

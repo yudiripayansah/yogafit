@@ -1,14 +1,14 @@
 import React, {useEffect, useContext} from 'react';
 import {Image, View, StatusBar} from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
-import analytics from '@react-native-firebase/analytics';
+// import analytics from '@react-native-firebase/analytics';
 const Splash = ({navigation}) => {
   const t = useContext(ThemeContext);
   const gAnalytics = () => {
-    analytics().logScreenView({
-      screen_name: 'Splash',
-      screen_class: 'Splash',
-    });
+    // analytics().logScreenView({
+    //   screen_name: 'Splash',
+    //   screen_class: 'Splash',
+    // });
   };
   useEffect(() => {
     gAnalytics();

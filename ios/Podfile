@@ -7,7 +7,8 @@ require Pod::Executable.execute_command('node', ['-p',
 
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
-use_modular_headers!
+# commented to test run on ios because we used the firebase before but we remove it for now
+# use_modular_headers!
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
   Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
