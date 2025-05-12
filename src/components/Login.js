@@ -176,8 +176,8 @@ function Login({navigation, ...props}) {
           <Text style={[t['p16-600'], t.cblack]}>Not a Member?</Text>
           <TouchableOpacity
             onPress={() => {
-              registerRef.current?.show();
               loginRef.current?.hide();
+              registerRef.current?.show();
             }}>
             <Text style={[t['p16-600'], t.corange, t.ms5]}>Register Here</Text>
           </TouchableOpacity>
