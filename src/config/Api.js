@@ -201,5 +201,9 @@ const Api = {
     };
     return defAxios.post(url, payload, config);
   },
+  countryCode() {
+    let url = '/auth/get_kode_negara';
+    return defAxios.get(url);
+  }
 };
 export {Api, useSetupAxiosInterceptors};

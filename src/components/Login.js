@@ -10,6 +10,7 @@ import {
 import {ThemeContext} from '../context/ThemeContext';
 import {AuthContext} from '../context/AuthContext';
 import ActionSheet from 'react-native-actions-sheet';
+import {Picker} from '@react-native-picker/picker';
 // assets
 import img from '../config/Image';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -23,6 +24,8 @@ function Login({navigation, ...props}) {
   const [password, setpassword] = useState();
   const [loading, setLoading] = useState(false);
   const [showpassword, setshowpassword] = useState(false);
+  const [countryCode, setCountryCode] = useState('+62');
+  const [countryCodes, setCountryCodes] = useState(['+62']);
   const [login, setLogin] = useState({
     status: true,
     msg: null,
@@ -32,7 +35,7 @@ function Login({navigation, ...props}) {
     setLoading(true);
     try {
       let payload = {
-        email: email,
+        email: countryCode+email,
         password: password,
       };
       if (email && password) {
@@ -86,6 +89,33 @@ function Login({navigation, ...props}) {
       });
     }, 3000);
   };
+  const handlePhoneNumber = text => {
+    let numericValue = text.replace(/[^0-9]/g, '');
+    numericValue = numericValue.replace(/^0+/, '');
+
+    setemail(numericValue);
+  };
+  const getCountryCode = async () => {
+    try {
+      let req = await Api.countryCode();
+      if (req.status === 200 || req.status === 201) {
+        if (req.data.data) {
+          setCountryCodes(req.data.data);
+          console.log(countryCodes[0]);
+        } else {
+          setCountryCode('+62');
+        }
+      } else {
+        setCountryCode('+62');
+      }
+    } catch (error) {
+      console.error('Error get country code: ' + error);
+      setCountryCode('+62');
+    }
+  };
+  useEffect(() => {
+    getCountryCode();
+  }, []);
   return (
     <ActionSheet ref={loginRef}>
       <View style={[t.bgwhite, t.wp100, t.px20, t.py20, t.brtl10, t.brtr10]}>
@@ -98,14 +128,35 @@ function Login({navigation, ...props}) {
           Already a Member?
         </Text>
         <View style={[t.mt20]}>
-          <Text style={[t['p16-500'], t.cblack]}>Mobile number</Text>
-          <TextInput
-            onChangeText={setemail}
-            value={email}
-            placeholderTextColor="#ccc"
-            placeholder="eg: +6281234567890"
+          <Text style={[t['p16-500'], t.cblack]}>Country</Text>
+          <Picker
             style={[t.bggrey90, t.p10, t['p14-500'], t.br5, t.cwhite, t.mt10]}
-          />
+            selectedValue={countryCode}
+            onValueChange={(itemValue, itemIndex) => setCountryCode(itemValue)}>
+            {countryCodes.map((item,index) => {
+              return (<Picker.Item label={item.name} value={item.code} key={index}/>);
+            })}
+          </Picker>
+        </View>
+        <View style={[t.mt20]}>
+          <Text style={[t['p16-500'], t.cblack]}>Mobile number</Text>
+          <View style={[t.fRow, t.faCenter, t.wp100]}>
+            <TextInput
+              keyboardType="numeric"
+              onChangeText={setCountryCode}
+              value={countryCode}
+              placeholderTextColor="#ccc"
+              placeholder="+62"
+              style={[t.bggrey90, t.p10 ,t.pr5,t.bsolid,t.brw1,,t.tCenter, t.bwhite, t['p14-500'], t.brtl5,t.brbl5, t.cwhite, t.mt10, t.wp15]}
+            />
+            <TextInput
+              onChangeText={handlePhoneNumber}
+              value={email}
+              placeholderTextColor="#ccc"
+              placeholder="eg: +6281234567890"
+              style={[t.bggrey90, t.p10, t['p14-500'], t.brtr5,t.brbr5, t.cwhite, t.mt10, t.wp85]}
+            />
+          </View>
         </View>
         <View style={[t.mt20]}>
           <Text style={[t['p16-500'], t.cblack]}>Password</Text>
