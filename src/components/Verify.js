@@ -46,8 +46,10 @@ function Verify({navigation, ...props}) {
               msg: 'Register success, you can login with your account now.',
             });
             setTimeout(() => {
-              loginRef.current?.show();
               verifyRef.current?.hide();
+              setTimeout(()=>{
+                loginRef.current?.show();
+              },300)
             }, 2000);
           } else {
             setRegister({
@@ -165,8 +167,10 @@ function Verify({navigation, ...props}) {
           <Text style={[t['p12-500'], t.cblack, t.tCenter, t.wp100]}>Or</Text>
           <TouchableOpacity
             onPress={() => {
-              changephoneRef.current?.show();
               verifyRef.current?.hide();
+              setTimeout(()=>{
+                changephoneRef.current?.show();
+              },300)
             }}
             style={[t.msAuto]}>
             <Text style={[t['p12-500'], t.corange, t.tCenter, t.wp100]}>

@@ -202,7 +202,6 @@ const Class = ({route, navigation}) => {
         title={alert.title}
         message={alert.message}
         closeOnTouchOutside={true}
-        closeOnHardwareBackPress={false}
         showCancelButton={false}
         showConfirmButton={true}
         cancelText={alert.cancelText}

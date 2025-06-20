@@ -8,6 +8,7 @@ import {
   PermissionsAndroid,
   Platform,
 } from 'react-native';
+import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import {ThemeContext} from '../context/ThemeContext';
 import {LocContext} from '../context/LocContext';
 import {LocationContext} from '../context/LocationContext';

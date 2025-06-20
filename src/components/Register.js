@@ -75,7 +75,9 @@ function Register({navigation, ...props}) {
             });
             setTimeout(() => {
               registerRef.current?.hide();
-              verifyRef.current?.show();
+              setTimeout(()=> {
+                verifyRef.current?.show();
+              },300)
             }, 2000);
           } else {
             setRegister({
@@ -244,7 +246,9 @@ function Register({navigation, ...props}) {
           <TouchableOpacity
             onPress={() => {
               registerRef.current?.hide();
-              loginRef.current?.hide();
+              setTimeout(()=>{
+                loginRef.current?.show();
+              },300)
             }}>
             <Text style={[t['p16-600'], t.corange, t.ms5]}>Login Here</Text>
           </TouchableOpacity>

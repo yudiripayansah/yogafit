@@ -99,7 +99,9 @@ function Forgot({navigation, ...props}) {
           <TouchableOpacity
             onPress={() => {
               forgotRef.current?.hide();
-              loginRef.current?.show();
+              setTimeout(()=>{
+                loginRef.current?.show();
+              },300)
             }}>
             <Text style={[t['p12-600'], t.corange, t.tItalic, t.ms5]}>
               Click Here

@@ -28,6 +28,12 @@ function Login({navigation, ...props}) {
     msg: null,
     data: null,
   });
+  const registerClick = () => {
+    loginRef.current?.hide();
+    setTimeout(() => {
+      registerRef.current?.show();
+    },300)
+  }
   const doLogin = async () => {
     setLoading(true);
     try {
@@ -142,8 +148,10 @@ function Login({navigation, ...props}) {
           <Text style={[t['p12-600'], t.cblack]}>Forgot your password?</Text>
           <TouchableOpacity
             onPress={() => {
-              forgotRef.current?.show();
               loginRef.current?.hide();
+              setTimeout(() => {
+                forgotRef.current?.show();
+              },300)
             }}>
             <Text style={[t['p12-600'], t.corange, t.tItalic, t.ms5]}>
               Click Here
@@ -175,10 +183,7 @@ function Login({navigation, ...props}) {
         <View style={[t.my40, t.fRow, t.fjCenter]}>
           <Text style={[t['p16-600'], t.cblack]}>Not a Member?</Text>
           <TouchableOpacity
-            onPress={() => {
-              loginRef.current?.hide();
-              registerRef.current?.show();
-            }}>
+            onPress={() => {registerClick()}}>
             <Text style={[t['p16-600'], t.corange, t.ms5]}>Register Here</Text>
           </TouchableOpacity>
         </View>

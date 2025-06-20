@@ -37,7 +37,9 @@ function ChangePhone({navigation, ...props}) {
           });
           setTimeout(() => {
             changephoneRef.current?.hide();
-            verifyRef.current?.show();
+            setTimeout(()=> {
+              verifyRef.current?.show();
+            },300)
           }, 2000);
         } else {
           setCp({
