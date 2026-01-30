@@ -10,7 +10,7 @@ const Nav = ({navigation, ...props}) => {
   const {activeScreen, onPressMainBtn} = props
   const user = useContext(UserContext);
   const t = useContext(ThemeContext);
-  return (
+  const elNav = (
     <ImageBackground resizeMode="cover" source={img.navigation} style={[t.fRow,t.fjBetween,t.faCenter,t.absolute,t.bottom0,t.left0,t.wp100,t.right0, {backgroundPosition: 'center center', backgroundSize: '100% 50px'},]}>
       <View style={[t.fRow,t.fjStart,t.faCenter,t.wp35,t.ps15]}>
         <TouchableOpacity style={[t.faCenter,t.fjCenter,t.px10, t.py10, t.me15]} onPress={() => {navigation.navigate('Home')}}>
@@ -41,7 +41,8 @@ const Nav = ({navigation, ...props}) => {
         </TouchableOpacity>
       </View>
     </ImageBackground>
-  );
+  )
+  return activeScreen != 'Intro' && activeScreen != 'LoginRegister' && activeScreen != 'Login' ? elNav : null;
 };
 
 export default Nav;

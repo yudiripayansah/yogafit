@@ -48,5 +48,10 @@ const img = {
   eyeclose: require('../assets/images/icon-eye-close.png'),
   card: require('../assets/images/bg-card.png'),
   logohorizontal: require('../assets/images/yogafit-logo-horizontal.png'),
+  fireLeft: require('../assets/images/revamp/fire-left.png'),
+  fireRight: require('../assets/images/revamp/fire-right.png'),
+  logoBig: require('../assets/images/revamp/logo-2.png'),
+  mapIcon: require('../assets/images/revamp/mappin-icon.png'),
+  chevronDown: require('../assets/images/revamp/chevron-down.png'),
 }
 export default img

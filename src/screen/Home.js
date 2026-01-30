@@ -220,7 +220,7 @@ const Home = ({navigation}) => {
         barStyle="light-content"
       />
       <HomeCarousel images={slider} />
-      <View style={[t.mmt30, t.px20]}>
+      <View style={[t.pt12, t.px20]}>
         <HomeLocation
           navigation={navigation}
           onPress={() => {

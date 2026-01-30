@@ -1,16 +1,14 @@
-import React, {useEffect, useContext, useState, useRef } from 'react';
-import {View, Text, ImageBackground, TouchableOpacity, Image} from 'react-native';
+import React, {useEffect, useContext, useState} from 'react';
+import {View, Text, ImageBackground, TouchableOpacity, Image, TouchableWithoutFeedback} from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import LinearGradient from 'react-native-linear-gradient';
 // assets
 import img from '../config/Image';
 // import analytics from '@react-native-firebase/analytics';
-const Intro = ({navigation}) => {
-  const sliderRef = useRef(null);
+const LoginRegister = ({navigation}) => {
   const t = useContext(ThemeContext);
   const [lastSlide, setLastSlide] = useState(false)
-  const [currentIndex, setCurrentIndex] = useState(0);
   const gAnalytics = () => {
     // analytics().logScreenView({
     //   screen_name: 'Intro',
@@ -21,7 +19,6 @@ const Intro = ({navigation}) => {
     gAnalytics();
   }, []);
   const onSlideChange = (index) => {
-    setCurrentIndex(index)
     if (index === introItems.length - 1) {
       setLastSlide(true)
     } else {
@@ -65,7 +62,8 @@ const Intro = ({navigation}) => {
     ...t.faCenter,
     ...t.fjCenter,
     ...t.br12,
-    ...t.mt24,
+    ...t.mt8,
+    ...t.mb16
   };
   let btnStyleLast = {
     ...t.bw1,
@@ -101,7 +99,7 @@ const Intro = ({navigation}) => {
                   dotStyle,
                   i === activeIndex ? activeDotStyle : t.bgnone,
                 ]}
-                onPress={() => sliderRef.current?.goToSlide(i, true)}
+                onPress={() => this.slider?.goToSlide(i, true)}
               />
             ))}
         </View>
@@ -110,10 +108,7 @@ const Intro = ({navigation}) => {
             style={lastSlide ? btnStyleLast :btnStyle}
             onPress={() => {
               if(lastSlide){
-                navigation.navigate('LoginRegister');
-              } else {
-                console.log(sliderRef.current)
-                sliderRef.current?.goToSlide(currentIndex + 1, true);
+                navigation.navigate('Login');
               }
             }}>
             <Text style={[t['h14-400'],lastSlide ? t.cwhite : t.cblack]}>
@@ -146,17 +141,48 @@ const Intro = ({navigation}) => {
   return (
     <LinearGradient
       colors={['#FFF3EE', '#FFFFFF']}
-      style={{ flex: 1 }}
+      style={[{ flex: 1 }]}
     >
-      <AppIntroSlider
-        ref={sliderRef}
-        renderItem={elementItems}
-        renderPagination={pagination}
-        data={introItems}
-        onSlideChange={onSlideChange}
-      />
+      <View style={[t.faCenter,t.fjCenter]}>
+      <Image source={img.logoBig} style={[t.wp80,t.h390,t.br13]} resizeMode='contain'/>
+      </View>
+      <View style={[t.px20, t.py20,t.tCenter]}>
+        <Text style={[t['h28-600'], t.cblack,t.tCenter]}>
+          Welcome to Yoga Fit App
+        </Text>
+        <Text style={[t['h14-400'], t.cblack,t.tCenter]}>Connect with thousands of yoga enthusiasts</Text>
+      </View>
+      <View style={[t.faCenter]}>
+        <TouchableOpacity
+          style={btnStyleLast}
+          onPress={() => {
+              navigation.navigate('Register');
+          }}>
+          <Text style={[t['h14-400'],t.cwhite]}>
+            Create Account
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={btnStyle}
+          onPress={() => {
+              navigation.navigate('Login');
+          }}>
+          <Text style={[t['h14-400'],t.cblack]}>
+            Login
+          </Text>
+        </TouchableOpacity>
+        <TouchableWithoutFeedback
+          style={[t.mt24]}
+          onPress={() => {
+              navigation.navigate('Home');
+          }}>
+          <Text style={[t['h14-400'],t.cblack]}>
+            Continue as guest
+          </Text>
+        </TouchableWithoutFeedback>
+      </View>
     </LinearGradient>
   );
 };
 
-export default Intro;
+export default LoginRegister;

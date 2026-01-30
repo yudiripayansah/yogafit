@@ -12,6 +12,7 @@ import Faq from '../screen/Faq';
 import Home from '../screen/Home';
 import Intro from '../screen/Intro';
 import Login from '../screen/Login';
+import LoginRegister from '../screen/LoginRegister';
 import Location from '../screen/Location';
 import MyContract from '../screen/MyContract';
 import MyContractDetail from '../screen/MyContractDetail';
@@ -70,6 +71,8 @@ export const RouteMain = ({navigation}) => {
             setActiveScreen(routeName);
           },
         })}>
+        <MainStack.Screen name={'Intro'} component={Intro} options={options} />
+        <MainStack.Screen name={'LoginRegister'} component={LoginRegister} options={options} />
         <MainStack.Screen name={'Home'} component={Home} options={options} />
         <MainStack.Screen name={'BookingHistory'} component={BookingHistory} options={options} />
         <MainStack.Screen name={'BookingUpcoming'} component={BookingUpcoming} options={options} />
@@ -79,7 +82,6 @@ export const RouteMain = ({navigation}) => {
         <MainStack.Screen name={'DetailClass'} component={DetailClass} options={options} />
         <MainStack.Screen name={'Trainer'} component={Trainer} options={options} />
         <MainStack.Screen name={'Profile'} component={Profile} options={options} />
-        <MainStack.Screen name={'Intro'} component={Intro} options={options} />
         <MainStack.Screen name={'Login'} component={Login} options={options} />
         <MainStack.Screen name={'Location'} component={Location} options={options} />
         <MainStack.Screen name={'MyContract'} component={MyContract} options={options} />
