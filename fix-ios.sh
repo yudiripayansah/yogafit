@@ -15,6 +15,6 @@ rm -rf build
 echo "📡 Running pod install with correct architecture (for M1/M2 Macs)..."
 pod cache clean --all
 pod deintegrate
-pod install
+arch -arm64 pod install
 
 cd .. || exit
