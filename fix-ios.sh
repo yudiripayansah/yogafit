@@ -1,5 +1,7 @@
 echo "🧹 Cleaning iOS build..."
 
+rm -rf node_modules
+yarn install
 cd ios || exit
 
 echo "📦 Removing Pods, Podfile.lock, and DerivedData..."
