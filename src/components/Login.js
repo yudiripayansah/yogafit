@@ -6,11 +6,14 @@ import {
   Image,
   TextInput,
   Pressable,
+  TouchableWithoutFeedback
 } from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import {AuthContext} from '../context/AuthContext';
+import {GstContext} from '../context/GstContext';
 import ActionSheet from 'react-native-actions-sheet';
 import {Picker} from '@react-native-picker/picker';
+import LinearGradient from 'react-native-linear-gradient';
 // assets
 import img from '../config/Image';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -19,9 +22,12 @@ import {Api} from '../config/Api';
 function Login({navigation, ...props}) {
   const t = useContext(ThemeContext);
   const {setUser} = useContext(AuthContext);
+  const {setGuest} = useContext(GstContext);
   const {loginRef, verifyRef, registerRef, forgotRef} = props;
-  const [email, setemail] = useState();
-  const [password, setpassword] = useState();
+  // const [email, setemail] = useState('8988449651');
+  // const [password, setpassword] = useState('54101eb@D');
+  const [email, setemail] = useState('');
+  const [password, setpassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [showpassword, setshowpassword] = useState(false);
   const [countryCode, setCountryCode] = useState('+62');
@@ -51,6 +57,7 @@ function Login({navigation, ...props}) {
             });
             setTimeout(() => {
               loginRef.current?.hide();
+              setGuest(true)
             }, 2000);
           } else {
             setLogin({
@@ -101,7 +108,6 @@ function Login({navigation, ...props}) {
       if (req.status === 200 || req.status === 201) {
         if (req.data.data) {
           setCountryCodes(req.data.data);
-          console.log(countryCodes[0]);
         } else {
           setCountryCode('+62');
         }
@@ -118,28 +124,33 @@ function Login({navigation, ...props}) {
   }, []);
   return (
     <ActionSheet ref={loginRef}>
-      <View style={[t.bgwhite, t.wp100, t.px20, t.py20, t.brtl10, t.brtr10]}>
-        <TouchableOpacity
-          onPress={() => loginRef.current?.hide()}
-          style={[t.msAuto]}>
-          <Image source={img.close} style={[t.w15, t.h15]} />
-        </TouchableOpacity>
-        <Text style={[t['p20-600'], t.cblack, t.tCenter]}>
-          Already a Member?
+      <LinearGradient colors={['#FFF3EE', '#FFFFFF']} style={[t.wp100, t.px20, t.py20, t.brtl10, t.brtr10, t.fjStart, t.hp100]}>
+        <TouchableWithoutFeedback onPress={() => {
+          loginRef.current?.hide()
+        }}>
+          <Image source={img.backBtn} style={[t.w48,t.h48,t.br100]} resizeMode='contain'/>
+        </TouchableWithoutFeedback>
+        <Text style={[t['h24-700'], t.cblack, t.mt40]}>
+          Welcome Back!
         </Text>
-        <View style={[t.mt20]}>
-          <Text style={[t['p16-500'], t.cblack]}>Country</Text>
-          <Picker
-            style={[t.bggrey90, t.p10, t['p14-500'], t.br5, t.cwhite, t.mt10]}
-            selectedValue={countryCode}
-            onValueChange={(itemValue, itemIndex) => setCountryCode(itemValue)}>
-            {countryCodes.map((item,index) => {
-              return (<Picker.Item label={item.name} value={item.code} key={index}/>);
-            })}
-          </Picker>
+        <Text style={[t['p14-400'], t.cgrey90]}>
+          Let’s continue your journey with Yoga Fit.
+        </Text>
+        <View style={[t.mt28]}>
+          <Text style={[t['h16-400'], t.cblack]}>Country</Text>
+          <View style={[t.br10, t.bw1,t.bsolid,t.bgrey,t.bgwhite, t.mt10 ,{overflow:'hidden'}]}>
+            <Picker
+              style={[t.bgwhite, t.p10, t['h14-400'], t.br5, t.cblack]}
+              selectedValue={countryCode}
+              onValueChange={(itemValue, itemIndex) => setCountryCode(itemValue)}>
+              {countryCodes.map((item,index) => {
+                return (<Picker.Item label={item.name} value={item.code} key={index}/>);
+              })}
+            </Picker>
+          </View>
         </View>
-        <View style={[t.mt20]}>
-          <Text style={[t['p16-500'], t.cblack]}>Mobile number</Text>
+        <View style={[t.mt12]}>
+          <Text style={[t['h16-400'], t.cblack]}>Mobile number</Text>
           <View style={[t.fRow, t.faCenter, t.wp100]}>
             <TextInput
               keyboardType="numeric"
@@ -147,34 +158,26 @@ function Login({navigation, ...props}) {
               value={countryCode}
               placeholderTextColor="#ccc"
               placeholder="+62"
-              style={[t.bggrey90, t.p10 ,t.pr5,t.bsolid,t.brw1,,t.tCenter, t.bwhite, t['p14-500'], t.brtl5,t.brbl5, t.cwhite, t.mt10, t.wp15]}
+              style={[t.bw1,t.bsolid,t.bgrey,t.bgwhite, t.p10 ,t.pr5,t.bsolid,t.brw1,t.tCenter, t['h14-400'], t.brtl10,t.brbl10, t.cblack, t.mt10, t.wp15]}
             />
             <TextInput
               onChangeText={handlePhoneNumber}
               value={email}
               placeholderTextColor="#ccc"
               placeholder="eg: +6281234567890"
-              style={[t.bggrey90, t.p10, t['p14-500'], t.brtr5,t.brbr5, t.cwhite, t.mt10, t.wp85]}
+              style={[t.bgwhite, t.p10, t['h14-400'], t.brtr10,t.brbr10, t.cblack, t.mt10, t.wp85, t.bw1,t.bsolid,t.bgrey]}
             />
           </View>
         </View>
-        <View style={[t.mt20]}>
-          <Text style={[t['p16-500'], t.cblack]}>Password</Text>
+        <View style={[t.mt12]}>
+          <Text style={[t['h16-400'], t.cblack]}>Password</Text>
           <View style={[t.fRow, t.fjBetween, t.faCenter, t.wp100, t.relative]}>
             <TextInput
               onChangeText={setpassword}
               value={password}
               placeholderTextColor="#ccc"
               placeholder="Enter your password"
-              style={[
-                t.bggrey90,
-                t.p10,
-                t['p14-500'],
-                t.br5,
-                t.cwhite,
-                t.mt10,
-                t.wp100,
-              ]}
+              style={[t.bgwhite,t.p10,t['h14-400'],t.br10,t.cblack,t.mt10,t.wp100,t.bw1,t.bsolid,t.bgrey,]}
               secureTextEntry={showpassword ? false : true}
             />
             <Pressable
@@ -189,32 +192,35 @@ function Login({navigation, ...props}) {
             </Pressable>
           </View>
         </View>
-        <View style={[t.mt10, t.fRow, t.mb20]}>
-          <Text style={[t['p12-600'], t.cblack]}>Forgot your password?</Text>
+        <View style={[t.mt10, t.fRow, t.fjEnd]}>
           <TouchableOpacity
             onPress={() => {
               forgotRef.current?.show();
               loginRef.current?.hide();
             }}>
-            <Text style={[t['p12-600'], t.corange, t.tItalic, t.ms5]}>
-              Click Here
+            <Text style={[t['p14-600'], t.cgrey90]}>
+              Forgot your password?
             </Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
           style={[
-            t.mxAuto,
+            t.bw1,
+            t.bsolid,
+            t.bfreshorange,
             t.bgorange,
+            t.wp100,
+            t.py13,
             t.faCenter,
             t.fjCenter,
-            t.px50,
-            t.py10,
-            t.br5,
+            t.br12,
+            t.mt12,
+            t.cwhite
           ]}
           onPress={() => {
             doLogin();
           }}>
-          <Text style={[t['p14-700'], t.cblack]}>
+          <Text style={[t['h14-400'], t.cwhite]}>
             {loading ? 'Processing...' : 'Login'}
           </Text>
         </TouchableOpacity>
@@ -223,17 +229,17 @@ function Login({navigation, ...props}) {
             {login.msg}
           </Text>
         </View>
-        <View style={[t.my40, t.fRow, t.fjCenter]}>
-          <Text style={[t['p16-600'], t.cblack]}>Not a Member?</Text>
+        <View style={[t.mt40, t.fRow, t.fjCenter]}>
+          <Text style={[t['p14-400'], t.cblack]}>Didn’t have an account?</Text>
           <TouchableOpacity
             onPress={() => {
-              registerRef.current?.show();
-              loginRef.current?.hide();
+              loginRef.current?.hide()
+              registerRef.current?.show()
             }}>
-            <Text style={[t['p16-600'], t.corange, t.ms5]}>Register Here</Text>
+            <Text style={[t['p14-600'], t.cdarkGreen, t.ms5]}>Register Here</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </LinearGradient>
     </ActionSheet>
   );
 }

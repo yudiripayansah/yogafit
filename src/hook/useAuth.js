@@ -22,6 +22,18 @@ export function useAuth() {
             user: undefined,
           };
           break;
+        case 'SET_GUEST':
+          return {
+            ...state,
+            guest: {...action.payload},
+          };
+          break;
+        case 'REMOVE_GUEST':
+          return {
+            ...state,
+            guest: undefined,
+          };
+          break;
         case 'SET_LOCATION':
           return {
             ...state,
@@ -41,7 +53,8 @@ export function useAuth() {
     },
     {
       user: undefined,
-      location: undefined
+      location: undefined,
+      guest: undefined
     },
   );
   const auth = useMemo(() => ({
@@ -52,6 +65,16 @@ export function useAuth() {
     removeUser: async () => {
       Store.remove('YOGAFITUSER');
       dispatch(createAction('REMOVE_USER'));
+    },
+  }));
+  const gst = useMemo(() => ({
+    setGuest: async guest => {
+      Store.set('YOGAFITGUEST', guest);
+      dispatch(createAction('SET_GUEST', guest));
+    },
+    removeGuest: async () => {
+      Store.remove('YOGAFITGUEST');
+      dispatch(createAction('REMOVE_GUEST'));
     },
   }));
   const loc = useMemo(() => ({
@@ -76,9 +99,16 @@ export function useAuth() {
       dispatch(createAction('SET_LOCATION', location));
     }
   };
+  const checkGuest = async () => {
+    let guest = await Store.get('YOGAFITGUEST');
+    if (guest) {
+      dispatch(createAction('SET_GUEST', guest));
+    }
+  };
   useEffect(() => {
     checkUser();
     checkLocation();
+    checkGuest();
   }, []);
-  return {loc, auth, state};
+  return {loc, auth, gst, state};
 }

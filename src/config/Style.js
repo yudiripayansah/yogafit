@@ -2,8 +2,9 @@ import {StyleSheet} from 'react-native';
 let color = {
   warning: '#FFDDAC',
   danger: '#dd0000',
-  orange: '#FE9805',
-  darkorange: '#ef8d00',
+  orange: '#F08519',
+  darkorange: '#F08519',
+  neworange: '#F08519',
   freshorange: '#F08519',
   skyblue: '#3399CC',
   leafGreen: '#62AC18',

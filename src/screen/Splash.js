@@ -28,7 +28,7 @@ const Splash = ({navigation}) => {
         <StatusBar
           translucent
           backgroundColor="transparent"
-          barStyle="light-content"
+          barStyle="dark-content"
         />
         <Image
           style={[t.w270, t.h60, {objectFit: 'contain'}]}

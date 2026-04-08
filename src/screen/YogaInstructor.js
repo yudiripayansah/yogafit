@@ -24,7 +24,6 @@ const YogaInstructor = ({navigation}) => {
     setloading(true);
     try {
       let req = await Api.getInstructor(user.token);
-      console.log(req.data)
       if (req.status === 200 || req.status === 201) {
         let {data} = req.data;
         setinstructor(data);

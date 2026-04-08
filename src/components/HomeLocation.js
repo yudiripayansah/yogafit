@@ -11,7 +11,7 @@ function HomeLocation({navigation, ...props}) {
   return (
     <TouchableOpacity style={[t.wp100,t.fRow,t.fjBetween,t.faCenter,{backgroundColor:'#FAFAFA'},t.br13,t.p10]} onPress={()=>{onPress()}}>
       <View style={[t.fRow,t.faCenter]}>
-        <Image source={img.mapIcon} style={[t.w24,t.h24]}/>
+        <Image source={img.mapIcon} style={[t.w24,t.h24,{tintColor:'#F08519'}]}/>
         <View style={[t.ms10]}>
           {/* <Text style={[t['p10-400'],t.cgrey90]}>Our Location</Text> */}
           <Text style={[t['h16-400'],{color: '#4A5565'}]}>{studio && studio.deptname}</Text>

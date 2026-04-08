@@ -1,6 +1,7 @@
 import React, {useEffect, useContext, useState, useRef } from 'react';
-import {View, Text, ImageBackground, TouchableOpacity, Image} from 'react-native';
+import {View, Text, ImageBackground, TouchableOpacity, Image, StatusBar} from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
+import {GuestContext} from '../context/GuestContext';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import LinearGradient from 'react-native-linear-gradient';
 // assets
@@ -9,6 +10,7 @@ import img from '../config/Image';
 const Intro = ({navigation}) => {
   const sliderRef = useRef(null);
   const t = useContext(ThemeContext);
+  const guest = useContext(GuestContext);
   const [lastSlide, setLastSlide] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0);
   const gAnalytics = () => {
@@ -19,6 +21,9 @@ const Intro = ({navigation}) => {
   };
   useEffect(() => {
     gAnalytics();
+    if(guest){
+      navigation.navigate('Home')
+    }
   }, []);
   const onSlideChange = (index) => {
     setCurrentIndex(index)
@@ -30,16 +35,19 @@ const Intro = ({navigation}) => {
   };
   let introItems = [
     {
+      idx: 1,
       title: 'Find Balance in Every Breath',
       text: 'Discover inner peace with guided meditation sessions',
       image: require('../assets/images/revamp/splash-1.png'),
     },
     {
+      idx: 2,
       title: 'Book Classes Anytime, Anywhere',
       text: 'Schedule your yoga sessions with just a few taps',
       image: require('../assets/images/revamp/splash-2.png'),
     },
     {
+      idx: 3,
       title: 'Join the Yoga Fit Community Now!',
       text: 'Connect with thousands of yoga enthusiasts',
       image: require('../assets/images/revamp/splash-3.png'),
@@ -71,7 +79,7 @@ const Intro = ({navigation}) => {
     ...t.bw1,
     ...t.bsolid,
     ...t.bfreshorange,
-    ...t.bgfreshorange,
+    ...t.bgorange,
     ...t.wp80,
     ...t.py8,
     ...t.faCenter,
@@ -112,7 +120,6 @@ const Intro = ({navigation}) => {
               if(lastSlide){
                 navigation.navigate('LoginRegister');
               } else {
-                console.log(sliderRef.current)
                 sliderRef.current?.goToSlide(currentIndex + 1, true);
               }
             }}>
@@ -126,7 +133,7 @@ const Intro = ({navigation}) => {
   };
   let elementItems = ({item}) => {
     return (
-      <View style={[t.wp100, t.hp100,t.faCenter,t.fjCenter, {flex: 1}]}>
+      <View style={[t.wp100, t.hp100,t.faCenter,t.fjCenter, {flex: 1}]} key={item.idx}>
         <View style={[t.relative,t.wp80,t.p20]}>
           <Image source={item.image} style={[t.wp100,t.h390,t.br13]}/>
           <View style={[t.absolute,t.left0,t.bottom0]}>
@@ -148,6 +155,7 @@ const Intro = ({navigation}) => {
       colors={['#FFF3EE', '#FFFFFF']}
       style={{ flex: 1 }}
     >
+      <StatusBar translucent backgroundColor="transparent" barStyle="dark-content"/>
       <AppIntroSlider
         ref={sliderRef}
         renderItem={elementItems}

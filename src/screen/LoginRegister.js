@@ -1,13 +1,32 @@
-import React, {useEffect, useContext, useState} from 'react';
-import {View, Text, ImageBackground, TouchableOpacity, Image, TouchableWithoutFeedback} from 'react-native';
+import React, {useEffect, useContext,useRef, useState} from 'react';
+import {View, Text, StatusBar, TouchableOpacity, Image, TouchableWithoutFeedback} from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
+import {GstContext} from '../context/GstContext';
+import {GuestContext} from '../context/GuestContext';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import LinearGradient from 'react-native-linear-gradient';
+import LoginModal from '../components/Login';
+import VerifyModal from '../components/Verify';
+import RegisterModal from '../components/Register';
+import ForgotModal from '../components/Forgot';
+import FreeTrialModal from '../components/FreeTrial';
+import ChangePhoneModal from '../components/ChangePhone';
 // assets
 import img from '../config/Image';
 // import analytics from '@react-native-firebase/analytics';
 const LoginRegister = ({navigation}) => {
   const t = useContext(ThemeContext);
+  const guest = useContext(GuestContext);
+  const {setGuest} = useContext(GstContext);
+  const locationRef = useRef(null);
+  const loginRef = useRef(null);
+  const verifyRef = useRef(null);
+  const registerRef = useRef(null);
+  const forgotRef = useRef(null);
+  const freetrialRef = useRef(null);
+  const changephoneRef = useRef(null);
+  const [registerdata, setregisterdata] = useState({});
+  const [trialcontract, settrialcontract] = useState();
   const [lastSlide, setLastSlide] = useState(false)
   const gAnalytics = () => {
     // analytics().logScreenView({
@@ -18,6 +37,11 @@ const LoginRegister = ({navigation}) => {
   useEffect(() => {
     gAnalytics();
   }, []);
+  useEffect(() => {
+    if(guest){
+      navigation.navigate('Home')
+    }
+  }, [guest]);
   const onSlideChange = (index) => {
     if (index === introItems.length - 1) {
       setLastSlide(true)
@@ -69,7 +93,7 @@ const LoginRegister = ({navigation}) => {
     ...t.bw1,
     ...t.bsolid,
     ...t.bfreshorange,
-    ...t.bgfreshorange,
+    ...t.bgorange,
     ...t.wp80,
     ...t.py8,
     ...t.faCenter,
@@ -143,6 +167,49 @@ const LoginRegister = ({navigation}) => {
       colors={['#FFF3EE', '#FFFFFF']}
       style={[{ flex: 1 }]}
     >
+      <StatusBar translucent backgroundColor="transparent" barStyle="dark-content"/>
+      <LoginModal
+        changephoneRef={changephoneRef}
+        verifyRef={verifyRef}
+        loginRef={loginRef}
+        registerRef={registerRef}
+        forgotRef={forgotRef}
+      />
+      <ForgotModal
+        changephoneRef={changephoneRef}
+        verifyRef={verifyRef}
+        loginRef={loginRef}
+        registerRef={registerRef}
+        forgotRef={forgotRef}
+      />
+      <VerifyModal
+        changephoneRef={changephoneRef}
+        verifyRef={verifyRef}
+        loginRef={loginRef}
+        registerRef={registerRef}
+        registerdata={registerdata}
+      />
+      <ChangePhoneModal
+        changephoneRef={changephoneRef}
+        verifyRef={verifyRef}
+        loginRef={loginRef}
+        registerRef={registerRef}
+        registerdata={registerdata}
+      />
+      <FreeTrialModal
+        changephoneRef={changephoneRef}
+        freetrialRef={freetrialRef}
+        data={trialcontract}
+      />
+      <RegisterModal
+        changephoneRef={changephoneRef}
+        verifyRef={verifyRef}
+        loginRef={loginRef}
+        registerRef={registerRef}
+        onRegister={data => {
+          setregisterdata(data);
+        }}
+      />
       <View style={[t.faCenter,t.fjCenter]}>
       <Image source={img.logoBig} style={[t.wp80,t.h390,t.br13]} resizeMode='contain'/>
       </View>
@@ -156,7 +223,7 @@ const LoginRegister = ({navigation}) => {
         <TouchableOpacity
           style={btnStyleLast}
           onPress={() => {
-              navigation.navigate('Register');
+              registerRef.current?.show()
           }}>
           <Text style={[t['h14-400'],t.cwhite]}>
             Create Account
@@ -165,7 +232,7 @@ const LoginRegister = ({navigation}) => {
         <TouchableOpacity
           style={btnStyle}
           onPress={() => {
-              navigation.navigate('Login');
+              loginRef.current?.show()
           }}>
           <Text style={[t['h14-400'],t.cblack]}>
             Login
@@ -174,7 +241,8 @@ const LoginRegister = ({navigation}) => {
         <TouchableWithoutFeedback
           style={[t.mt24]}
           onPress={() => {
-              navigation.navigate('Home');
+            setGuest(true)
+            navigation.navigate('Home');
           }}>
           <Text style={[t['h14-400'],t.cblack]}>
             Continue as guest

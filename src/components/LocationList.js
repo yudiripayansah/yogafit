@@ -9,6 +9,7 @@ import {
   Platform,
 } from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
+import {UserContext} from '../context/UserContext';
 import {LocContext} from '../context/LocContext';
 import {LocationContext} from '../context/LocationContext';
 import ActionSheet from 'react-native-actions-sheet';
@@ -23,9 +24,10 @@ import {Api} from '../config/Api';
 import LocationItem from '../components/LocationItem';
 function LocationList({navigation, ...props}) {
   const t = useContext(ThemeContext);
+  const user = useContext(UserContext);
   const {setLocation} = useContext(LocContext);
   const currentStudio = useContext(LocationContext);
-  const {locationRef} = props;
+  const {locationRef,region,nav} = props;
   const [studio, setStudio] = useState([]);
   const [loading, setloading] = useState(false);
   const [longlat, setlonglat] = useState({
@@ -34,8 +36,9 @@ function LocationList({navigation, ...props}) {
   });
   const getStudio = async () => {
     setloading(true);
+    let region_id = region ? region : 1
     try {
-      let req = await Api.studio();
+      let req = await Api.studio(user ? user.region_id : region_id);
       if (req.status === 200 || req.status === 201) {
         let {data} = req.data;
         let distance = 0;
@@ -57,11 +60,13 @@ function LocationList({navigation, ...props}) {
           if (index == 0) {
             distance = theDistance;
           }
+          theStudio = item
           if (theDistance > 0 && theDistance <= distance) {
             distance = theDistance;
             theStudio = item;
           }
         });
+        // console.log(theStudio.deptname,currentStudio.deptname)
         if (theStudio && !currentStudio) {
           setLocation(theStudio);
         }
@@ -140,20 +145,18 @@ function LocationList({navigation, ...props}) {
   }, []);
   useEffect(() => {
     getStudio();
-  }, [longlat]);
+  }, [longlat,region]);
   return (
     <ActionSheet ref={locationRef}>
       <View style={[t.bgwhite, t.wp100, t.px20, t.py20, t.brtl10, t.brtr10]}>
         <TouchableOpacity
           onPress={() => locationRef.current?.hide()}
-          style={[t.msAuto]}>
-          <Image source={img.close} style={[t.w15, t.h15]} />
-        </TouchableOpacity>
-        {studio.length > 0 && (
-          <Text style={[t['p14-500'], t.cblack, t.mt10]}>
-            {studio.length} Yoga Fit Studio tersedia di Indonesia
+          style={[t.faCenter,t.fRow]}>
+          <Image source={img.backBtn} style={[t.w40, t.h40]} />
+          <Text style={[t['h18-400'], t.cblack, t.ms10]}>
+            Select your studio
           </Text>
-        )}
+        </TouchableOpacity>
         <ScrollView style={[t.mt20]} showsVerticalScrollIndicator={false}>
           {!loading ? (
             studio.map((item, index) => {
@@ -166,6 +169,11 @@ function LocationList({navigation, ...props}) {
                     setLocation(selectedStudio);
                     locationRef.current?.hide();
                   }}
+                  onDetailLocation={selectedStudio => {
+                    nav.navigate('StudioDetail', {studio: selectedStudio})
+                    locationRef.current?.hide();
+                  }}
+                  nav={nav}
                 />
               );
             })

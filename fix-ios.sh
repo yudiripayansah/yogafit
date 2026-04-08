@@ -1,7 +1,9 @@
 #!/bin/bash
 
+echo "cleanup node modules..."
+rm -rf node_modules
+yarn install
 echo "🧹 Cleaning iOS build..."
-
 cd ios || exit
 
 echo "📦 Removing Pods, Podfile.lock, and DerivedData..."

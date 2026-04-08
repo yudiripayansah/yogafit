@@ -23,15 +23,9 @@ const MyDetailActivity = ({navigation}) => {
     setloading(true);
     try {
       let req = await Api.myActivity(user.token);
-      console.log(req.data)
       if (req.status === 200 || req.status === 201) {
         let {data} = req.data;
         setdetailactivity(data);
-        // setdetailactivity([{
-        //   tanggal: '2024-11-16',
-        //   type: 'class',
-        //   keterangan: 'Morning Stretch'
-        // }]);
       } else {
         console.error('Error get event');
       }

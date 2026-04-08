@@ -29,8 +29,8 @@ const Profile = ({navigation}) => {
   const [loading, setloading] = useState(false);
   const [profileimage, setprofileimage] = useState(
     user
-      ? {uri: 'https://login.yogafitidonline.com/api/storage/foto/' + user.foto}
-      : {uri: 'https://login.yogafitidonline.com/api/storage/foto/'},
+      ? {uri: user.foto}
+      : {uri: 'https://api.yogafitidonline.com/api/storage/foto/'},
   );
   function convertToInternationalFormat(phoneNumber) {
     if (phoneNumber.startsWith('0')) {
@@ -109,6 +109,7 @@ const Profile = ({navigation}) => {
     getBooking();
     getContract();
   }, []);
+  
   return (
     <ScrollView style={[t.bgwhite]}>
       <StatusBar
