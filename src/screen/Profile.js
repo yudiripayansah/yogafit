@@ -38,23 +38,6 @@ const Profile = ({navigation}) => {
     }
     return phoneNumber; // If it doesn't start with '0', return the number as is.
   }
-  const sendWhatsAppMessage = number => {
-    const phoneNumber = convertToInternationalFormat(number); // WhatsApp number with country code
-    const message = 'Hi Yogafit!'; // Optional: pre-defined message
-    const url = `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(
-      message,
-    )}`;
-
-    Linking.canOpenURL(url)
-      .then(supported => {
-        if (supported) {
-          return Linking.openURL(url);
-        } else {
-          Alert.alert('Error', 'WhatsApp is not installed');
-        }
-      })
-      .catch(err => console.error('Error occurred', err));
-  };
   const getBooking = async () => {
     setloading(true);
     try {
@@ -167,7 +150,7 @@ const Profile = ({navigation}) => {
             t.fjBetween,
           ]}
           onPress={() => {
-            sendWhatsAppMessage('+6287803377765');
+            Helper.sendWhatsapp('Hi Yogafit, i need a help.');
           }}>
           <Image
             source={img.contact}

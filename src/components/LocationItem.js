@@ -4,6 +4,7 @@ import {ThemeContext} from '../context/ThemeContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';// assets
 import Theimage from './Theimage'
 import img from '../config/Image'
+import helper from '../config/Helper'
 function LocationItem({navigation, ...props}) {
   const t = useContext(ThemeContext);
   const {data,boxStyle,onSelectLocation,onDetailLocation,nav} = props
@@ -13,21 +14,6 @@ function LocationItem({navigation, ...props}) {
     }
     return phoneNumber; // If it doesn't start with '0', return the number as is.
   }
-  const sendWhatsAppMessage = (number) => {
-    const phoneNumber = convertToInternationalFormat(number); // WhatsApp number with country code
-    const message = 'Hi Yogafit!'; // Optional: pre-defined message
-    const url = `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
-
-    Linking.canOpenURL(url)
-      .then((supported) => {
-        if (supported) {
-          return Linking.openURL(url);
-        } else {
-          Alert.alert('Error', 'WhatsApp is not installed');
-        }
-      })
-      .catch((err) => console.error('Error occurred', err));
-  };
   return (
     <TouchableOpacity onPress={() => {onSelectLocation(data)}} style={[t.bw1,t.bsolid,t.bgreyc,t.p15,t.br10,boxStyle]}>
       <Text style={[t['h24-600'],t.cblack]}>{data.deptname}</Text>
@@ -57,7 +43,7 @@ function LocationItem({navigation, ...props}) {
         </View>
       </View>
       <View style={[t.fRow,t.fjBetween,t.faCenter,t.mt10]}>
-        <TouchableOpacity style={[t.px25,t.py5,t.bgorange,t.br5,t.fRow,t.faCenter]} onPress={()=>{sendWhatsAppMessage(data.telp)}}>
+        <TouchableOpacity style={[t.px25,t.py5,t.bgorange,t.br5,t.fRow,t.faCenter]} onPress={()=>{helper.sendWhatsapp(`Hi Yogafit i want to know more about ${data.deptname}`,data.telp)}}>
           <Image source={img.whatsapp} style={[t.w20,t.h20,t.me5,{objectFit:'contain'}]}/>
           <Text style={[t['h12-500'],t.cwhite]}>Chat Via Whatsapp</Text>
         </TouchableOpacity>

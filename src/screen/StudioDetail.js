@@ -76,18 +76,6 @@ const StudioDetail = ({ route, navigation }) => {
     }
     return phoneNumber;
   }
-  const sendWhatsAppMessage = number => {
-    const phoneNumber = convertToInternationalFormat(number);
-    const message = `Hi Yogafit Studio ${theStudio.deptname}!`;
-    const url = `whatsapp://send?phone=${number}&text=${encodeURIComponent(message,)}`;
-    Linking.canOpenURL(url).then(supported => {
-      if (supported) {
-        return Linking.openURL(url);
-      } else {
-        Alert.alert('Error', 'WhatsApp is not installed');
-      }
-    }).catch(err => console.error('Error occurred', err));
-  };
   useEffect(() => {
     detail();
     console.log(loc)
@@ -213,7 +201,7 @@ const StudioDetail = ({ route, navigation }) => {
         </View>
       </ScrollView>
       <View style={[t.px20, t.pb30, t.pt10, t.bgwhite]}>
-        <TouchableOpacity style={[t.bgneworange, t.py15, t.br12, t.fRow, t.fjCenter, t.faCenter]} onPress={() => { sendWhatsAppMessage(studio?.telp) }}>
+        <TouchableOpacity style={[t.bgneworange, t.py15, t.br12, t.fRow, t.fjCenter, t.faCenter]} onPress={() => { Helper.sendWhatsapp(`Hi Yogafit i want to know more about this ${studio.deptname}`,studio?.telp) }}>
           <Image source={img.whatsapp} style={[t.w24, t.h24, t.me10]} />
           <Text style={[t.cwhite, t['p16-700']]}>Chat via WhatsApp</Text>
         </TouchableOpacity>

@@ -22,24 +22,31 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import img from '../config/Image';
 import Helper from '../config/Helper';
 import {Api} from '../config/Api';
-import Theimage from '../components/Theimage';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const EditProfile = ({ navigation }) => {
   const t = useContext(ThemeContext);
   const {setUser} = useContext(AuthContext);
   const user = useContext(UserContext);
-
+  const [alert, setalert] = useState({
+    show: false,
+    title: 'Success',
+    message: 'Profile successfully updated',
+    cancelText: 'Close',
+    confirmText: 'Ok'
+  });
   const profileimage = user && user.foto
-    ? { uri: user.foto }
+    ? { uri: 'https://api.yogafitidonline.com/storage/foto/'+user.foto }
     : img.profile;
 
   const [profilePhoto, setProfilePhoto] = useState(profileimage);
 
-  const [name, setname] = useState(user.name);
   const [loading, setloading] = useState(false);
+  const [name, setname] = useState(user.name);
   const [email, setemail] = useState(user.email);
   const [phone, setPhone] = useState(user.no_telp);
   const [gender, setGender] = useState(user.gender);
+  const [profile, setprofile] = useState({});
 
   const [dateBirth, setDateBirth] = useState(
     user.date_birth ? new Date(user.date_birth) : new Date()
@@ -53,13 +60,27 @@ const EditProfile = ({ navigation }) => {
   const myProfile = async () => {
     try {
       let req = await Api.myProfile(user.token)
-      let profile = req.data.data[0]
-      let newUser = {...user,...profile}
-      setUser(newUser)
+      let prof = req.data.users
+      setprofile(prof)
+      setname(prof.name)
+      setemail(prof.email)
+      setPhone(prof.no_telp)
+      setGender(prof.gender)
+      setDateBirth(new Date(prof.date_birth))
     } catch (error) {
       
     }
   }
+  const hideAlert = () => {
+    setalert({
+      show: false,
+      title: '',
+      message: '',
+      cancelText: 'Close',
+      confirmText: 'Ok',
+      onConfirm: () => { },
+    });
+  };
   const saveProfile = async () => {
     setloading(true)
     try {
@@ -75,11 +96,28 @@ const EditProfile = ({ navigation }) => {
       console.log(profilePhoto)
       let req = await Api.updateProfile(payload,user.token)
       myProfile()
+      setalert({
+        show: true,
+        title: 'Success',
+        message: 'Profile successfully updated',
+        cancelText: 'Close',
+        confirmText: 'Ok',
+        onConfirm: () => {
+          hideAlert();
+        },
+      })
       setTimeout(()=>{
         setloading(false)
       },1000)
     } catch (error) {
-      console.error(error)
+      console.log(error)
+      setalert({
+        show: true,
+        title: 'Error',
+        message: 'Failed to update Profile, please try again',
+        cancelText: 'Close',
+        confirmText: 'Ok',
+      })
       setTimeout(()=>{
         setloading(false)
       },1000)
@@ -223,10 +261,31 @@ const EditProfile = ({ navigation }) => {
   );
   useEffect(()=>{
     myProfile()
-    console.log(user.foto)
   },[])
   return (
     <View style={[t.bgwhite, { flex: 1 }]}>
+      <AwesomeAlert
+        show={alert.show}
+        showProgress={false}
+        title={alert.title}
+        message={alert.message}
+        closeOnTouchOutside={true}
+        closeOnHardwareBackPress={false}
+        showCancelButton={false}
+        showConfirmButton={true}
+        cancelText={alert.cancelText}
+        confirmText={alert.confirmText}
+        confirmButtonColor="#62AC18"
+        cancelButtonColor="#dd0000"
+        titleStyle={[t['h20-400'], t.cblack]}
+        messageStyle={[t[('p14-500', t.cblack, t.tCenter)]]}
+        contentStyle={[t.tCenter]}
+        confirmButtonTextStyle={[t[('p20-600', t.cblack)]]}
+        onCancelPressed={() => {
+          setalert(false);
+        }}
+        onConfirmPressed={alert.onConfirm}
+      />
       <StatusBar barStyle="dark-content" />
 
       {/* HEADER */}

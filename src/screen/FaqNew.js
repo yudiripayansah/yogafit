@@ -15,6 +15,7 @@ import { ThemeContext } from '../context/ThemeContext';
 import { UserContext } from '../context/UserContext';
 import img from '../config/Image';
 
+import helper from '../config/Helper';
 import { Api } from '../config/Api';
 // Mengaktifkan animasi untuk Android
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -160,7 +161,11 @@ const FAQ = ({ navigation }) => {
             Can't find the answer you're looking for? Our support team is here to help!
           </Text>
 
-          <TouchableOpacity style={[t.bgorange, t.py15, t.br12, t.fRow, t.faCenter, t.fjCenter, t.mb10]}>
+          <TouchableOpacity style={[t.bgorange, t.py15, t.br12, t.fRow, t.faCenter, t.fjCenter, t.mb10]}
+            onPress={() => {
+              helper.sendWhatsapp(`Hi Yogafit!, i have a question about Yogafit Indonesia!`)
+            }}
+          >
             <Image source={img.whatsapp} style={[t.w20, t.h20, t.me10, { tintColor: '#fff' }]} />
             <Text style={[t.cwhite, t['h15-700']]}>Chat on WhatsApp</Text>
           </TouchableOpacity>

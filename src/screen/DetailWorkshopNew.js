@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { ThemeContext } from '../context/ThemeContext';
 import img from '../config/Image'; // Pastikan path icon sesuai
+import Helper from '../config/Helper'; // Pastikan path icon sesuai
 
 const DetailWorkshop = ({ route, navigation }) => {
   const t = useContext(ThemeContext);
@@ -161,7 +162,11 @@ const DetailWorkshop = ({ route, navigation }) => {
               <Text style={[t.cblack, t['p12-400']]}>
                 Contact our team via WhatsApp for instant assistance with your registration.
               </Text>
-              <TouchableOpacity style={[t.bgwhite,t.bw1,t.bsolid,t.bblack,t.mt10, t.py5,t.px15, t.br10, t.faCenter, t.fRow, t.fjCenter]}>
+              <TouchableOpacity style={[t.bgwhite,t.bw1,t.bsolid,t.bblack,t.mt10, t.py5,t.px15, t.br10, t.faCenter, t.fRow, t.fjCenter]}
+                onPress={()=>{
+                  Helper.sendWhatsapp(`Hi Yogafit!, i have a question about ${theClass?.title} at Yogafit Indonesia!`)
+                }}
+              >
                 <Image source={img.paperlineblack} style={[t.w18, t.h18, t.me10]} />
                 <Text style={[t.cblack, t['h12-500']]}>Chat with Us</Text>
               </TouchableOpacity>

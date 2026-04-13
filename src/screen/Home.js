@@ -464,9 +464,9 @@ const Home = ({navigation}) => {
       />
       <View style={[t.relative]}>
         <HomeCarousel images={slider} />
-        <Pressable style={[t.absolute,t.top60,t.right20,t.w40,t.h40,t.bgwhite,t.faCenter,t.fjCenter,t.br100]} onPress={() => {navigation.navigate('Notification')}}>
+        {/* <Pressable style={[t.absolute,t.top60,t.right20,t.w40,t.h40,t.bgwhite,t.faCenter,t.fjCenter,t.br100]} onPress={() => {navigation.navigate('Notification')}}>
           <Image source={img.notification} style={[t.w24,t.h24, {tintColor:'#F08519'}]}/>
-        </Pressable>
+        </Pressable> */}
       </View>
       <View style={[t.pt12, t.px20]}>
         <HomeLocation

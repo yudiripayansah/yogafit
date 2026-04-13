@@ -274,7 +274,10 @@ const PlanCard = ({ icon, title, desc, benefits }) => {
           <Text style={[t.cgrey60, t['h13-400']]}>{item}</Text>
         </View>
       ))}
-      <TouchableOpacity style={[t.mt20, t.py12, t.br12, t.bw1, { borderColor: '#456A58' }, t.faCenter]}>
+      <TouchableOpacity style={[t.mt20, t.py12, t.br12, t.bw1, { borderColor: '#456A58' }, t.faCenter]}
+      onPress={() => {
+        Helper.sendWhatsapp(`Hi Yogafit!, i have a question about Membership at Yogafit Indonesia!`)
+      }}>
         <Text style={[{ color: '#456A58' }, t['h14-600']]}>Chat with Sales</Text>
       </TouchableOpacity>
     </View>

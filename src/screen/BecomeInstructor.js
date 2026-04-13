@@ -14,6 +14,8 @@ import { ThemeContext } from '../context/ThemeContext';
 import { UserContext } from '../context/UserContext';
 import img from '../config/Image';
 
+import helper from '../config/Helper';
+
 // components
 import RenderHTML from 'react-native-render-html';
 import { Api } from '../config/Api';
@@ -172,7 +174,9 @@ const BecomeInstructor = ({ navigation }) => {
       <View style={[t.p20, t.btw1, { borderColor: '#F3F4F6' }]}>
         <TouchableOpacity
           style={[t.bgneworange, t.py15, t.br15, t.fRow, t.faCenter, t.fjCenter]}
-          onPress={() => {/* Handle WhatsApp Link */ }}
+          onPress={() => {
+            helper.sendWhatsapp(`Hi Yogafit!, i want to know more about Become an Instructor at Yogafit Indonesia!`)
+          }}
         >
           <Image source={img.whatsapp} style={[t.w20, t.h20, t.me10, { tintColor: '#fff' }]} />
           <Text style={[t.cwhite, t['h16-700']]}>Chat on WhatsApp</Text>

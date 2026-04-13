@@ -28,22 +28,18 @@ const ProfileScreen = ({ navigation }) => {
   const [contract, setcontract] = useState();
   const [loading, setloading] = useState(false);
   const [detailactivity, setdetailactivity] = useState({});
-  const [profileimage, setprofileimage] = useState(
-    user
-      ? { uri: user.foto }
-      : { uri: 'https://api.yogafitidonline.com/api/storage/foto/' },
-  );
+  const [profileimage, setprofileimage] = useState({uri:'https://api.yogafitidonline.com/storage/foto/'+user.foto});
+  const [profile, setprofile] = useState({})
   const myProfile = async () => {
     console.log('get profile')
     try {
       let req = await Api.myProfile(user.token)
-      let profile = req.data.data[0]
-      let newUser = { ...user, ...profile }
-      setprofileimage(profile.foto && { uri: profile.foto })
-      setUser(newUser)
-      console.log(profileimage)
+      let prof = req.data.users
+      setprofile(prof)
+      console.log(prof)
+      setprofileimage({uri: prof.foto}) 
     } catch (error) {
-      console.log(error)
+      console.log('error get profile',error)
     }
   }
   const getDetailactivity = async () => {
@@ -68,23 +64,6 @@ const ProfileScreen = ({ navigation }) => {
     }
     return phoneNumber; // If it doesn't start with '0', return the number as is.
   }
-  const sendWhatsAppMessage = number => {
-    const phoneNumber = convertToInternationalFormat(number); // WhatsApp number with country code
-    const message = 'Hi Yogafit!'; // Optional: pre-defined message
-    const url = `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(
-      message,
-    )}`;
-
-    Linking.canOpenURL(url)
-      .then(supported => {
-        if (supported) {
-          return Linking.openURL(url);
-        } else {
-          Alert.alert('Error', 'WhatsApp is not installed');
-        }
-      })
-      .catch(err => console.error('Error occurred', err));
-  };
   const getBooking = async () => {
     setloading(true);
     try {
@@ -176,7 +155,7 @@ const ProfileScreen = ({ navigation }) => {
             placeholder={img.profile}
             style={[t.w100, t.h100, t.br100, { objectFit: 'cover' }]}
           />
-          <Text style={[t.cblack, t['p22-700'], t.mt15]}>{user && user.name}</Text>
+          <Text style={[t.cblack, t['p22-700'], t.mt15]}>{profile && profile.name}</Text>
           {contract && (
             <View style={[t.bgneworange, t.px15, t.py6, t.br20, t.mt10]}>
               <Text style={[t.cwhite, t['p12-700'], { textTransform: 'uppercase' }]}>
@@ -185,8 +164,8 @@ const ProfileScreen = ({ navigation }) => {
             </View>
           )}
 
-          <Text style={[t.cgrey60, t['p14-400'], t.mt10]}>{user && user.email}</Text>
-          <Text style={[t.cgrey60, t['p13-400'], t.mt2]}>Member since {Helper.formatDate(user && user.created_at, 'MMMM YYYY')}</Text>
+          <Text style={[t.cgrey60, t['p14-400'], t.mt10]}>{profile && profile.email}</Text>
+          <Text style={[t.cgrey60, t['p13-400'], t.mt2]}>Member since {Helper.formatDate(profile && profile.created_at, 'MMMM YYYY')}</Text>
         </View>
 
         {/* Stats Cards */}

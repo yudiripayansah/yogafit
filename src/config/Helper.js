@@ -167,19 +167,15 @@ const helper = {
     return phoneNumber; // If it doesn't start with '0', return the number as is.
   },
   sendWhatsapp(msg, phone = '083811308999') {
-    const phoneNumber = this.convertToInternationalFormat(phone); // WhatsApp number with country code
-    const message = 'Hi Yogafit!'; // Optional: pre-defined message
-    const url = `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    // Convert ke format internasional (Indonesia: 62)
+    const phoneNumber = this.convertToInternationalFormat(phone);
 
-    Linking.canOpenURL(url)
-      .then((supported) => {
-        if (supported) {
-          return Linking.openURL(url);
-        } else {
-          Alert.alert('Error', 'WhatsApp is not installed');
-        }
-      })
-      .catch((err) => console.error('Error occurred', err));
+    const message = msg || 'Hi Yogafit!';
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    Linking.openURL(url)
+    .catch(() => {
+      Alert.alert('Error', 'Tidak bisa membuka WhatsApp');
+    });
   }
 }
 export default helper

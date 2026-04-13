@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   StyleSheet,
+  ActivityIndicator,
   Dimensions
 } from 'react-native';
 import { UserContext } from '../context/UserContext';
@@ -21,7 +22,7 @@ import RegisterModal from '../components/Register';
 import ChangePhoneModal from '../components/ChangePhone';
 import Theimage from '../components/Theimage';
 // api
-import {Api} from '../config/Api';
+import { Api } from '../config/Api';
 import Helper from '../config/Helper';
 const DetailClass = ({ route, navigation }) => {
   const user = useContext(UserContext);
@@ -129,7 +130,7 @@ const DetailClass = ({ route, navigation }) => {
           setregisterdata(data);
         }}
         classdata={classdata}
-        
+
       />
       <ChangePhoneModal
         changephoneRef={changephoneRef}
@@ -217,7 +218,7 @@ const DetailClass = ({ route, navigation }) => {
             <Image source={img.iconcalendar} style={[t.w20, t.h20, t.me15]} />
             <View>
               <Text style={[t.cgrey30, t['h12-400']]}>Date</Text>
-              <Text style={[t.cblack, t['p14-700']]}>{Helper.formatDate(theClass?.tgl_schedule,'DD MMM YYYY')}</Text>
+              <Text style={[t.cblack, t['p14-700']]}>{Helper.formatDate(theClass?.tgl_schedule, 'DD MMM YYYY')}</Text>
             </View>
           </View>
 
@@ -253,7 +254,7 @@ const DetailClass = ({ route, navigation }) => {
         <View style={[t.px20, t.mb20]}>
           <Text style={[t.cblack, t['h16-700'], t.mb10]}>Your Instructor</Text>
           <View style={[t.fRow, t.faCenter]}>
-            <Theimage original={theClass.teacher_photo} placeholder={img.teacher} style={[t.w60,t.h60,t.br30,t.me15,{objectFit:'cover'}]}/>
+            <Theimage original={theClass.teacher_photo} placeholder={img.teacher} style={[t.w60, t.h60, t.br30, t.me15, { objectFit: 'cover' }]} />
             <View style={{ flex: 1 }}>
               <Text style={[t.cblack, t['h14-700']]}>{theClass?.name}</Text>
               <Text style={[t.cgrey10, t['h12-400']]}>Certified yoga instructor with 10+ years of experience.</Text>
@@ -288,13 +289,19 @@ const DetailClass = ({ route, navigation }) => {
 
       {/* Footer Button Area */}
       <View style={[t.px20, t.pb30, t.pt10, t.bgwhite]}>
-        <TouchableOpacity style={[t.bgneworange, t.py10, t.br10, t.faCenter, t.fRow, t.fjCenter]} onPress={() => {
+        <TouchableOpacity disabled={loading} style={[t.bgneworange, t.py10, t.br10, t.faCenter, t.fRow, t.fjCenter]} onPress={() => {
           user ? doBookNow(theClass) : registerAndBook(theClass);
         }}>
-          <Image source={img.paperlinewhite} style={[t.w18, t.h18, t.me10, { tintColor: '#fff' }]} />
-          <Text style={[t.cwhite, t['h14-600']]}>Book Now</Text>
+          {loading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <>
+              <Image source={img.paperlinewhite} style={[t.w18, t.h18, t.me10, { tintColor: '#fff' }]} />
+              <Text style={[t.cwhite, t['h14-600']]}>Book Now</Text>
+            </>
+          )}
         </TouchableOpacity>
-        <TouchableOpacity style={[t.mt15, t.faCenter, t.fRow, t.fjCenter]} onPress={()=>{Helper.sendWhatsapp('Hello i want to know more about this class '+theClass.class_name)}}>
+        <TouchableOpacity style={[t.mt15, t.faCenter, t.fRow, t.fjCenter]} onPress={() => { Helper.sendWhatsapp('Hello i want to know more about this class ' + theClass.class_name) }}>
           <Image source={img.phonecall} style={[t.w18, t.h18, t.me10]} />
           <Text style={[t.cblack, t['h14-600']]}>Contact Studio</Text>
         </TouchableOpacity>

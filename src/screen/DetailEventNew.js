@@ -15,6 +15,7 @@ import img from '../config/Image'; // Pastikan path icon sesuai
 import Helper from '../config/Helper'; // Pastikan path icon sesuai
 import RenderHTML from 'react-native-render-html';
 
+import helper from '../config/Helper';
 const DetailEvent = ({ route, navigation }) => {
   const t = useContext(ThemeContext);
   const screenWidth = Dimensions.get('window').width - 40;
@@ -171,7 +172,11 @@ const DetailEvent = ({ route, navigation }) => {
               <Text style={[t.cblack, t['p12-400']]}>
                 Contact our team via WhatsApp for instant assistance with your registration.
               </Text>
-              <TouchableOpacity style={[t.bgwhite, t.bw1, t.bsolid, t.bblack, t.mt10, t.py5, t.px15, t.br10, t.faCenter, t.fRow, t.fjCenter]}>
+              <TouchableOpacity style={[t.bgwhite, t.bw1, t.bsolid, t.bblack, t.mt10, t.py5, t.px15, t.br10, t.faCenter, t.fRow, t.fjCenter]} 
+                onPress={()=>{
+                  helper.sendWhatsapp(`Hi Yogafit!, i have a question about ${data?.dTitle} at Yogafit Indonesia!`)
+                }}
+              >
                 <Image source={img.paperlineblack} style={[t.w18, t.h18, t.me10]} />
                 <Text style={[t.cblack, t['h12-500']]}>Chat with Us</Text>
               </TouchableOpacity>
