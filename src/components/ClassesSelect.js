@@ -8,7 +8,7 @@ function ClassesSelect({navigation, ...props}) {
   const t = useContext(ThemeContext);
   const {onPress,level} = props
   return (
-    <TouchableOpacity style={[t.bgfreshorange,t.px10,t.py10,t.br10,t.fRow,t.faCenter,t.fjBetween]} onPress={()=>{onPress()}}>
+    <TouchableOpacity style={[t.bgorange,t.px10,t.py10,t.br10,t.fRow,t.faCenter,t.fjBetween]} onPress={()=>{onPress()}}>
       <View style={[t.fRow,t.faCenter]}>
         <Text style={[t['p20-600'],t.cwhite]}>{level}</Text>
       </View>

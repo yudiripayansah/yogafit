@@ -27,8 +27,8 @@ const MyProfile = ({navigation}) => {
   const [new_password, setnew_password] = useState();
   const [confirmasi_password, setconfirmasi_password] = useState();
   const profileimage = user
-    ? {uri: 'https://login.yogafitidonline.com/api/storage/foto/' + user.foto}
-    : {uri: 'https://login.yogafitidonline.com/api/storage/foto/'};
+    ? {uri: 'https://api.yogafitidonline.com/api/storage/foto/' + user.foto}
+    : {uri: 'https://api.yogafitidonline.com/api/storage/foto/'};
   const [cp, setCp] = useState({
     status: true,
     msg: null,

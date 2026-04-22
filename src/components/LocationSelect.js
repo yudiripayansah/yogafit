@@ -12,16 +12,16 @@ function LocationSelect({navigation, ...props}) {
   const locationRef = useRef(null);
   return (
     <>
-    <LocationModal locationRef={locationRef}/>
-    <TouchableOpacity style={[t.bgorange,t.px10,t.py10,t.br10,t.fRow,t.faCenter,t.fjBetween]} onPress={() => {locationRef.current?.show();}}>
+    <LocationModal locationRef={locationRef} nav={navigation}/>
+    <TouchableOpacity style={[t.wp100,t.fRow,t.fjBetween,t.faCenter,{backgroundColor:'#FAFAFA'},t.br13,t.p10]} onPress={() => {locationRef.current?.show();console.log('touched')}}>
       <View style={[t.fRow,t.faCenter]}>
-        <Image source={img.mappoint} style={[t.w40,t.h40]}/>
+        <Image source={img.mapIcon} style={[t.w24,t.h24,{tintColor:'#F08519'}]}/>
         <View style={[t.ms10]}>
-          <Text style={[t['p12-400'],t.cwhite]}>Choose Your Studio</Text>
-          <Text style={[t['h24-400'],t.cwhite]}>{studio && studio.deptname}</Text>
+          {/* <Text style={[t['p12-400'],t.cwhite]}>Choose Your Studio</Text> */}
+          <Text style={[t['h16-400'],{color: '#4A5565'}]}>{studio && studio.deptname}</Text>
         </View>
       </View>
-      <Image source={img.arrowDownWhite} style={[t.w30,t.h30]}/>
+      <Image source={img.chevronDown} style={[t.w24,t.h24]}/>
     </TouchableOpacity>
     </>
   );

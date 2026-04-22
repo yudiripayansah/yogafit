@@ -29,8 +29,8 @@ const Profile = ({navigation}) => {
   const [loading, setloading] = useState(false);
   const [profileimage, setprofileimage] = useState(
     user
-      ? {uri: 'https://login.yogafitidonline.com/api/storage/foto/' + user.foto}
-      : {uri: 'https://login.yogafitidonline.com/api/storage/foto/'},
+      ? {uri: user.foto}
+      : {uri: 'https://api.yogafitidonline.com/api/storage/foto/'},
   );
   function convertToInternationalFormat(phoneNumber) {
     if (phoneNumber.startsWith('0')) {
@@ -38,23 +38,6 @@ const Profile = ({navigation}) => {
     }
     return phoneNumber; // If it doesn't start with '0', return the number as is.
   }
-  const sendWhatsAppMessage = number => {
-    const phoneNumber = convertToInternationalFormat(number); // WhatsApp number with country code
-    const message = 'Hi Yogafit!'; // Optional: pre-defined message
-    const url = `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(
-      message,
-    )}`;
-
-    Linking.canOpenURL(url)
-      .then(supported => {
-        if (supported) {
-          return Linking.openURL(url);
-        } else {
-          Alert.alert('Error', 'WhatsApp is not installed');
-        }
-      })
-      .catch(err => console.error('Error occurred', err));
-  };
   const getBooking = async () => {
     setloading(true);
     try {
@@ -109,6 +92,7 @@ const Profile = ({navigation}) => {
     getBooking();
     getContract();
   }, []);
+  
   return (
     <ScrollView style={[t.bgwhite]}>
       <StatusBar
@@ -166,7 +150,7 @@ const Profile = ({navigation}) => {
             t.fjBetween,
           ]}
           onPress={() => {
-            sendWhatsAppMessage('+6287803377765');
+            Helper.sendWhatsapp('Hi Yogafit, i need a help.');
           }}>
           <Image
             source={img.contact}

@@ -15,7 +15,7 @@ function CourseItem({navigation, ...props}) {
       </View>
       <View style={[{flex:1}]}>
         <Text style={[t['h20-400'],t.corange]}>{data.course}</Text>
-        <Text style={[t['p12-400'],t.greya]}>{data.studio}</Text>
+        <Text style={[t['p12-400'],t.cgreya]}>{data.studio}</Text>
         <Text style={[t['p13-600'],t.cblack,t.mt10]}>{data.durasi}</Text>
         <View style={[t.fRow,t.fjBetween,t.faCenter,t.mt5]}>
           <Text style={[t['p12-600'],t.cblack]}>with {data.teacher}</Text>

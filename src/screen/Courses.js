@@ -55,10 +55,10 @@ const Courses = ({navigation}) => {
   return (
     <ScrollView style={[t.bgwhite]}>
       <StatusBar translucent barStyle="dark-content" />
-      <View style={[t.px20, t.bggreye, t.pt70]}>
+      <View style={[t.px20, t.pt70]}>
         <LocationSelect navigation={navigation} />
       </View>
-      <SubNavigation navigation={navigation} />
+      <SubNavigation navigation={navigation} activeScreen="Experiences"/>
       <View style={[t.mt20, t.px20]}>
         {!loading && course.length > 0 ? (
           course.map((item, index) => {

@@ -8,7 +8,7 @@ function FreeContractCard({navigation, ...props}) {
   const t = useContext(ThemeContext);
   const screenWidth = Dimensions.get('window').width - 40;
   const {data,boxStyle,onPress} = props
-  // {uri:data ? 'https://login.yogafitidonline.com/api/storage/qrcode/'+data.referal_code+'.png': 'xxx'}
+  // {uri:data ? 'https://api.yogafitidonline.com/api/storage/qrcode/'+data.referal_code+'.png': 'xxx'}
   return (
     <View style={[t.relative]}>
       <AutoHeightImage

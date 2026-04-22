@@ -2,7 +2,7 @@ import axios from 'axios';
 import {AuthContext} from '../context/AuthContext';
 import {useEffect, useContext} from 'react';
 const defAxios = axios.create({
-  baseURL: 'https://login.yogafitidonline.com/api/api/',
+  baseURL: 'https://api.yogafitidonline.com/api/',
 });
 const useSetupAxiosInterceptors = (navigation) => {
   const { removeUser } = useContext(AuthContext);
@@ -31,17 +31,34 @@ const useSetupAxiosInterceptors = (navigation) => {
   }, [removeUser]);
 };
 const Api = {
+  region(payload) {
+    let url = '/auth/get_regions';
+    return defAxios.get(url, payload);
+  },
   slider(payload) {
     let url = '/auth/slider';
     return defAxios.get(url, payload);
   },
   studio(payload) {
     let url = '/auth/get_studio';
+    if(payload)
+      url = url + '?id_region='+ payload
     return defAxios.get(url, payload);
   },
   login(payload) {
     let url = '/auth/login';
     return defAxios.post(url, payload);
+  },
+  updateProfile(payload, token) { 
+    let url = '/member/update_profile';
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'multipart/form-data',
+      },
+      body: payload
+    };
+    return defAxios.post(url,payload, config);
   },
   register(payload) {
     let url = '/auth/register';
@@ -80,6 +97,24 @@ const Api = {
     };
     return defAxios.get(url, config);
   },
+  getNotifSettings(payload, token) {
+    let url = '/member/get_notification-setting';
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return defAxios.get(url, config);
+  },
+  updateNotifSettings(payload, token) {
+    let url = '/member/update_notification-setting';
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return defAxios.post(url,payload, config);
+  },
   myBookingHistory(payload, token) {
     let url = '/member/my_booking_history';
     let config = {
@@ -98,6 +133,15 @@ const Api = {
     };
     return defAxios.get(url, config);
   },
+  myScheduleExp(payload, token) {
+    let url = '/auth/get_users_schedule_experience?'+payload;
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return defAxios.get(url, config);
+  },
   bookingClass(payload, token) {
     let url = '/member/booking_class';
     let config = {
@@ -109,6 +153,15 @@ const Api = {
   },
   getInstructor(token) {
     let url = '/member/get_instructor';
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return defAxios.get(url, config);
+  },
+  myProfile(token) {
+    let url = '/member/my_profile';
     let config = {
       headers: {
         Authorization: 'Bearer ' + token,
@@ -159,6 +212,14 @@ const Api = {
     let url = '/auth/get_class?'+payload;
     return defAxios.get(url);
   },
+  studioDetail(payload) {
+    let url = '/auth/get_studio?'+payload;
+    return defAxios.get(url);
+  },
+  teacherDetail(payload) {
+    let url = '/auth/get_teacher_active?'+payload;
+    return defAxios.get(url);
+  },
   classesDetail(payload) {
     let url = '/auth/get_class';
     return defAxios.get(url, payload);
@@ -203,6 +264,14 @@ const Api = {
   },
   countryCode() {
     let url = '/auth/get_kode_negara';
+    return defAxios.get(url);
+  },
+  specialOffer() {
+    let url = '/auth/special_offer';
+    return defAxios.get(url);
+  },
+  article() {
+    let url = '/auth/article';
     return defAxios.get(url);
   }
 };

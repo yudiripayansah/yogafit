@@ -28,7 +28,7 @@ const Classes = ({navigation}) => {
       if (req.status === 200 || req.status == 201) {
         let {data} = req.data;
         data.map((item, i) => {
-          item.textStyle = i % 2 === 0 ? t.bgfreshorange : t.bgorange;
+          item.textStyle = i % 2 === 0 ? t.bgorange : t.bgorange;
           item.dImage = {uri: item.file};
           item.dTitle = item.class_name;
           item.dText = `<div>

@@ -13,7 +13,7 @@ import LocationSelect from '../components/LocationSelect';
 import LocationItem from '../components/LocationItem';
 // API
 import {Api} from '../config/Api';
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation from '@react-native-community/geolocation';
 import {getDistance} from 'geolib';
 const Location = ({navigation}) => {
   const t = useContext(ThemeContext);
@@ -33,7 +33,7 @@ const Location = ({navigation}) => {
         });
       },
       error => {
-        console.log(error.code, error.message);
+        console.error(error.code, error.message);
       },
       {
         enableHighAccuracy: true, // Set to true to get better accuracy
@@ -53,7 +53,7 @@ const Location = ({navigation}) => {
   const getStudio = async () => {
     setloading(true);
     try {
-      let req = await Api.studio();
+      let req = await Api.studio(user ? user.region_id : 1);
       if (req.status === 200 || req.status === 201) {
         let {data} = req.data;
         data.map(item => {

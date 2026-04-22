@@ -10,7 +10,7 @@ function ContractItem({navigation, ...props}) {
   const {data,boxStyle,onPress} = props
   return (
     <Pressable 
-      onPress={()=>{onPress({uri:data ? 'https://login.yogafitidonline.com/api/storage/qrcode/'+data.referal_code+'.png': 'xxx'})}}>
+      onPress={()=>{onPress({uri:data ? 'https://api.yogafitidonline.com/api/storage/qrcode/'+data.referal_code+'.png': 'xxx'})}}>
       <Text style={[t['h30-400'],t.corange,t.pb10,t.bbw1,t.bsolid,t.bgreyd]}>{data && data.name}</Text>
       <View style={[t.fRow,t.fjBetween,t.faStart,t.mt10]}>
         <View style={[]}>
@@ -27,7 +27,7 @@ function ContractItem({navigation, ...props}) {
         </View>
         <View style={[t.px10,t.py5,t.bgorange,t.br5]}>
           <Text style={[t['p10-500'],t.cwhite,t.tCenter,t.mb5]}>Scan QR</Text>
-          <Theimage original={{uri:data ? 'https://login.yogafitidonline.com/api/storage/qrcode/'+data.referal_code+'.png': 'xxx'}} placeholder={img.placeholder} style={[t.w80,t.h80,{objectFit:'contain'}]}/>
+          <Theimage original={{uri:data ? 'https://api.yogafitidonline.com/api/storage/qrcode/'+data.referal_code+'.png': 'xxx'}} placeholder={img.placeholder} style={[t.w80,t.h80,{objectFit:'contain'}]}/>
           <Text style={[t['p10-500'],t.cwhite,t.tCenter,t.mt5]}>Klik Disini</Text>
         </View>
       </View>

@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) needs access to your camera to scan QR codes for class check-in.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -32,7 +34,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app requires location access to detect nearby Yogafit studios and determine the distance between your location and the studio.</string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -49,6 +51,15 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Inter_18pt-Black.ttf</string>
+		<string>Inter_18pt-Bold.ttf</string>
+		<string>Inter_18pt-ExtraBold.ttf</string>
+		<string>Inter_18pt-ExtraLight.ttf</string>
+		<string>Inter_18pt-Light.ttf</string>
+		<string>Inter_18pt-Medium.ttf</string>
+		<string>Inter_18pt-Regular.ttf</string>
+		<string>Inter_18pt-SemiBold.ttf</string>
+		<string>Inter_18pt-Thin.ttf</string>
 		<string>Montserrat-Black.ttf</string>
 		<string>Montserrat-BlackItalic.ttf</string>
 		<string>Montserrat-Bold.ttf</string>
@@ -68,6 +79,15 @@
 		<string>Montserrat-Thin.ttf</string>
 		<string>Montserrat-ThinItalic.ttf</string>
 		<string>NewAmsterdam-Regular.ttf</string>
+		<string>palatinolinotype_Black.ttf</string>
+		<string>palatinolinotype_Bold.ttf</string>
+		<string>palatinolinotype_ExtraBold.ttf</string>
+		<string>palatinolinotype_ExtraLight.ttf</string>
+		<string>palatinolinotype_Light.ttf</string>
+		<string>palatinolinotype_Medium.ttf</string>
+		<string>palatinolinotype_Regular.ttf</string>
+		<string>palatinolinotype_SemiBold.ttf</string>
+		<string>palatinolinotype_Thin.ttf</string>
 	</array>
 </dict>
 </plist>

@@ -2,49 +2,45 @@ import React, {useEffect, useContext} from 'react';
 import {Dimensions, Text, View, ActivityIndicator} from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Helper from '../config/Helper'
+import Helper from '../config/Helper'// assets
+import img from '../config/Image';
+import Theimage from './Theimage';
 function ClassItem({navigation, ...props}) {
   const t = useContext(ThemeContext);
   const {onBookPress,onDetailPress,data,boxStyle,hidebtn,loading} = props
   return (
-    <View style={[t.bw1,t.bsolid,t.bblack,t.p10,t.br10,t.fRow,t.faCenter,boxStyle]}>
-      <View style={[t.faCenter,t.fjCenter,t.pe10]}>
-        <Text style={[t['p12-600'],t.cblack,t.tCenter]}>{data.start_time.replace(':00','')} - {data.end_time.replace(':00','')}</Text>
-        <Text style={[t['p12-600'],t.cgrey90,t.tCenter]}>{data.duration} Mins</Text>
+    <TouchableOpacity style={[t.bw1,t.bsolid,t.bgreye,t.br14,{overflow:'hidden'},boxStyle]} onPress={()=>{onDetailPress(data, navigation)}}>
+      <View style={[t.faCenter,t.fjCenter]}>
+        <Theimage
+          original={data.gambar}
+          placeholder={img.classimage}
+          style={{
+            width: '100%',
+          }}
+        />
+        <Text style={[t['p10-400'],t.py2,t.px8,t.br100,t.absolute,t.top12,t.left12,{color:'#DA7917', backgroundColor:'#FEF3E8'}]}>{data.capacity - data.status_booking} Spots Left</Text>
       </View>
-      <View style={[{flex:1}]}>
-        <View style={[t.fRow,t.fjBetween,t.faStart]}>
-          <Text style={[t['h16-400'],t.corange]}>{data.deptname}</Text>
-          <Text style={[t['p12-800'],(data.class_kat == 'Hot') ? t.cdanger : t.cblack]}>{data.class_kat}</Text>
+      <View style={[{flex:1},t.p12]}>
+        <View style={[t.fRow,t.fjStart,t.faStart,{columnGap:5}]}>
+          <Text style={[t['h12-400'],t.py2,t.px8,t.br100,{color:'#007D2F', backgroundColor:'#D5FFD5'}]}>{data.class_level}</Text>
+          <Text style={[t['h12-400'],t.py2,t.px8,t.br100,{color:'#007D2F', backgroundColor:'#ECF0EE'},(data.class_kat == 'Hot') ? t.cdanger : {color:'#3F6050'}]}>{data.class_kat}</Text>
         </View>
-        <View style={[t.fRow,t.fjBetween,t.faEnd,t.mt5]}>
-          <View style={[t.wp70]}>
-            <Text style={[t['h18-400'],t.cskyblue]}>{data.class_name}</Text>
-            <Text style={[t['p14-600'],t.cblack]}>{data.name}</Text>
-          </View>
-          {/* <View style={[t.fRow,t.faCenter]}>
-            <Image source={img.fire} style={[t.w20,t.h20,t.me5,{objectFit:'contain'}]}/>
-            <Text style={[t['p12-400'],t.corange]}>{data.spot_left}</Text>
-          </View> */}
-        </View>
+        <Text style={[t['h14-400'],t.cblack,t.mt4]}>{data.class_name}</Text>
+        <Text style={[t['h12-400'],t.cgrey30]}>{data.name}</Text>
+        <Text style={[t['h12-500'],{color:'#456A58'}]}>{data.open}</Text>
         {!hidebtn ? (
-          <View style={[t.fRow,t.fjBetween,t.faEnd,t.mt10]}>
-            <TouchableOpacity onPress={()=>{onDetailPress()}}>
-              <Text style={[t.bggrey90,t.py5,t.px10,t.bw1,t.bblack,t.bsolid,t.br100,t.cblack,t['p12-700']]}>Detail</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{onBookPress(data)}} style={[t.bgorange,t.py5,t.px10,t.bw1,t.borange,t.bsolid,t.br100]}>
-              {loading ? (
-                <ActivityIndicator size="small" color="#fff" />
-              ): (
-              <Text style={[t.cwhite,t['p12-700']]}>Book Now</Text>
-              )}
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity onPress={()=>{onBookPress(data)}} style={[t.bgorange,t.py7,t.px10,t.bw1,t.borange,t.bsolid,t.br7,t.faCenter,t.mt12]}>
+            {loading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ): (
+            <Text style={[t.cwhite,t['h12-400']]}>Book Now</Text>
+            )}
+          </TouchableOpacity>
         ): (
           <Text style={[t['p12-700'],t.cblack,t.mt5]}>{Helper.dateIndo(data.tgl_schedule)}</Text>
         )}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

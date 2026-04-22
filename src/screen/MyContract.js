@@ -31,7 +31,6 @@ const MyContract = ({navigation}) => {
       if (req.status === 200 || req.status === 201) {
         let {data} = req.data;
         data.map(item => {
-          console.log(data)
           item.status = '';
           switch (item.status_contract) {
             case '0':

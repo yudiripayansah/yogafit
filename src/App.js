@@ -5,6 +5,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {RouteMain} from './config/Router';
 import {ThemeContext} from './context/ThemeContext';
 import {UserContext} from './context/UserContext';
+import {GuestContext} from './context/GuestContext';
+import {GstContext} from './context/GstContext';
 import {AuthContext} from './context/AuthContext';
 import {LocContext} from './context/LocContext';
 import {LocationContext} from './context/LocationContext';
@@ -18,7 +20,7 @@ const App = ({}) => {
   const RootStack = createStackNavigator();
   const [appState, setAppState] = useState(AppState.currentState);
   const [loading, setLoading] = useState(true);
-  const {loc, auth, state} = useAuth();
+  const {loc, auth, gst, state} = useAuth();
   const requestLocationPermission = async () => {
     try {
       if (Platform.OS === 'android') {
@@ -51,7 +53,9 @@ const App = ({}) => {
           {({navigation}) => (
             <LocationContext.Provider value={state.location}>
             <UserContext.Provider value={state.user}>
+            <GuestContext.Provider value={state.guest}>
               <RouteMain navigation={navigation} />
+            </GuestContext.Provider>
             </UserContext.Provider>
             </LocationContext.Provider>
           )}
@@ -92,6 +96,7 @@ const App = ({}) => {
     <ThemeContext.Provider value={Style}>
       <AuthContext.Provider value={auth}>
         <LocContext.Provider value={loc}>
+        <GstContext.Provider value={gst}>
           <NavigationContainer>
             <RootStack.Navigator
               screenOptions={{
@@ -101,6 +106,7 @@ const App = ({}) => {
               {renderRoute()}
             </RootStack.Navigator>
           </NavigationContainer>
+        </GstContext.Provider>
         </LocContext.Provider>
       </AuthContext.Provider>
     </ThemeContext.Provider>
