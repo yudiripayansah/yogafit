@@ -82,6 +82,11 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 12
         versionName "2.1"
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+            }
+        }
     }
     signingConfigs {
         debug {
@@ -114,12 +119,19 @@ android {
             minifyEnabled true
         }
     }
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+        }
+    }
 }
 
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
-
+    // Force versi yang konsisten
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+    
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {
@@ -130,6 +142,10 @@ configurations.all {
     resolutionStrategy {
         force "androidx.core:core:1.13.1"
         force "androidx.core:core-ktx:1.13.1"
+        force "com.google.android.gms:play-services-location:21.3.0"
+        force "com.google.android.gms:play-services-base:18.4.0"      // ← naikan
+        force "com.google.android.gms:play-services-basement:18.4.0"  // ← naikan
+        force "com.google.android.gms:play-services-tasks:18.4.0"     // ← tambah ini
     }
 }
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

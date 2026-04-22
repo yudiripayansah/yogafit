@@ -13,7 +13,7 @@ import LocationSelect from '../components/LocationSelect';
 import LocationItem from '../components/LocationItem';
 // API
 import {Api} from '../config/Api';
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation from '@react-native-community/geolocation';
 import {getDistance} from 'geolib';
 const Location = ({navigation}) => {
   const t = useContext(ThemeContext);

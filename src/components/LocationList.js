@@ -13,7 +13,7 @@ import {UserContext} from '../context/UserContext';
 import {LocContext} from '../context/LocContext';
 import {LocationContext} from '../context/LocationContext';
 import ActionSheet from 'react-native-actions-sheet';
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation from '@react-native-community/geolocation';
 import {getDistance} from 'geolib';
 // assets
 import img from '../config/Image';
