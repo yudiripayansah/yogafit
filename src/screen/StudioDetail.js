@@ -78,7 +78,6 @@ const StudioDetail = ({ route, navigation }) => {
   }
   useEffect(() => {
     detail();
-    console.log(loc)
   }, []);
   return (
     <View style={[t.bgwhite, { flex: 1 }]}>

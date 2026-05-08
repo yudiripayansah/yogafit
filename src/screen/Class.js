@@ -149,7 +149,6 @@ const Class = ({ route, navigation }) => {
           item.gambar = {uri: item.gambar}
           item.teacher_photo = {uri: item.teacher_photo}
         })
-        console.log(data)
         setclasslist(data);
       } else {
         setclasslist([]);
@@ -176,15 +175,16 @@ const Class = ({ route, navigation }) => {
             cancelText: 'Close',
             confirmText: 'Ok',
             onConfirm: () => {
+              hideAlert()
               navigation.navigate('Booking');
             },
           });
         } else {
-          if (req.data.data && req.data.data.length > 0) {
+          if (req.data) {
             setalert({
               show: true,
               title: 'Failed',
-              message: req.data.data[0],
+              message: req.data.message,
               cancelText: 'Close',
               confirmText: 'Ok',
               onConfirm: () => {
@@ -362,7 +362,7 @@ const Class = ({ route, navigation }) => {
               }}
             />
           </View>
-          <View style={[t.mt10, t.px20, t.fRow, t.faCenter, t.fjStart, { flexWrap: 'wrap' }]}>
+          <View style={[t.mt10, t.px20, t.fRow, t.fjStart]}>
             <TouchableOpacity
               style={[
                 t.bggreye,
@@ -376,10 +376,10 @@ const Class = ({ route, navigation }) => {
               onPress={() => {
                 classkatRef.current?.show();
               }}>
-              <View style={[t.fRow]}>
+              <View style={[t.fRow,t.faCenter]}>
                 <Image
                   source={img.filter}
-                  style={[t.w17, t.h17, { objectFit: 'contain' }]}
+                  style={[t.w15, t.h15, { objectFit: 'contain' }]}
                 />
                 <Text style={[t.cblack, t.ms5, t['h12-500']]}>{level}</Text>
               </View>
@@ -401,10 +401,10 @@ const Class = ({ route, navigation }) => {
               onPress={() => {
                 ckRef.current?.show();
               }}>
-              <View style={[t.fRow]}>
+              <View style={[t.fRow,t.faCenter]}>
                 <Image
                   source={img.filter}
-                  style={[t.w17, t.h17, { objectFit: 'contain' }]}
+                  style={[t.w15, t.h15, { objectFit: 'contain' }]}
                 />
                 <Text style={[t.cblack, t.ms5, t['h12-500']]}>
                   {classkat ? classkat : classKat}
@@ -422,7 +422,7 @@ const Class = ({ route, navigation }) => {
                 t.p12,
                 t.fRow,
                 t.faCenter,
-                t.fjBetween,
+                t.fjBetween
               ]}
               onPress={() => {
                 setlevel('Select Level');

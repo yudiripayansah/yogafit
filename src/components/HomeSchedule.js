@@ -36,7 +36,7 @@ function HomeSchedule({ navigation, ...props }) {
             }}
           >
             <Pressable
-              onPress={() => navigation.navigate('DetailClassNew', {theClass: item})}
+              onPress={() => navigation.navigate('DetailClassNew', { theClass: item })}
               style={{
                 width: ITEM_WIDTH,
                 height: ITEM_HEIGHT,
@@ -59,42 +59,48 @@ function HomeSchedule({ navigation, ...props }) {
                 end={{ x: 0.5, y: 1 }}
                 style={[
                   t.absolute,
-                  t.p15,
+                  t.p0,
                   t.fjEnd,
                   t.wp100,
                   t.hp100,
+                  t.top0,
+                  t.bottom0,
+                  t.left0,
+                  t.right0,
                 ]}
               >
-                <Text
-                  style={[
-                    t['p10-600'],
-                    t.corange,
-                    t.py4,
-                    t.px8,
-                    t.br50,
-                    t.absolute,
-                    t.top10,
-                    t.right10,
-                    { backgroundColor: '#fef3e8' },
-                  ]}
-                >
-                  {item.capacity - item.status_booking} Spots Left
-                </Text>
+                <View style={[t.p15,t.hp100,t.wp100,t.fjEnd,t.relative]}>
+                  <Text
+                    style={[
+                      t['p10-600'],
+                      t.corange,
+                      t.py4,
+                      t.px8,
+                      t.br50,
+                      t.absolute,
+                      t.top10,
+                      t.right10,
+                      { backgroundColor: '#fef3e8' },
+                    ]}
+                  >
+                    {item.capacity - item.status_booking} Spots Left
+                  </Text>
 
-                <Text style={[t['h14-600'], t.cwhite]}>
-                  {item.class_name}
-                </Text>
+                  <Text style={[t['h14-600'], t.cwhite]}>
+                    {item.class_name}
+                  </Text>
 
-                <Text style={[t['h12-400'], t.cwhite]}>
-                  {item.name}
-                </Text>
+                  <Text style={[t['h12-400'], t.cwhite]}>
+                    {item.name}
+                  </Text>
 
-                <Text style={[t['h12-600'], t.cwhite]}>
-                  {item.open}
-                </Text>
-                <Text style={[t['p9-400'], t.cwhite, {fontStyle:'italic'}]}>
-                  {item.class_level} {item.class_kat} Studio
-                </Text>
+                  <Text style={[t['h12-600'], t.cwhite]}>
+                    {item.open}
+                  </Text>
+                  <Text style={[t['p9-400'], t.cwhite, { fontStyle: 'italic' }]}>
+                    {item.class_level} {item.class_kat} Studio
+                  </Text>
+                </View>
               </LinearGradient>
             </Pressable>
           </View>

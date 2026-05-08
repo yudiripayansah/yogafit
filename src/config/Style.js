@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 let color = {
   warning: '#FFDDAC',
   danger: '#dd0000',
@@ -86,6 +86,20 @@ for (let i = 0; i <= 1000; i++) {
   positions[`mleft${i}`] = {left: -i};
   positions[`mright${i}`] = {right: -i};
 }
+// Palatinolinotype TTF files only contain two distinct PostScript names:
+// PalatinoLinotype-Bold (Medium/SemiBold/Bold/ExtraBold/Black)
+// PalatinoLinotype-Roman (Thin/ExtraLight/Light/Regular)
+const PALATINO_BOLD_WEIGHTS = new Set(['Medium', 'SemiBold', 'Bold', 'ExtraBold', 'Black']);
+function palatinoFamily(weight) {
+  if (Platform.OS === 'ios') {
+    return PALATINO_BOLD_WEIGHTS.has(weight) ? 'PalatinoLinotype-Bold' : 'PalatinoLinotype-Roman';
+  }
+  return `palatinolinotype_${weight}`;
+}
+// Inter PostScript names use no underscore: Inter18pt-Bold (iOS) vs Inter_18pt-Bold (Android)
+function interFamily(weight) {
+  return Platform.OS === 'ios' ? `Inter18pt-${weight}` : `Inter_18pt-${weight}`;
+}
 let typo = [];
 for (let i = 1; i <= 100; i++) {
   let weight = [
@@ -101,10 +115,10 @@ for (let i = 1; i <= 100; i++) {
   ];
   for (let p = 0; p < weight.length; p++) {
     typo[`h${i}-${p + 1}00`] = {
-      fontFamily: `palatinolinotype_${weight[p]}`,
+      fontFamily: palatinoFamily(weight[p]),
       fontSize: i,
     };
-    typo[`p${i}-${p + 1}00`] = {fontFamily: `Inter_18pt-${weight[p]}`, fontSize: i};
+    typo[`p${i}-${p + 1}00`] = {fontFamily: interFamily(weight[p]), fontSize: i};
   }
 }
 let border = [];

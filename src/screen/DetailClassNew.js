@@ -46,7 +46,6 @@ const DetailClass = ({ route, navigation }) => {
   });
   const [loading, setloading] = useState(false);
   const doBookNow = async () => {
-    console.log(theClass.id_schedule)
     setloading(true);
     try {
       let param = {
@@ -70,7 +69,7 @@ const DetailClass = ({ route, navigation }) => {
             setalert({
               show: true,
               title: 'Failed',
-              message: req.data.data[0],
+              message: req.data.message,
               cancelText: 'Close',
               confirmText: 'Ok',
               onConfirm: () => {

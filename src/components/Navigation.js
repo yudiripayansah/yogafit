@@ -27,11 +27,11 @@ const Nav = ({navigation, ...props}) => {
       />
       <View style={[t.fRow,t.fjStart,t.faCenter,t.wp35,t.ps15]}>
         <TouchableOpacity style={[t.faCenter,t.fjCenter,t.px10, t.py10, t.me15]} onPress={() => {navigation.navigate('Home')}}>
-          <Image source={(activeScreen == 'Home') ? img.navHomeActive : img.navHomeInactive} style={[t.w30,t.h30,(activeScreen == 'Home') && {tintColor:'#F08519'}]}/>
+          <Image source={(activeScreen == 'Home') ? img.navHomeActive : img.navHomeInactive} style={[t.w30,t.h30,(activeScreen == 'Home') ? {tintColor:'#F08519'} : {tintColor:'#666'}]}/>
           <Text style={[t['h12-400'],t.mt3,(activeScreen == 'Home') ? t.corange : t.cgrey60]}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[t.faCenter,t.fjCenter,t.px10, t.py10]} onPress={() => {navigation.navigate('Class')}}>
-          <Image source={(activeScreen == 'Class') ? img.navClassActive : img.navClassInactive} style={[t.w30,t.h30,(activeScreen == 'Class') && {tintColor:'#F08519'}]}/>
+          <Image source={(activeScreen == 'Class') ? img.navClassActive : img.navClassInactive} style={[t.w30,t.h30,(activeScreen == 'Class') ? {tintColor:'#F08519'} : {tintColor:'#666'}]}/>
           <Text style={[t['h12-400'],t.mt3,(activeScreen == 'Class') ? t.corange : t.cgrey60]}>Practice</Text>
         </TouchableOpacity>
       </View>
@@ -45,11 +45,11 @@ const Nav = ({navigation, ...props}) => {
       </View>
       <View style={[t.fRow,t.fjEnd,t.faCenter,t.wp35,t.pe15]}>
         <TouchableOpacity style={[t.faCenter,t.fjCenter,t.px10, t.py10, t.me15]} onPress={() => {user ? navigation.navigate('Booking') : onPressMainBtn() }}>
-          <Image source={(activeScreen == 'Booking') ? img.navTrainerActive : img.navTrainerInactive} style={[t.w30,t.h30,(activeScreen == 'Booking') && {tintColor:'#F08519'}]}/>
+          <Image source={(activeScreen == 'Booking') ? img.navTrainerActive : img.navTrainerInactive} style={[t.w30,t.h30,(activeScreen == 'Booking') ? {tintColor:'#F08519'} : {tintColor:'#666'}]}/>
           <Text style={[t['h12-400'],t.mt3,(activeScreen == 'Booking') ? t.corange : t.cgrey60]}>Booking</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[t.faCenter,t.fjCenter,t.px10, t.py10]} onPress={() => {user ? navigation.navigate('ProfileNew') : onPressMainBtn()}}>
-          <Image source={(activeScreen == 'ProfileNew') ? img.navProfileActive : img.navProfileInactive} style={[t.w30,t.h30,(activeScreen == 'ProfileNew') && {tintColor:'#F08519'}]}/>
+          <Image source={(activeScreen == 'ProfileNew') ? img.navProfileActive : img.navProfileInactive} style={[t.w30,t.h30,(activeScreen == 'ProfileNew') ? {tintColor:'#F08519'} : {tintColor:'#666'}]}/>
           <Text style={[t['h12-400'],t.mt3,(activeScreen == 'ProfileNew') ? t.corange : t.cgrey60]}>Profile</Text>
         </TouchableOpacity>
       </View>

@@ -34,7 +34,7 @@ const ChoosePlan = ({ navigation }) => {
     {
       title: 'Personal Training',
       desc: 'Tailored for You',
-      benefits: ['Private 1-on-1 Session with International Certified Teacher', 'Customized & Personalized Training Plan', 'Flexible Scheduling Time','Good for member with Medical Conditions (Helps recovery faster)'],
+      benefits: ['Private 1-on-1 Session with International Certified Teacher', 'Customized & Personalized Training Plan', 'Flexible Scheduling Time', 'Good for member with Medical Conditions (Helps recovery faster)'],
       icon: img.iconmedalgrey
     }
   ];
@@ -47,27 +47,28 @@ const ChoosePlan = ({ navigation }) => {
           colors={['#FF4E00', '#FF8E4E']}
           start={{ x: 0.5, y: 0 }}
           end={{ x: 0.5, y: 1 }}
-          style={[t.pt50, t.px20, t.pb30]}
+          style={[]}
         >
+          <View style={[t.pt50, t.px20, t.pb30]}>
+            <View style={[t.fRow, t.faCenter, t.fjBetween]}>
+              {/* Back Button */}
+              <TouchableOpacity
+                style={[]}
+                onPress={() => navigation.goBack()}
+              >
+                <Image source={img.btnback} style={[t.w40, t.h40]} />
+              </TouchableOpacity>
 
-          <View style={[t.fRow, t.faCenter, t.fjBetween]}>
-            {/* Back Button */}
-            <TouchableOpacity
-              style={[]}
-              onPress={() => navigation.goBack()}
-            >
-              <Image source={img.btnback} style={[t.w40, t.h40]} />
-            </TouchableOpacity>
-
-          </View>
-          <View style={[t.fjCenter,t.faCenter,t.px20,t.tCenter]}>
-            <Text style={[t.cwhite, t['h24-600'],t.tCenter]}>Choose Your Plan</Text>
-            <Text style={[t.cwhite, t['p16-400'],t.tCenter]}>
-              Find the perfect membership for your journey
-            </Text>
+            </View>
+            <View style={[t.fjCenter, t.faCenter, t.px20, t.tCenter]}>
+              <Text style={[t.cwhite, t['h24-600'], t.tCenter]}>Choose Your Plan</Text>
+              <Text style={[t.cwhite, t['p16-400'], t.tCenter]}>
+                Find the perfect membership for your journey
+              </Text>
+            </View>
           </View>
         </LinearGradient>
-        <View style={[t.px20,t.pt30]}>
+        <View style={[t.px20, t.pt30]}>
           {plans.map((item) => {
             return (
               <PlanCard
@@ -84,7 +85,7 @@ const ChoosePlan = ({ navigation }) => {
 
       {/* Bottom Action */}
       <View style={[t.p20, t.btw1, { borderColor: '#F3F4F6' }]}>
-        <Text style={[t.cgrey90, t['h12-500'],t.tCenter,t.mb20]}>Need help? Tap below to connect with our team.</Text>
+        <Text style={[t.cgrey90, t['h12-500'], t.tCenter, t.mb20]}>Need help? Tap below to connect with our team.</Text>
         <TouchableOpacity style={[t.bgneworange, t.py15, t.br12, t.fRow, t.fjCenter, t.faCenter]}
           onPress={() => {
             helper.sendWhatsapp(`Hi Yogafit!, i want to know more about Plans at Yogafit Indonesia!`)

@@ -28,7 +28,7 @@ function HomeTeacher({ navigation, ...props }) {
           <View style={{ width: ITEM_WIDTH + SPACING, paddingLeft: 20 }}>
             <Pressable
               onPress={() =>
-                navigation.navigate('InstructorDetail', {param: item})
+                navigation.navigate('InstructorDetail', { param: item })
               }
               style={{
                 width: ITEM_WIDTH,
@@ -51,16 +51,17 @@ function HomeTeacher({ navigation, ...props }) {
                 end={{ x: 0.5, y: 1 }}
                 style={[
                   t.absolute,
-                  t.p15,
-                  t.faCenter,
-                  t.fjEnd,
-                  t.wp100,
-                  t.hp100,
+                  { top: 0, left: 0, right: 0, bottom: 0 },
                 ]}
               >
-                <Text style={[t['h14-400'], t.cwhite, t.tCenter]}>
-                  {item.name}
-                </Text>
+                <View style={[t.wp100, t.hp100,
+                t.p15,
+                t.faCenter,
+                t.fjEnd,]}>
+                  <Text style={[t['h14-400'], t.cwhite, t.tCenter]}>
+                    {item.name}
+                  </Text>
+                </View>
               </LinearGradient>
             </Pressable>
           </View>

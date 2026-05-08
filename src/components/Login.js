@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useRef, useState} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import {
   Dimensions,
   Text,
@@ -6,7 +6,9 @@ import {
   Image,
   TextInput,
   Pressable,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  ScrollView,
+  Platform,
 } from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
 import {AuthContext} from '../context/AuthContext';
@@ -25,13 +27,14 @@ function Login({navigation, ...props}) {
   const {setGuest} = useContext(GstContext);
   const {loginRef, verifyRef, registerRef, forgotRef} = props;
   // const [email, setemail] = useState('8988449651');
-  // const [password, setpassword] = useState('54101eb@D');
+  // const [password, setpassword] = useState('964953');
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [showpassword, setshowpassword] = useState(false);
   const [countryCode, setCountryCode] = useState('+62');
   const [countryCodes, setCountryCodes] = useState(['+62']);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [login, setLogin] = useState({
     status: true,
     msg: null,
@@ -123,8 +126,9 @@ function Login({navigation, ...props}) {
     getCountryCode();
   }, []);
   return (
-    <ActionSheet ref={loginRef}>
-      <LinearGradient colors={['#FFF3EE', '#FFFFFF']} style={[t.wp100, t.px20, t.py20, t.brtl10, t.brtr10, t.fjStart, t.hp100]}>
+    <ActionSheet ref={loginRef} isModal={false}>
+      <LinearGradient colors={['#FFF3EE', '#FFFFFF']} style={[t.wp100, t.brtl10, t.brtr10, t.fjStart, t.hp100]}>
+        <View style={[t.px20, t.py20]}>
         <TouchableWithoutFeedback onPress={() => {
           loginRef.current?.hide()
         }}>
@@ -136,18 +140,53 @@ function Login({navigation, ...props}) {
         <Text style={[t['p14-400'], t.cgrey90]}>
           Let’s continue your journey with Yoga Fit.
         </Text>
-        <View style={[t.mt28]}>
+        <View style={[t.mt28, {zIndex: 999}]}>
           <Text style={[t['h16-400'], t.cblack]}>Country</Text>
-          <View style={[t.br10, t.bw1,t.bsolid,t.bgrey,t.bgwhite, t.mt10 ,{overflow:'hidden'}]}>
-            <Picker
-              style={[t.bgwhite, t.p10, t['h14-400'], t.br5, t.cblack]}
-              selectedValue={countryCode}
-              onValueChange={(itemValue, itemIndex) => setCountryCode(itemValue)}>
-              {countryCodes.map((item,index) => {
-                return (<Picker.Item label={item.name} value={item.code} key={index}/>);
-              })}
-            </Picker>
-          </View>
+          {Platform.OS === 'ios' ? (
+            <View style={{position: 'relative'}}>
+              <Pressable
+                onPress={() => setDropdownOpen(v => !v)}
+                style={[t.br10, t.bw1, t.bsolid, t.bgrey, t.bgwhite, t.mt10, t.p10, t.fRow, t.fjBetween, t.faCenter]}>
+                <Text style={[t['h14-400'], t.cblack]}>
+                  {countryCodes.find(c => c.code === countryCode)?.name || countryCode}
+                </Text>
+                <Text style={[t['h14-400'], t.cgrey90]}>{dropdownOpen ? '▴' : '▾'}</Text>
+              </Pressable>
+              {dropdownOpen && (
+                <View style={[t.bgwhite, t.br10, {
+                  position: 'absolute', top: '100%', left: 0, right: 0,
+                  zIndex: 999, maxHeight: 200, marginTop: 4,
+                  shadowColor: '#000', shadowOffset: {width: 0, height: 2},
+                  shadowOpacity: 0.15, shadowRadius: 6,
+                  borderWidth: 1, borderColor: '#eee',
+                }]}>
+                  <ScrollView nestedScrollEnabled>
+                    {countryCodes.map((item, index) => (
+                      <Pressable
+                        key={index}
+                        onPress={() => { setCountryCode(item.code); setDropdownOpen(false); }}
+                        style={[t.p15, {borderBottomWidth: 1, borderBottomColor: '#eee'}]}>
+                        <Text style={[t['h14-400'], countryCode === item.code ? {color: '#456A58', fontWeight: '600'} : t.cblack]}>
+                          {item.name}  ({item.code})
+                        </Text>
+                      </Pressable>
+                    ))}
+                  </ScrollView>
+                </View>
+              )}
+            </View>
+          ) : (
+            <View style={[t.br10, t.bw1, t.bsolid, t.bgrey, t.bgwhite, t.mt10, {overflow: 'hidden'}]}>
+              <Picker
+                style={[t.bgwhite, t.p10, t['h14-400'], t.br5, t.cblack]}
+                selectedValue={countryCode}
+                onValueChange={(itemValue) => setCountryCode(itemValue)}>
+                {countryCodes.map((item, index) => (
+                  <Picker.Item label={item.name} value={item.code} key={index} />
+                ))}
+              </Picker>
+            </View>
+          )}
         </View>
         <View style={[t.mt12]}>
           <Text style={[t['h16-400'], t.cblack]}>Mobile number</Text>
@@ -233,11 +272,12 @@ function Login({navigation, ...props}) {
           <Text style={[t['p14-400'], t.cblack]}>Didn’t have an account?</Text>
           <TouchableOpacity
             onPress={() => {
-              loginRef.current?.hide()
-              registerRef.current?.show()
+              registerRef.current?.show();
+              loginRef.current?.hide();
             }}>
             <Text style={[t['p14-600'], t.cdarkGreen, t.ms5]}>Register Here</Text>
           </TouchableOpacity>
+        </View>
         </View>
       </LinearGradient>
     </ActionSheet>

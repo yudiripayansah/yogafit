@@ -182,7 +182,6 @@ const Home = ({navigation}) => {
           item.gambar = {uri: item.gambar}
           item.teacher_photo = {uri: item.teacher_photo}
         })
-        console.log(data[0])
         setSchedule(data);
       } else {
         setSchedule([]);
@@ -386,14 +385,14 @@ const Home = ({navigation}) => {
     getarticle();
     getTrainer();
     getSchedule();
-    getTrialContract();
+    // getTrialContract();
     getContract();
     getStudio()
     getSpecialOffer()
     // redirect()
   }, []);
   useEffect(() => {
-    getTrialContract();
+    // getTrialContract();
     getContract();
   }, [user]);
   useEffect(() => {
@@ -405,7 +404,7 @@ const Home = ({navigation}) => {
       getarticle();
       getTrainer();
       getSchedule();
-      getTrialContract();
+      // getTrialContract();
       getContract();
       getStudio()
       getSpecialOffer()

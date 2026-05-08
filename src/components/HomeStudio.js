@@ -24,17 +24,19 @@ function HomeStudio({ navigation, ...props }) {
         pagingEnabled={false}
         loop
         style={{ width: screenWidth }}
-        renderItem={({ item },index) => (
-          <View style={{ width: ITEM_WIDTH + SPACING,
-              paddingLeft: 20, }}>
+        renderItem={({ item }, index) => (
+          <View style={{
+            width: ITEM_WIDTH + SPACING,
+            paddingLeft: 20,
+          }}>
             <Pressable
               onPress={() => {
-                  if(item.type == 'all'){
-                    onPressViewAll()
-                  } else {
-                    navigation.navigate('StudioDetail', {studio: item})
-                  }
+                if (item.type == 'all') {
+                  onPressViewAll()
+                } else {
+                  navigation.navigate('StudioDetail', { studio: item })
                 }
+              }
               }
               style={{
                 width: ITEM_WIDTH,
@@ -58,53 +60,54 @@ function HomeStudio({ navigation, ...props }) {
                   end={{ x: 0.5, y: 1 }}
                   style={[
                     t.absolute,
-                    t.p15,
                     t.fjCenter,
                     t.faCenter,
-                    t.wp100,
-                    t.hp100,
+                    { top: 0, left: 0, right: 0, bottom: 0 },
                   ]}
                 >
                   <Text style={[t['h16-600'], t.cwhite]}>
                     All Studios
                   </Text>
-                  <Text style={[t['h12-400'], t.cwhite,t.mt10, t.px8,t.bw1,t.bsolid,t.bwhite,t.br100]}>
+                  <Text style={[t['h12-400'], t.cwhite, t.mt10, t.px8, t.bw1, t.bsolid, t.bwhite, t.br100]}>
                     View All
                   </Text>
                 </LinearGradient>
               ) : (
-              <LinearGradient
-                colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.7)']}
-                start={{ x: 0.5, y: 0 }}
-                end={{ x: 0.5, y: 1 }}
-                style={[
-                  t.absolute,
-                  t.p15,
-                  t.fjEnd,
-                  t.faStart,
-                  t.wp100,
-                  t.hp100,
-                ]}
-              >
-                <Text style={[t['p8-400'], t.cwhite, t.px8,t.bw1,t.bsolid,t.bwhite,t.br100]}>
-                  Jakarta {index}
-                </Text>
-                <Text style={[t['h14-600'], t.cwhite]}>
-                  {item.deptname}
-                </Text>
-                <View style={[t.fRow,t.faCenter]}>
-                    <Image source={img.star} style={[t.w8,t.h8]} ob/>
-                  <Text style={[t['p8-400'], t.cwhite,t.ms5]}>
-                    {item.rating}
-                  </Text>
-                  <Text style={[t['p8-400'], t.cwhite, t.mx2]}>
-                  -
-                  </Text>
-                  <Text style={[t['p8-400'], t.cwhite]}>
-                    {item.ratingCount} reviews
-                  </Text>
-                </View>
-              </LinearGradient>
+                <LinearGradient
+                  colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.7)']}
+                  start={{ x: 0.5, y: 0 }}
+                  end={{ x: 0.5, y: 1 }}
+                  style={[
+                    t.absolute,
+                    { top: 0, left: 0, right: 0, bottom: 0 },
+                  ]}
+                >
+                  <View style={[
+                    t.wp100,
+                    t.hp100,
+                    t.p15,
+                    t.fjEnd,
+                    t.faStart]}>
+                    <Text style={[t['p8-400'], t.cwhite, t.px8, t.bw1, t.bsolid, t.bwhite, t.br100]}>
+                      Jakarta {index}
+                    </Text>
+                    <Text style={[t['h14-600'], t.cwhite,t.mt5]}>
+                      {item.deptname}
+                    </Text>
+                    <View style={[t.fRow, t.faCenter]}>
+                      <Image source={img.star} style={[t.w8, t.h8]} ob />
+                      <Text style={[t['p8-400'], t.cwhite, t.ms5]}>
+                        {item.rating}
+                      </Text>
+                      <Text style={[t['p8-400'], t.cwhite, t.mx2]}>
+                        -
+                      </Text>
+                      <Text style={[t['p8-400'], t.cwhite]}>
+                        {item.ratingCount} reviews
+                      </Text>
+                    </View>
+                  </View>
+                </LinearGradient>
               )}
             </Pressable>
           </View>

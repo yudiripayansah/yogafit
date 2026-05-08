@@ -13,7 +13,7 @@ function LocationSelect({navigation, ...props}) {
   return (
     <>
     <LocationModal locationRef={locationRef} nav={navigation}/>
-    <TouchableOpacity style={[t.wp100,t.fRow,t.fjBetween,t.faCenter,{backgroundColor:'#FAFAFA'},t.br13,t.p10]} onPress={() => {locationRef.current?.show();console.log('touched')}}>
+    <TouchableOpacity style={[t.wp100,t.fRow,t.fjBetween,t.faCenter,{backgroundColor:'#FAFAFA'},t.br13,t.p10]} onPress={() => {locationRef.current?.show();}}>
       <View style={[t.fRow,t.faCenter]}>
         <Image source={img.mapIcon} style={[t.w24,t.h24,{tintColor:'#F08519'}]}/>
         <View style={[t.ms10]}>

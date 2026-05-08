@@ -1,0 +1,50 @@
+diff --git a/lib/commonjs/getShadowNodeFromRef.js b/lib/commonjs/getShadowNodeFromRef.js
+--- a/lib/commonjs/getShadowNodeFromRef.js
++++ b/lib/commonjs/getShadowNodeFromRef.js
+@@ -27,6 +27,10 @@
+     } catch (e) {
+       findHostInstance_DEPRECATED = _ref => null;
+     }
++    // Fallback: require succeeded but function not found in module exports (e.g. RN 0.79+)
++    if (!findHostInstance_DEPRECATED) {
++      findHostInstance_DEPRECATED = _ref => null;
++    }
+   }
+
+   // Load findHostInstance_DEPRECATED lazily because it may not be available before render
+@@ -46,6 +50,8 @@
+   }
+
+   // @ts-ignore Fabric
+-  return getInternalInstanceHandleFromPublicInstance(findHostInstance_DEPRECATED(ref)).stateNode.node;
++  const hostInstance = findHostInstance_DEPRECATED(ref);
++  if (!hostInstance) return null;
++  return getInternalInstanceHandleFromPublicInstance(hostInstance)?.stateNode?.node ?? null;
+ }
+ //# sourceMappingURL=getShadowNodeFromRef.js.map
+\ No newline at end of file
+diff --git a/lib/module/getShadowNodeFromRef.js b/lib/module/getShadowNodeFromRef.js
+--- a/lib/module/getShadowNodeFromRef.js
++++ b/lib/module/getShadowNodeFromRef.js
+@@ -23,6 +23,10 @@
+     } catch (e) {
+       findHostInstance_DEPRECATED = _ref => null;
+     }
++    // Fallback: require succeeded but function not found in module exports (e.g. RN 0.79+)
++    if (!findHostInstance_DEPRECATED) {
++      findHostInstance_DEPRECATED = _ref => null;
++    }
+   }
+
+   // Load findHostInstance_DEPRECATED lazily because it may not be available before render
+@@ -42,6 +46,8 @@
+   }
+
+   // @ts-ignore Fabric
+-  return getInternalInstanceHandleFromPublicInstance(findHostInstance_DEPRECATED(ref)).stateNode.node;
++  const hostInstance = findHostInstance_DEPRECATED(ref);
++  if (!hostInstance) return null;
++  return getInternalInstanceHandleFromPublicInstance(hostInstance)?.stateNode?.node ?? null;
+ }
+ //# sourceMappingURL=getShadowNodeFromRef.js.map
+\ No newline at end of file

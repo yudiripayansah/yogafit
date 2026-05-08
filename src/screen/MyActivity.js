@@ -223,9 +223,9 @@ const MyActivity = ({ navigation }) => {
           </>
         ) : (<>
           {
-            history.map((item) => {
+            history.map((item, index) => {
               return (
-                <View style={[t.bneworange,t.bw1,t.bsolid, t.p20, t.br20, t.fRow, t.faCenter, t.fjBetween, t.mb10]}>
+                <View key={item.id ?? index} style={[t.bneworange,t.bw1,t.bsolid, t.p20, t.br20, t.fRow, t.faCenter, t.fjBetween, t.mb10]}>
                     <View style={[]}>
                       <Text style={[t.cblack, t['h18-700']]}>{item.keterangan}</Text>
                       <Text style={[t.cblack, t['h14-400'], t.mt2]}>{item.type}</Text>

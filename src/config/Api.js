@@ -151,6 +151,15 @@ const Api = {
     };
     return defAxios.post(url, payload, config);
   },
+  bookingCancel(payload, token) {
+    let url = '/member/booking_cancel';
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return defAxios.post(url, payload, config);
+  },
   getInstructor(token) {
     let url = '/member/get_instructor';
     let config = {

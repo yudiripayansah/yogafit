@@ -24,6 +24,7 @@ import MyActivity from '../screen/MyActivity';
 import Faq from '../screen/Faq';
 import FaqNew from '../screen/FaqNew';
 import Home from '../screen/Home';
+import Splash from '../screen/Splash';
 import Intro from '../screen/Intro';
 import InstructorDetail from '../screen/InstructorDetail';
 import LoginRegister from '../screen/LoginRegister';
@@ -81,11 +82,9 @@ export const RouteMain = ({navigation}) => {
   },[])
   return (
     <>
-      <LoginModal verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} forgotRef={forgotRef}/>
       <ForgotModal verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} forgotRef={forgotRef}/>
       <VerifyModal changephoneRef={changephoneRef} verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} registerdata={registerdata}/>
       <ChangePhoneModal changephoneRef={changephoneRef} verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} registerdata={registerdata}/>
-      <RegisterModal changephoneRef={changephoneRef} verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} onRegister={(data) => {setregisterdata(data)}}/>
       <MainStack.Navigator
         screenOptions={{
           headerShown: false,
@@ -147,6 +146,8 @@ export const RouteMain = ({navigation}) => {
         <MainStack.Screen name={'YogaInstructor'} component={YogaInstructor} options={options} />
       </MainStack.Navigator>
       <Nav navigation={navigation} activeScreen={activeScreen} onPressMainBtn={openLogin}/>
+      <LoginModal verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} forgotRef={forgotRef}/>
+      <RegisterModal changephoneRef={changephoneRef} verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} onRegister={(data) => {setregisterdata(data)}}/>
     </>
   );
 };

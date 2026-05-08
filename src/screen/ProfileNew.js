@@ -31,12 +31,10 @@ const ProfileScreen = ({ navigation }) => {
   const [profileimage, setprofileimage] = useState({uri:'https://api.yogafitidonline.com/storage/foto/'+user.foto});
   const [profile, setprofile] = useState({})
   const myProfile = async () => {
-    console.log('get profile')
     try {
       let req = await Api.myProfile(user.token)
       let prof = req.data.users
       setprofile(prof)
-      console.log(prof)
       setprofileimage({uri: prof.foto}) 
     } catch (error) {
       console.log('error get profile',error)

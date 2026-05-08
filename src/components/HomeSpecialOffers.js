@@ -25,8 +25,10 @@ function HomeSpecialOffers({ navigation, ...props }) {
         loop
         style={{ width: screenWidth }}
         renderItem={({ item }) => (
-          <View style={{ width: ITEM_WIDTH + SPACING, 
-              paddingLeft: 20, }}>
+          <View style={{
+            width: ITEM_WIDTH + SPACING,
+            paddingLeft: 20,
+          }}>
             <Pressable
               onPress={() =>
                 navigation.navigate('OfferDetails', {
@@ -54,16 +56,17 @@ function HomeSpecialOffers({ navigation, ...props }) {
                 end={{ x: 0.5, y: 1 }}
                 style={[
                   t.absolute,
-                  t.p15,
-                  t.faStart,
-                  t.fjEnd,
-                  t.wp100,
-                  t.hp100,
+                  { top: 0, left: 0, right: 0, bottom: 0 },
                 ]}
               >
-                <Text style={[t['h14-400'], t.cwhite, t.tLeft]}>
-                  {item.title}
-                </Text>
+                <View style={[
+                  t.p15,
+                  t.faStart,
+                  t.fjEnd,]}>
+                  <Text style={[t['h14-400'], t.cwhite, t.tLeft]}>
+                    {item.title}
+                  </Text>
+                </View>
               </LinearGradient>
             </Pressable>
           </View>

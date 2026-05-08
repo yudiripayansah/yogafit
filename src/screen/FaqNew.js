@@ -34,7 +34,6 @@ const FAQ = ({ navigation }) => {
       if (req.status === 200 || req.status === 201) {
         let { data } = req.data;
         setfaq(data);
-        console.log(data[0])
       } else {
         console.error('Error get event');
       }
@@ -106,7 +105,7 @@ const FAQ = ({ navigation }) => {
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[t.pb40]}>
         {/* Search Bar */}
-        <View style={[t.mx20, t.mt10, t.fRow, t.faCenter, t.px15, t.br15, t.bw1, { borderColor: '#E5E7EB' }]}>
+        <View style={[t.mx20, t.mt10, t.fRow, t.faCenter, t.p15, t.br15, t.bw1, { borderColor: '#E5E7EB' }]}>
           <Image source={img.iconsearch} style={[t.w20, t.h20, t.me10, { tintColor: '#9CA3AF' }]} />
           <TextInput
             placeholder="Search questions..."

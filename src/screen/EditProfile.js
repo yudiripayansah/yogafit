@@ -92,8 +92,6 @@ const EditProfile = ({ navigation }) => {
       if(profilePhoto.name){
         payload.append('file', profilePhoto)
       }
-      console.log(payload)
-      console.log(profilePhoto)
       let req = await Api.updateProfile(payload,user.token)
       myProfile()
       setalert({
@@ -174,8 +172,6 @@ const EditProfile = ({ navigation }) => {
         saveToPhotos: true,
       },
       response => {
-        console.log(response);
-
         if (response.didCancel) return;
 
         if (response.errorCode) {
@@ -377,7 +373,7 @@ const EditProfile = ({ navigation }) => {
                 t.bw1,
                 t.br12,
                 t.bgwhite,
-                t.px12,
+                t.p12,
                 t.bgreye,
                 t.bsolid,
               ]}
@@ -409,7 +405,7 @@ const EditProfile = ({ navigation }) => {
                 t.bw1,
                 t.br12,
                 { backgroundColor: '#F3F4F6' },
-                t.px12,
+                t.p12,
                 t.bgreye,
                 t.bsolid,
               ]}

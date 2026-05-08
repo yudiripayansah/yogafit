@@ -1,0 +1,17 @@
+diff --git a/src/AwesomeAlert.js b/src/AwesomeAlert.js
+--- a/src/AwesomeAlert.js
++++ b/src/AwesomeAlert.js
+@@ -34,7 +34,7 @@
+
+   componentDidMount() {
+-    HwBackHandler.addEventListener(HW_BACK_EVENT, this._handleHwBackEvent);
++    this._backHandlerSubscription = HwBackHandler.addEventListener(HW_BACK_EVENT, this._handleHwBackEvent);
+   }
+
+@@ -228,7 +228,7 @@
+
+   componentWillUnmount() {
+-    HwBackHandler.removeEventListener(HW_BACK_EVENT, this._handleHwBackEvent);
++    this._backHandlerSubscription?.remove();
+   }
+ }

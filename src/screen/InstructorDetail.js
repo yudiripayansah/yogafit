@@ -32,7 +32,6 @@ const InstructorDetail = ({ navigation, route }) => {
       if (req.status === 200 || req.status === 201) {
         let { data } = req.data;
         let thedata = data[0]
-        console.log(thedata.available_classes)
         thedata.language = thedata.language ? thedata.language : []
         thedata.certification = thedata.certification ? thedata.certification : []
         thedata.speciality = thedata.speciality ? thedata.speciality : []

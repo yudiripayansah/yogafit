@@ -29,8 +29,8 @@ function HomeCarousel({navigation, ...props}) {
               justifyContent: 'center',
             }}>
               <Theimage original={images[index]} placeholder={img.banner1} style={[{objectFit:'cover'},t.wp100,t.hp100]} />
-              <View style={[t.absolute,t.wp100,t.hp100,t.bgblack,{opacity:.2}]}></View>
-              <View style={[t.absolute,t.wp100,t.hp100,t.fjCenter,t.p20]}>
+              <View style={[t.absolute,{top:0,left:0,right:0,bottom:0},t.bgblack,{opacity:.2}]}></View>
+              <View style={[t.absolute,{top:0,left:0,right:0,bottom:0},t.fjCenter,t.p20]}>
                 <Text style={[t['p23-700'],{color:'#FF7133'}]}>Find Your Balance</Text>
                 <Text style={[t['p23-700'],{color: '#314B3E'}]}>in Every Move</Text>
                 <Text style={[t['p10-400'],t.w225]}>Join Yoga Fit and discover a calm, mindful journey wherever you are.</Text>
