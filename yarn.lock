@@ -2554,10 +2554,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-24.0.0.tgz#185cd1d9f343fd6a2f077de05def34977fe63103"
   integrity sha512-rODaV83e8mR+Y9EPDblfSpy4rM+alriiq5306RyzPryhsyu+guj4fhGwZpESWwhmk9fKjsnshv++aFA50xFjhg==
 
-"@react-native-picker/picker@^2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.8.0.tgz#441ce47bcf7d227fe616d5b906350448f6327a01"
-  integrity sha512-nNU3T3DUi0NDmOEv34aGvV3tDybfIo4Di+1AaNceiImhRFD/dvBWIEgkVfOKUsC/biqv1Yo7td+2BrDL0gyZcw==
+"@react-native-picker/picker@^2.11.4":
+  version "2.11.4"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.11.4.tgz#7fb09506ee00a82989125cc03e8495204c8afc01"
+  integrity sha512-Kf8h1AMnBo54b1fdiVylP2P/iFcZqzpMYcglC28EEFB1DEnOjsNr6Ucqc+3R9e91vHxEDnhZFbYDmAe79P2gjA==
 
 "@react-native/assets-registry@0.79.2":
   version "0.79.2"
