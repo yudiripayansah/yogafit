@@ -1,17 +1,22 @@
-diff --git a/src/AwesomeAlert.js b/src/AwesomeAlert.js
---- a/src/AwesomeAlert.js
-+++ b/src/AwesomeAlert.js
-@@ -34,7 +34,7 @@
-
+diff --git a/node_modules/react-native-awesome-alerts/src/AwesomeAlert.js b/node_modules/react-native-awesome-alerts/src/AwesomeAlert.js
+index 9977d01..b9c0a2e 100644
+--- a/node_modules/react-native-awesome-alerts/src/AwesomeAlert.js
++++ b/node_modules/react-native-awesome-alerts/src/AwesomeAlert.js
+@@ -34,7 +34,7 @@ export default class AwesomeAlert extends Component {
+   }
+ 
    componentDidMount() {
 -    HwBackHandler.addEventListener(HW_BACK_EVENT, this._handleHwBackEvent);
 +    this._backHandlerSubscription = HwBackHandler.addEventListener(HW_BACK_EVENT, this._handleHwBackEvent);
    }
-
-@@ -228,7 +228,7 @@
-
+ 
+   _springShow = (fromConstructor) => {
+@@ -228,7 +228,7 @@ export default class AwesomeAlert extends Component {
+   }
+ 
    componentWillUnmount() {
 -    HwBackHandler.removeEventListener(HW_BACK_EVENT, this._handleHwBackEvent);
 +    this._backHandlerSubscription?.remove();
    }
  }
+ 
