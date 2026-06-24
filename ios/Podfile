@@ -61,5 +61,13 @@ target 'yogafit' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+    # Ensure Hermes framework builds with dSYM for proper crash symbolication
+    installer.pods_project.targets.each do |target|
+      if target.name == 'hermes-engine'
+        target.build_configurations.each do |config|
+          config.build_settings['DEBUG_INFORMATION_FORMAT'] = 'dwarf-with-dsym'
+        end
+      end
+    end
   end
 end
