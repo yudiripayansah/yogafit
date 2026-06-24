@@ -138,7 +138,7 @@ function Login({navigation, ...props}) {
           Welcome Back!
         </Text>
         <Text style={[t['p14-400'], t.cgrey90]}>
-          Let’s continue your journey with Yoga Fit.
+          Let's continue your journey with Yoga Fit.
         </Text>
         <View style={[t.mt28, {zIndex: 999}]}>
           <Text style={[t['h16-400'], t.cblack]}>Country</Text>
@@ -269,7 +269,7 @@ function Login({navigation, ...props}) {
           </Text>
         </View>
         <View style={[t.mt40, t.fRow, t.fjCenter]}>
-          <Text style={[t['p14-400'], t.cblack]}>Didn’t have an account?</Text>
+          <Text style={[t['p14-400'], t.cblack]}>Didn't have an account?</Text>
           <TouchableOpacity
             onPress={() => {
               registerRef.current?.show();

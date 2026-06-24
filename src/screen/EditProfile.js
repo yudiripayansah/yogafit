@@ -66,7 +66,10 @@ const EditProfile = ({ navigation }) => {
       setemail(prof.email)
       setPhone(prof.no_telp)
       setGender(prof.gender)
-      setDateBirth(new Date(prof.date_birth))
+      if (prof.date_birth) {
+        const parsed = new Date(prof.date_birth)
+        if (!isNaN(parsed)) setDateBirth(parsed)
+      }
     } catch (error) {
       
     }
@@ -87,7 +90,8 @@ const EditProfile = ({ navigation }) => {
       let payload = new FormData()
       payload.append('name', name)
       payload.append('email', email)
-      payload.append('date_of_birth', Helper.formatDate(dateBirth,'YYYY-MM-DD'))
+      payload.append('no_telp', phone)
+      payload.append('date_birth', Helper.formatDate(dateBirth,'YYYY-MM-DD'))
       payload.append('gender', gender)
       if(profilePhoto.name){
         payload.append('file', profilePhoto)
@@ -115,6 +119,7 @@ const EditProfile = ({ navigation }) => {
         message: 'Failed to update Profile, please try again',
         cancelText: 'Close',
         confirmText: 'Ok',
+        onConfirm: hideAlert,
       })
       setTimeout(()=>{
         setloading(false)
@@ -274,13 +279,13 @@ const EditProfile = ({ navigation }) => {
         confirmButtonColor="#62AC18"
         cancelButtonColor="#dd0000"
         titleStyle={[t['h20-400'], t.cblack]}
-        messageStyle={[t[('p14-500', t.cblack, t.tCenter)]]}
+        messageStyle={[t['p14-500'], t.cblack, t.tCenter]}
         contentStyle={[t.tCenter]}
-        confirmButtonTextStyle={[t[('p20-600', t.cblack)]]}
+        confirmButtonTextStyle={[t['p20-600'], t.cwhite]}
         onCancelPressed={() => {
-          setalert(false);
+          hideAlert();
         }}
-        onConfirmPressed={alert.onConfirm}
+        onConfirmPressed={alert.onConfirm || hideAlert}
       />
       <StatusBar barStyle="dark-content" />
 

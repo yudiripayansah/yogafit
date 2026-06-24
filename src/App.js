@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {AppState} from 'react-native';
+import {PermissionsAndroid, Platform} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {RouteMain} from './config/Router';
@@ -13,100 +13,67 @@ import {LocationContext} from './context/LocationContext';
 import Style from './config/Style';
 import Splash from './screen/Splash';
 import {useAuth} from './hook/useAuth';
-// import usePushNotification from './hook/usePushNotification';
-import {PermissionsAndroid, Platform} from 'react-native';
-const App = ({}) => {
-  // const {requestUserPermission} = usePushNotification();
+
+const App = () => {
   const RootStack = createStackNavigator();
-  const [appState, setAppState] = useState(AppState.currentState);
   const [loading, setLoading] = useState(true);
   const {loc, auth, gst, state} = useAuth();
+
   const requestLocationPermission = async () => {
+    if (Platform.OS !== 'android') return;
     try {
-      if (Platform.OS === 'android') {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: "Location Permission",
-            message: "This app needs access to your location.",
-            buttonNeutral: "Ask Me Later",
-            buttonNegative: "Cancel",
-            buttonPositive: "OK"
-          }
-        );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log("You can access the location");
-        } else {
-          console.log("Location permission denied");
-        }
-      }
-    } catch (err) {
-      console.warn("Failed to request location permission", err);
-    }
-  };
-  const renderRoute = () => {
-    if (loading) {
-      return <RootStack.Screen name={'SplashScreen'} component={Splash} />;
-    } else {
-      return (
-        <RootStack.Screen name={'RouteMain'}>
-          {({navigation}) => (
-            <LocationContext.Provider value={state.location}>
-            <UserContext.Provider value={state.user}>
-            <GuestContext.Provider value={state.guest}>
-              <RouteMain navigation={navigation} />
-            </GuestContext.Provider>
-            </UserContext.Provider>
-            </LocationContext.Provider>
-          )}
-        </RootStack.Screen>
+      await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Location Permission',
+          message: 'This app needs access to your location.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
       );
+    } catch (err) {
+      console.warn('Failed to request location permission', err);
     }
   };
-  const handleAppStateChange = nextAppState => {
-    if (appState.match(/inactive|background/) && nextAppState === 'active') {
-      console.log('App has come to the foreground!');
-    } else if (appState === 'active' && nextAppState.match(/inactive|background/)) {
-      console.log('App has gone to the background or minimized!');
-    }
-    setAppState(nextAppState);
-  };
-  const listenToNotifications = () => {
-    // try {
-    //   requestUserPermission();
-    // } catch (error) {
-    //   console.error('Error get permission: '+error);
-    // }
-  };
-  useEffect(() => {
-    requestLocationPermission();
-    listenToNotifications();
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }, []);
 
   useEffect(() => {
-    handleAppStateChange;
-    AppState.addEventListener('change', handleAppStateChange);
-    return () => {};
-  }, [appState]);
+    requestLocationPermission();
+    const timer = setTimeout(() => setLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const renderRoute = () => {
+    if (loading) {
+      return <RootStack.Screen name="SplashScreen" component={Splash} />;
+    }
+    return (
+      <RootStack.Screen name="RouteMain">
+        {({navigation}) => (
+          <LocationContext.Provider value={state.location}>
+            <UserContext.Provider value={state.user}>
+              <GuestContext.Provider value={state.guest}>
+                <RouteMain navigation={navigation} />
+              </GuestContext.Provider>
+            </UserContext.Provider>
+          </LocationContext.Provider>
+        )}
+      </RootStack.Screen>
+    );
+  };
 
   return (
     <ThemeContext.Provider value={Style}>
       <AuthContext.Provider value={auth}>
         <LocContext.Provider value={loc}>
-        <GstContext.Provider value={gst}>
-          <NavigationContainer>
-            <RootStack.Navigator
-              screenOptions={{
-                headerShown: false,
-                animationEnabled: true,
-              }}>
-              {renderRoute()}
-            </RootStack.Navigator>
-          </NavigationContainer>
-        </GstContext.Provider>
+          <GstContext.Provider value={gst}>
+            <NavigationContainer>
+              <RootStack.Navigator
+                screenOptions={{headerShown: false, animationEnabled: true}}>
+                {renderRoute()}
+              </RootStack.Navigator>
+            </NavigationContainer>
+          </GstContext.Provider>
         </LocContext.Provider>
       </AuthContext.Provider>
     </ThemeContext.Provider>

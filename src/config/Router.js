@@ -77,9 +77,6 @@ export const RouteMain = ({navigation}) => {
   const openRegister = () => {
     registerRef.current?.show();
   }
-  useEffect(() => {
-    
-  },[])
   return (
     <>
       <ForgotModal verifyRef={verifyRef} loginRef={loginRef} registerRef={registerRef} forgotRef={forgotRef}/>

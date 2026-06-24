@@ -56,7 +56,6 @@ const Api = {
         Authorization: 'Bearer ' + token,
         'Content-Type': 'multipart/form-data',
       },
-      body: payload
     };
     return defAxios.post(url,payload, config);
   },

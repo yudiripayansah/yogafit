@@ -30,14 +30,8 @@ function Register({ navigation, ...props }) {
   const [name, setname] = useState();
   const [email, setemail] = useState();
   const [referral, setreferral] = useState('');
-  const [gender, setgender] = useState(true);
-  const [birthday, setbirthday] = useState(new Date());
-  // const [id, setid] = useState('89670381633');
-  // const [name, setname] = useState('Yudi Ripayansah');
-  // const [email, setemail] = useState('yudiripayansah@gmail.com');
-  // const [referral, setreferral] = useState('');
-  // const [gender, setgender] = useState(true);
-  // const [birthday, setbirthday] = useState(new Date('1993-05-28'));
+  const [gender, setgender] = useState(null);
+  const [birthday, setbirthday] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [tempDate, setTempDate] = useState(new Date());
@@ -56,28 +50,27 @@ function Register({ navigation, ...props }) {
     if (Platform.OS === 'ios') {
       if (selectedDate) setTempDate(selectedDate);
     } else {
-      if (selectedDate) setbirthday(selectedDate);
+      if (selectedDate) { setbirthday(selectedDate); }
       setShowDatePicker(false);
     }
   };
   const doRegister = async () => {
     setLoading(true);
-    let dGender = gender ? 'male' : 'female';
     try {
       let payload = {
         id: countryCode + id,
         region: region,
         name: name,
         email: email,
-        gender: dGender,
-        birthday: birthday,
         referral: referral,
         studio: studio.id,
       };
+      if (gender !== null) payload.gender = gender ? 'male' : 'female';
+      if (birthday !== null) payload.birthday = birthday;
       if (classdata && classdata.idschedule) {
         payload.schedule = classdata.idschedule;
       }
-      if (id && name && email && dGender && birthday && studio) {
+      if (id && name && email && studio) {
         let req = false;
         if (classdata && classdata.idschedule) {
           req = await Api.getuserotp(payload);
@@ -209,7 +202,7 @@ function Register({ navigation, ...props }) {
               Join the Yoga Fit Community!
             </Text>
             <Text style={[t['p14-400'], t.cgrey90]}>
-              Let’s continue your journey with Yoga Fit.
+              Let's continue your journey with Yoga Fit.
             </Text>
             {classdata && classdata.idschedule && (
               <View style={[t.mt20]}>
@@ -334,10 +327,7 @@ function Register({ navigation, ...props }) {
               />
             </View>
             <View style={[t.mt20]}>
-              <View style={[t.fRow]}>
-                <Text style={[t['h16-400'], t.cblack]}>Gender</Text>
-                <Text style={[t['h16-400'], t.cdanger, t.ms3]}>*</Text>
-              </View>
+              <Text style={[t['h16-400'], t.cblack]}>Gender</Text>
               <View style={[t.fRow, t.mt10]}>
                 {[{label: 'Male', value: true}, {label: 'Female', value: false}].map(opt => (
                   <TouchableOpacity
@@ -353,15 +343,12 @@ function Register({ navigation, ...props }) {
               </View>
             </View>
             <View style={[t.mt20]}>
-              <View style={[t.fRow]}>
-                <Text style={[t['h16-400'], t.cblack]}>Date of Birth</Text>
-                <Text style={[t['h16-400'], t.cdanger, t.ms3]}>*</Text>
-              </View>
+              <Text style={[t['h16-400'], t.cblack]}>Date of Birth</Text>
               <TouchableOpacity
-                onPress={() => { setTempDate(birthday); setShowDatePicker(true); }}
+                onPress={() => { setTempDate(birthday || new Date()); setShowDatePicker(true); }}
                 style={[t.bgwhite, t.p10, t['h14-400'], t.br10, t.cblack, t.mt10, t.wp100, t.bw1, t.bsolid, t.bgrey]}>
-                <Text style={[t['h14-400'], t.cblack]}>
-                  {birthday.toLocaleDateString()}
+                <Text style={[t['h14-400'], birthday ? t.cblack : { color: '#ccc' }]}>
+                  {birthday ? birthday.toLocaleDateString() : 'eg: 01/01/1990'}
                 </Text>
               </TouchableOpacity>
               {Platform.OS === 'ios' && showDatePicker && (
@@ -382,7 +369,7 @@ function Register({ navigation, ...props }) {
               )}
               {Platform.OS === 'android' && showDatePicker && (
                 <DateTimePicker
-                  value={birthday}
+                  value={birthday || new Date()}
                   mode="date"
                   display="default"
                   onChange={onDateChange}

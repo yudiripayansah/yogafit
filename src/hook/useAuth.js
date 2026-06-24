@@ -1,114 +1,78 @@
-import React, {useReducer, useMemo, useEffect} from 'react';
+import {useReducer, useMemo, useEffect} from 'react';
 import Store from '../config/Store';
-const createAction = (type, payload) => {
-  return {
-    type,
-    payload,
-  };
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_USER':
+      return {...state, user: {...action.payload}};
+    case 'REMOVE_USER':
+      return {...state, user: undefined};
+    case 'SET_GUEST':
+      return {...state, guest: {...action.payload}};
+    case 'REMOVE_GUEST':
+      return {...state, guest: undefined};
+    case 'SET_LOCATION':
+      return {...state, location: {...action.payload}};
+    case 'REMOVE_LOCATION':
+      return {...state, location: undefined};
+    default:
+      return state;
+  }
 };
+
 export function useAuth() {
-  const [state, dispatch] = useReducer(
-    (state, action) => {
-      switch (action.type) {
-        case 'SET_USER':
-          return {
-            ...state,
-            user: {...action.payload},
-          };
-          break;
-        case 'REMOVE_USER':
-          return {
-            ...state,
-            user: undefined,
-          };
-          break;
-        case 'SET_GUEST':
-          return {
-            ...state,
-            guest: {...action.payload},
-          };
-          break;
-        case 'REMOVE_GUEST':
-          return {
-            ...state,
-            guest: undefined,
-          };
-          break;
-        case 'SET_LOCATION':
-          return {
-            ...state,
-            location: {...action.payload},
-          };
-          break;
-        case 'REMOVE_LOCATION':
-          return {
-            ...state,
-            location: undefined,
-          };
-          break;
-        default:
-          return state;
-          break;
-      }
-    },
-    {
-      user: undefined,
-      location: undefined,
-      guest: undefined
-    },
-  );
+  const [state, dispatch] = useReducer(reducer, {
+    user: undefined,
+    location: undefined,
+    guest: undefined,
+  });
+
   const auth = useMemo(() => ({
     setUser: async user => {
       Store.set('YOGAFITUSER', user);
-      dispatch(createAction('SET_USER', user));
+      dispatch({type: 'SET_USER', payload: user});
     },
     removeUser: async () => {
       Store.remove('YOGAFITUSER');
-      dispatch(createAction('REMOVE_USER'));
+      dispatch({type: 'REMOVE_USER'});
     },
-  }));
+  }), [dispatch]);
+
   const gst = useMemo(() => ({
     setGuest: async guest => {
       Store.set('YOGAFITGUEST', guest);
-      dispatch(createAction('SET_GUEST', guest));
+      dispatch({type: 'SET_GUEST', payload: guest});
     },
     removeGuest: async () => {
       Store.remove('YOGAFITGUEST');
-      dispatch(createAction('REMOVE_GUEST'));
+      dispatch({type: 'REMOVE_GUEST'});
     },
-  }));
+  }), [dispatch]);
+
   const loc = useMemo(() => ({
     setLocation: async location => {
       Store.set('YOGAFITLOCATION', location);
-      dispatch(createAction('SET_LOCATION', location));
+      dispatch({type: 'SET_LOCATION', payload: location});
     },
     removeLocation: async () => {
       Store.remove('YOGAFITLOCATION');
-      dispatch(createAction('REMOVE_LOCATION'));
+      dispatch({type: 'REMOVE_LOCATION'});
     },
-  }));
-  const checkUser = async () => {
-    let user = await Store.get('YOGAFITUSER');
-    if (user) {
-      dispatch(createAction('SET_USER', user));
-    }
-  };
-  const checkLocation = async () => {
-    let location = await Store.get('YOGAFITLOCATION');
-    if (location) {
-      dispatch(createAction('SET_LOCATION', location));
-    }
-  };
-  const checkGuest = async () => {
-    let guest = await Store.get('YOGAFITGUEST');
-    if (guest) {
-      dispatch(createAction('SET_GUEST', guest));
-    }
-  };
+  }), [dispatch]);
+
   useEffect(() => {
-    checkUser();
-    checkLocation();
-    checkGuest();
+    const init = async () => {
+      const [user, location, guest] = await Promise.all([
+        Store.get('YOGAFITUSER'),
+        Store.get('YOGAFITLOCATION'),
+        Store.get('YOGAFITGUEST'),
+      ]);
+      if (user) dispatch({type: 'SET_USER', payload: user});
+      if (location) dispatch({type: 'SET_LOCATION', payload: location});
+      if (guest) dispatch({type: 'SET_GUEST', payload: guest});
+    };
+    init();
   }, []);
+
   return {loc, auth, gst, state};
 }
